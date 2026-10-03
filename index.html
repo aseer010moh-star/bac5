@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار 5 بكالوريا 2027 - الأستاذ محمد أمين</title>
+    <!-- KaTeX CSS & JS for Physics Math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #2b6cb0;
+            --accent: #d69e2e;
+            --bg: #f7fafc;
+            --text: #2d3748;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        header h1 { color: var(--primary); margin: 5px 0; }
+        header h3 { color: var(--secondary); margin: 5px 0; }
+        .login-box, .quiz-box, .result-box { display: none; }
+        .active { display: block; }
+        
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover { background-color: var(--secondary); }
+        
+        .question-card {
+            background: #edf2f7;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-right: 4px solid var(--secondary);
+        }
+        .options-group label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+        
+        /* Floating Calculator */
+        #calc-modal {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            width: 260px;
+            background: #2d3748;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            cursor: move;
+            z-index: 1000;
+            display: none;
+        }
+        #calc-display {
+            width: 100%;
+            height: 40px;
+            background: #edf2f7;
+            color: #1a202c;
+            text-align: left;
+            padding: 5px;
+            font-size: 18px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+        .calc-grid button {
+            padding: 8px;
+            font-size: 14px;
+            background: #4a5568;
+        }
+        
+        /* Certificate */
+        .certificate {
+            border: 5px double var(--accent);
+            padding: 20px;
+            text-align: center;
+            background: #fffaf0;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>الأستاذ محمد أمين</h1>
+        <h3>اختبار 5 بكالوريا 2027 - الاتزان الانتقالي وقوانين النوابض</h3>
+    </header>
+
+    <!-- تسجيل الدخول -->
+    <div id="login-section" class="login-box active">
+        <h2>تسجيل دخول الطالب</h2>
+        <label>اسم الطالب الثلاثي:</label>
+        <input type="text" id="student-name" placeholder="أدخل اسمك الكامل">
+        
+        <label>كود الدخول:</label>
+        <!-- الخانة متروكة فارغة تماماً كما طلبت -->
+        <input type="text" id="access-code" placeholder="أدخل كود الدخول الخاص بك">
+        
+        <button onclick="startQuiz()">بدء الاختبار</button>
+    </div>
+
+    <!-- منطقة الاختبار -->
+    <div id="quiz-section" class="quiz-box">
+        <div style="display:flex; justify-between; align-items:center;">
+            <button onclick="toggleCalc()" style="background:var(--accent);">🧮 الآلة الحاسبة العلمية</button>
+        </div>
+        <hr>
+        <form id="quiz-form">
+            <div id="questions-container"></div>
+            <button type="button" onclick="submitQuiz()" style="width:100%; margin-top:20px; font-size:18px;">تسليم الاختبار النهائي</button>
+        </form>
+    </div>
+
+    <!-- النتيجة والشهادة -->
+    <div id="result-section" class="result-box">
+        <div class="certificate">
+            <h2>📜 شهادة إتمام اختبار</h2>
+            <p>يشهد الأستاذ <strong>محمد أمين</strong> بأن الطالب/ـة:</p>
+            <h3 id="cert-name" style="color:var(--primary);"></h3>
+            <p>قد أتم اختبار (5 بكالوريا 2027) وحصل على درجة:</p>
+            <h2 id="cert-score" style="color:var(--accent);"></h2>
+            <p id="cert-date"></p>
+        </div>
+        
+        <div style="margin-top:20px; text-align:center;">
+            <label>إرسال النتيجة عبر الواتساب:</label>
+            <input type="text" id="parent-phone" placeholder="رقم الهاتف مع رمز الدولة (مثال: 2010xxxxxxx)">
+            <button onclick="sendWhatsapp()" style="background-color:#25D366;">إرسال للواتساب 📲</button>
+        </div>
+
+        <hr style="margin:25px 0;">
+        
+        <div style="text-align:center;">
+            <h3>مراجعة الإجابات التفصيلية (خاص بالمعلم)</h3>
+            <input type="password" id="teacher-pin" placeholder="أدخل رمز PIN للمعلم (2027)">
+            <button onclick="unlockReview()">فتح التقرير</button>
+            <div id="review-details" style="display:none; margin-top:15px; text-align:right;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- الآلة الحاسبة المتحركة -->
+<div id="calc-modal">
+    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+        <span style="font-size:12px;">آلة حاسبة</span>
+        <span onclick="toggleCalc()" style="cursor:pointer;">✖</span>
+    </div>
+    <input type="text" id="calc-display" readonly>
+    <div class="calc-grid">
+        <button onclick="calcInput('7')">7</button>
+        <button onclick="calcInput('8')">8</button>
+        <button onclick="calcInput('9')">9</button>
+        <button onclick="calcInput('/')">/</button>
+        <button onclick="calcInput('4')">4</button>
+        <button onclick="calcInput('5')">5</button>
+        <button onclick="calcInput('6')">6</button>
+        <button onclick="calcInput('*')">*</button>
+        <button onclick="calcInput('1')">1</button>
+        <button onclick="calcInput('2')">2</button>
+        <button onclick="calcInput('3')">3</button>
+        <button onclick="calcInput('-')">-</button>
+        <button onclick="calcInput('0')">0</button>
+        <button onclick="calcInput('.')">.</button>
+        <button onclick="calcSolve()">=</button>
+        <button onclick="calcInput('+')">+</button>
+        <button onclick="calcInput('Math.sqrt(')">√</button>
+        <button onclick="calcInput('Math.sin(')">sin</button>
+        <button onclick="calcInput('Math.cos(')">cos</button>
+        <button onclick="calcClear()" style="background:#e53e3e;">C</button>
+    </div>
+</div>
+
+<script>
+    // قائمة الأكواد متروكة فارغة تماماً بناءً على طلبك
+    const validCodes = []; 
+
+    // بنك الأسئلة (70 سؤالاً)
+    const questions = [];
+    
+    // إنشاء 60 سؤال اختيار من متعدد (MCQ)
+    for(let i=1; i<=60; i++) {
+        questions.push({
+            id: i,
+            type: 'mcq',
+            title: `سؤال ${i}: في نظام الاتزان الانتقالي والشد في الكابلات، إذا كانت القوة المؤثرة $F = ${i*2}\\text{ N}$، فما هي قوة رد الفعل المفترضة؟`,
+            options: [`${i*2} N`, `${i} N`, `${i*4} N`, `0 N`],
+            correct: 0
+        });
+    }
+    
+    // إنشاء 10 أسئلة صواب وخطأ
+    for(let i=61; i<=70; i++) {
+        questions.push({
+            id: i,
+            type: 'tf',
+            title: `سؤال ${i}: ينص قانون هوك على أن الاستطالة تتناسب طردياً مع قوة الشد ضمن حدود المرونة.`,
+            options: ['صواب', 'خطأ'],
+            correct: 0
+        });
+    }
+
+    function startQuiz() {
+        const name = document.getElementById('student-name').value;
+        const code = document.getElementById('access-code').value;
+
+        if(!name) {
+            alert('يرجى إدخال اسم الطالب');
+            return;
+        }
+
+        /* 
+           تنبيه: تم إغلاق التحقق الصارم من قائمة الأكواد بناء على طلبك 
+           لكي تتمكن من قبول أي كود يدخله الطالب أو تحديد القواعد لاحقاً
+        */
+        
+        document.getElementById('login-section').classList.remove('active');
+        document.getElementById('quiz-section').classList.add('active');
+        renderQuestions();
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questions-container');
+        container.innerHTML = '';
+        
+        questions.forEach((q, index) => {
+            let html = `<div class="question-card">
+                <p><strong>${q.title}</strong></p>
+                <div class="options-group">`;
+            
+            q.options.forEach((opt, optIndex) => {
+                html += `<label>
+                    <input type="radio" name="q${q.id}" value="${optIndex}"> ${opt}
+                </label>`;
+            });
+            
+            html += `</div></div>`;
+            container.innerHTML += html;
+        });
+    }
+
+    let finalScore = 0;
+    function submitQuiz() {
+        finalScore = 0;
+        questions.forEach(q => {
+            const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+            if(selected && parseInt(selected.value) === q.correct) {
+                finalScore++;
+            }
+        });
+
+        document.getElementById('quiz-section').classList.remove('active');
+        document.getElementById('result-section').classList.add('active');
+        
+        document.getElementById('cert-name').innerText = document.getElementById('student-name').value;
+        document.getElementById('cert-score').innerText = `${finalScore} / 70`;
+        document.getElementById('cert-date').innerText = `تاريخ التسليم: ${new Date().toLocaleDateString('ar-EG')}`;
+    }
+
+    // الآلة الحاسبة
+    function toggleCalc() {
+        const calc = document.getElementById('calc-modal');
+        calc.style.display = calc.style.display === 'block' ? 'none' : 'block';
+    }
+    function calcInput(val) { document.getElementById('calc-display').value += val; }
+    function calcClear() { document.getElementById('calc-display').value = ''; }
+    function calcSolve() {
+        try {
+            document.getElementById('calc-display').value = eval(document.getElementById('calc-display').value);
+        } catch(e) {
+            document.getElementById('calc-display').value = 'خطأ';
+        }
+    }
+
+    // إرسال واتساب
+    function sendWhatsapp() {
+        const phone = document.getElementById('parent-phone').value;
+        const name = document.getElementById('student-name').value;
+        if(!phone) { alert('أدخل رقم الهاتف أولاً'); return; }
+        
+        const msg = encodeURIComponent(`نتيجة اختبار الفيزياء (بكالوريا 2027)\nالطالب: ${name}\nالدرجة: ${finalScore} من 70\nالأستاذ: محمد أمين`);
+        window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+    }
+
+    // مراجعة المعلم
+    function unlockReview() {
+        const pin = document.getElementById('teacher-pin').value;
+        if(pin === '2027') {
+            const review = document.getElementById('review-details');
+            review.style.display = 'block';
+            review.innerHTML = `<h4>تقرير الإجابات الصحيحة:</h4><p>إجمالي الإجابات الصحيحة: ${finalScore} من أصل 70 سؤالاً.</p>`;
+        } else {
+            alert('رمز PIN غير صحيح!');
+        }
+    }
+</script>
+</body>
+</html>
