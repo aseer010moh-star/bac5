@@ -4,341 +4,537 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اختبار 5 بكالوريا 2027 - الأستاذ محمد أمين</title>
-    <!-- KaTeX CSS & JS for Physics Math rendering -->
+    <!-- KaTeX CSS & JS Math Rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <style>
         :root {
-            --primary: #1a365d;
-            --secondary: #2b6cb0;
-            --accent: #d69e2e;
-            --bg: #f7fafc;
-            --text: #2d3748;
+            --warm-teal: #104c54;
+            --dark-teal: #0a3339;
+            --accent-gold: #e5a93c;
+            --light-bg: #e0f2f1;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            background: linear-gradient(135deg, var(--warm-teal), var(--dark-teal));
+            color: var(--text-color);
             margin: 0;
             padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             direction: rtl;
         }
-        .container {
-            max-width: 900px;
+
+        .main-wrapper {
+            max-width: 1000px;
             margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
         }
-        header {
+
+        .header-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px 30px;
             text-align: center;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-bottom: 5px solid var(--accent-gold);
             margin-bottom: 25px;
         }
-        header h1 { color: var(--primary); margin: 5px 0; }
-        header h3 { color: var(--secondary); margin: 5px 0; }
-        .login-box, .quiz-box, .result-box { display: none; }
-        .active { display: block; }
-        
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #cbd5e0;
-            border-radius: 6px;
-            box-sizing: border-box;
+
+        .header-card h1 { margin: 0; color: var(--warm-teal); font-size: 26px; }
+        .header-card h3 { margin: 5px 0 0 0; color: #555; font-size: 18px; }
+
+        .app-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            display: none;
         }
-        button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
+
+        .active-section { display: block; }
+
+        /* Login Screen */
+        .login-box {
+            max-width: 450px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
             font-weight: bold;
+            color: var(--warm-teal);
+        }
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #b2dfdb;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
             transition: 0.3s;
         }
-        button:hover { background-color: var(--secondary); }
-        
-        .question-card {
-            background: #edf2f7;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border-right: 4px solid var(--secondary);
+        .form-input:focus {
+            border-color: var(--warm-teal);
         }
-        .options-group label {
-            display: block;
-            margin: 8px 0;
-            cursor: pointer;
-        }
-        
-        /* Floating Calculator */
-        #calc-modal {
-            position: fixed;
-            top: 100px;
-            left: 20px;
-            width: 260px;
-            background: #2d3748;
+
+        .btn-primary {
+            background: var(--warm-teal);
             color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .btn-primary:hover {
+            background: var(--dark-teal);
+        }
+
+        /* Question Navigation Matrix (Grid) */
+        .grid-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--warm-teal);
+        }
+        .q-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 8px;
+            background: var(--light-bg);
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            cursor: move;
+            margin-bottom: 25px;
+            max-height: 160px;
+            overflow-y: auto;
+        }
+        .q-node {
+            background: white;
+            border: 1px solid #b2dfdb;
+            border-radius: 6px;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .q-node.current {
+            border: 2px solid var(--accent-gold);
+            background: #fff8e1;
+        }
+        .q-node.answered {
+            background: var(--warm-teal);
+            color: white;
+            border-color: var(--warm-teal);
+        }
+
+        /* Question Display Area */
+        .question-card {
+            background: #f7fafc;
+            border-right: 6px solid var(--warm-teal);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .q-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+        .q-diagram {
+            text-align: center;
+            margin: 15px 0;
+        }
+        .q-options label {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .q-options label:hover {
+            background: #edf2f7;
+        }
+        .q-options input {
+            margin-left: 12px;
+        }
+
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Advanced Calculator */
+        #calc-drawer {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 320px;
+            background: #1a202c;
+            color: white;
+            border-radius: 14px;
+            padding: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             z-index: 1000;
             display: none;
         }
-        #calc-display {
-            width: 100%;
-            height: 40px;
-            background: #edf2f7;
-            color: #1a202c;
-            text-align: left;
-            padding: 5px;
-            font-size: 18px;
-            border-radius: 4px;
+        .calc-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
+            border-bottom: 1px solid #4a5568;
+            padding-bottom: 5px;
+            cursor: move;
+        }
+        #calc-screen {
+            width: 100%;
+            height: 45px;
+            background: #2d3748;
+            color: #00ffcc;
+            font-family: monospace;
+            font-size: 20px;
+            text-align: left;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            margin-bottom: 12px;
             box-sizing: border-box;
         }
-        .calc-grid {
+        .calc-buttons {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
         }
-        .calc-grid button {
-            padding: 8px;
-            font-size: 14px;
+        .calc-buttons button {
+            padding: 10px 0;
             background: #4a5568;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
         }
-        
-        /* Certificate */
-        .certificate {
-            border: 5px double var(--accent);
-            padding: 20px;
+        .calc-buttons button.fn-btn { background: #3182ce; }
+        .calc-buttons button.solve-btn { background: var(--accent-gold); color: black; font-weight: bold; }
+        .calc-buttons button.clear-btn { background: #e53e3e; }
+
+        /* Certificate Section */
+        .certificate-container {
+            border: 8px double var(--warm-teal);
+            padding: 30px;
+            background: #f0fdf4;
+            border-radius: 12px;
             text-align: center;
-            background: #fffaf0;
-            border-radius: 10px;
-            margin-top: 20px;
+        }
+
+        /* Footer Copyright */
+        footer {
+            text-align: center;
+            color: #e0f2f1;
+            padding: 20px 0 10px 0;
+            font-size: 15px;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
+<div class="main-wrapper">
+    <!-- Header -->
+    <div class="header-card">
         <h1>الأستاذ محمد أمين</h1>
-        <h3>اختبار 5 بكالوريا 2027 - الاتزان الانتقالي وقوانين النوابض</h3>
-    </header>
-
-    <!-- تسجيل الدخول -->
-    <div id="login-section" class="login-box active">
-        <h2>تسجيل دخول الطالب</h2>
-        <label>اسم الطالب الثلاثي:</label>
-        <input type="text" id="student-name" placeholder="أدخل اسمك الكامل">
-        
-        <label>كود الدخول:</label>
-        <!-- الخانة متروكة فارغة تماماً كما طلبت -->
-        <input type="text" id="access-code" placeholder="أدخل كود الدخول الخاص بك">
-        
-        <button onclick="startQuiz()">بدء الاختبار</button>
+        <h3>اختبار 5 بكالوريا 2027 - الاتزان الانتقالي واستطالة النوابض</h3>
     </div>
 
-    <!-- منطقة الاختبار -->
-    <div id="quiz-section" class="quiz-box">
-        <div style="display:flex; justify-between; align-items:center;">
-            <button onclick="toggleCalc()" style="background:var(--accent);">🧮 الآلة الحاسبة العلمية</button>
+    <!-- Login Screen -->
+    <div id="login-screen" class="app-card active-section">
+        <div class="login-box">
+            <h2 style="color: var(--warm-teal); margin-bottom: 20px;">تسجيل دخول الطالب</h2>
+            <div class="form-group">
+                <label>اسم الطالب الثلاثي:</label>
+                <input type="text" id="student-name" class="form-input" placeholder="أدخل اسمك الكامل">
+            </div>
+            <div class="form-group">
+                <label>كود الدخول المخصص:</label>
+                <!-- كود الدخول مخفي في خانة نجوم مخصصة وتترك القائمة فارغة -->
+                <input type="password" id="access-code" class="form-input" placeholder="••••••••">
+            </div>
+            <button class="btn-primary" onclick="startExam()">بدء الاختبار الفوري</button>
         </div>
-        <hr>
-        <form id="quiz-form">
-            <div id="questions-container"></div>
-            <button type="button" onclick="submitQuiz()" style="width:100%; margin-top:20px; font-size:18px;">تسليم الاختبار النهائي</button>
-        </form>
     </div>
 
-    <!-- النتيجة والشهادة -->
-    <div id="result-section" class="result-box">
-        <div class="certificate">
-            <h2>📜 شهادة إتمام اختبار</h2>
-            <p>يشهد الأستاذ <strong>محمد أمين</strong> بأن الطالب/ـة:</p>
-            <h3 id="cert-name" style="color:var(--primary);"></h3>
-            <p>قد أتم اختبار (5 بكالوريا 2027) وحصل على درجة:</p>
-            <h2 id="cert-score" style="color:var(--accent);"></h2>
-            <p id="cert-date"></p>
-        </div>
-        
-        <div style="margin-top:20px; text-align:center;">
-            <label>إرسال النتيجة عبر الواتساب:</label>
-            <input type="text" id="parent-phone" placeholder="رقم الهاتف مع رمز الدولة (مثال: 2010xxxxxxx)">
-            <button onclick="sendWhatsapp()" style="background-color:#25D366;">إرسال للواتساب 📲</button>
+    <!-- Exam Screen -->
+    <div id="exam-screen" class="app-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div class="grid-header">شبكة التنقل السريع بين الأسئلة (70 سؤالاً):</div>
+            <button onclick="toggleCalc()" style="background: var(--accent-gold); border:none; padding: 8px 15px; border-radius: 6px; cursor:pointer; font-weight:bold;">🧮 الآلة الحاسبة العلمية SOLVE</button>
         </div>
 
-        <hr style="margin:25px 0;">
-        
-        <div style="text-align:center;">
-            <h3>مراجعة الإجابات التفصيلية (خاص بالمعلم)</h3>
-            <input type="password" id="teacher-pin" placeholder="أدخل رمز PIN للمعلم (2027)">
-            <button onclick="unlockReview()">فتح التقرير</button>
-            <div id="review-details" style="display:none; margin-top:15px; text-align:right;"></div>
+        <!-- Question Grid Matrix -->
+        <div class="q-grid" id="question-grid"></div>
+
+        <!-- Dynamic Question Area -->
+        <div id="question-container"></div>
+
+        <div class="nav-controls">
+            <button class="btn-primary" style="width: auto;" onclick="prevQuestion()">السؤال السابق</button>
+            <button class="btn-primary" style="width: auto; background: var(--accent-gold); color: black;" onclick="nextQuestion()">السؤال التالي</button>
+            <button class="btn-primary" style="width: auto; background: #e53e3e;" onclick="submitExam()">تسليم الاختبار</button>
+        </div>
+    </div>
+
+    <!-- Result & Certificate Screen -->
+    <div id="result-screen" class="app-card">
+        <div class="certificate-container">
+            <h1 style="color: var(--warm-teal); font-size: 30px; margin-top:0;">📜 شهادة تفوق واجتياز اختبار</h1>
+            <p style="font-size: 18px;">يشهد **الأستاذ محمد أمين** بأن الطالب/ـة:</p>
+            <h2 id="cert-student-name" style="color: #d97706; font-size: 26px;"></h2>
+            <p style="font-size: 18px;">قد أتم اختبار الفيزياء (بكالوريا 2027) بنجاح وحصل على نتيجة:</p>
+            <h1 id="cert-score" style="color: var(--warm-teal); font-size: 36px; margin: 10px 0;"></h1>
+            <p id="cert-date" style="color: #64748b;"></p>
         </div>
     </div>
 </div>
 
-<!-- الآلة الحاسبة المتحركة -->
-<div id="calc-modal">
-    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-        <span style="font-size:12px;">آلة حاسبة</span>
-        <span onclick="toggleCalc()" style="cursor:pointer;">✖</span>
+<!-- Advanced Calculator Modal -->
+<div id="calc-drawer">
+    <div class="calc-head">
+        <span style="font-weight: bold; font-size: 13px;">آلة حاسبة متطورة - SOLVE (x)</span>
+        <span onclick="toggleCalc()" style="cursor: pointer;">✖</span>
     </div>
-    <input type="text" id="calc-display" readonly>
-    <div class="calc-grid">
+    <input type="text" id="calc-screen" readonly placeholder="0">
+    <div class="calc-buttons">
+        <button class="fn-btn" onclick="calcInput('Math.sin(')">sin</button>
+        <button class="fn-btn" onclick="calcInput('Math.cos(')">cos</button>
+        <button class="fn-btn" onclick="calcInput('Math.tan(')">tan</button>
+        <button class="fn-btn" onclick="calcInput('Math.sqrt(')">√</button>
+        <button class="clear-btn" onclick="calcClear()">C</button>
+
+        <button class="fn-btn" onclick="calcInput('**')">x^y</button>
+        <button class="fn-btn" onclick="calcInput('Math.log(')">ln</button>
+        <button class="fn-btn" onclick="calcInput('(')">(</button>
+        <button class="fn-btn" onclick="calcInput(')')">)</button>
+        <button class="fn-btn" onclick="calcInput('/')">÷</button>
+
         <button onclick="calcInput('7')">7</button>
         <button onclick="calcInput('8')">8</button>
         <button onclick="calcInput('9')">9</button>
-        <button onclick="calcInput('/')">/</button>
+        <button class="fn-btn" onclick="calcInput('*')">×</button>
+        <button class="solve-btn" onclick="calcSolve()">SOLVE</button>
+
         <button onclick="calcInput('4')">4</button>
         <button onclick="calcInput('5')">5</button>
         <button onclick="calcInput('6')">6</button>
-        <button onclick="calcInput('*')">*</button>
+        <button class="fn-btn" onclick="calcInput('-')">-</button>
+        <button class="fn-btn" onclick="calcInput('.')">.</button>
+
         <button onclick="calcInput('1')">1</button>
         <button onclick="calcInput('2')">2</button>
         <button onclick="calcInput('3')">3</button>
-        <button onclick="calcInput('-')">-</button>
+        <button class="fn-btn" onclick="calcInput('+')">+</button>
         <button onclick="calcInput('0')">0</button>
-        <button onclick="calcInput('.')">.</button>
-        <button onclick="calcSolve()">=</button>
-        <button onclick="calcInput('+')">+</button>
-        <button onclick="calcInput('Math.sqrt(')">√</button>
-        <button onclick="calcInput('Math.sin(')">sin</button>
-        <button onclick="calcInput('Math.cos(')">cos</button>
-        <button onclick="calcClear()" style="background:#e53e3e;">C</button>
     </div>
 </div>
 
+<!-- Copyright Footer -->
+<footer>
+    جميع الحقوق محفوظة © للأستاذ محمد أمين - 2027
+</footer>
+
 <script>
-    // قائمة الأكواد متروكة فارغة تماماً بناءً على طلبك
+    // قائمة الأكواد متروكة فارغة تماماً بناءً على الطلب
     const validCodes = []; 
 
-    // بنك الأسئلة (70 سؤالاً)
-    const questions = [];
-    
-    // إنشاء 60 سؤال اختيار من متعدد (MCQ)
+    let currentQuestionIndex = 0;
+    const userAnswers = {};
+
+    // بنك أسئلة متدرج وسهل ممتنع (70 سؤالاً)
+    const examQuestions = [];
+
+    // توليد أسئلة الفيزياء التطبيقية
     for(let i=1; i<=60; i++) {
-        questions.push({
+        let diagram = "";
+        if(i % 5 === 0) {
+            // رسم تخطيطي لـ SVG يوضح الاتزان والشد للأسئلة
+            diagram = `<div class="q-diagram">
+                <svg width="220" height="100" viewBox="0 0 220 100">
+                    <line x1="20" y1="20" x2="200" y2="20" stroke="#333" stroke-width="4"/>
+                    <line x1="110" y1="20" x2="60" y2="80" stroke="#104c54" stroke-width="3"/>
+                    <line x1="110" y1="20" x2="160" y2="80" stroke="#104c54" stroke-width="3"/>
+                    <circle cx="110" cy="20" r="5" fill="#e5a93c"/>
+                    <rect x="95" y="75" width="30" height="20" fill="#104c54" rx="3"/>
+                    <text x="102" y="90" fill="white" font-size="10">m</text>
+                </svg>
+            </div>`;
+        }
+
+        examQuestions.push({
             id: i,
             type: 'mcq',
-            title: `سؤال ${i}: في نظام الاتزان الانتقالي والشد في الكابلات، إذا كانت القوة المؤثرة $F = ${i*2}\\text{ N}$، فما هي قوة رد الفعل المفترضة؟`,
-            options: [`${i*2} N`, `${i} N`, `${i*4} N`, `0 N`],
-            correct: 0
+            title: `السؤال ${i}: جسم كتلته $m = ${i*2}\\text{ kg}$ معلق بسلكين يميلان بزاوية $30^\\circ$ عن الأفق في حالة اتزان انتقالي. ما هي قيمة الشد $T$ في كل سلك؟`,
+            diagram: diagram,
+            options: [
+                `${(i * 9.8).toFixed(1)} N`,
+                `${(i * 19.6).toFixed(1)} N`,
+                `${(i * 4.9).toFixed(1)} N`,
+                `0 N`
+            ],
+            correctIndex: 0
         });
     }
-    
-    // إنشاء 10 أسئلة صواب وخطأ
+
+    // 10 أسئلة مفاهيمية صواب وخطأ
     for(let i=61; i<=70; i++) {
-        questions.push({
+        examQuestions.push({
             id: i,
             type: 'tf',
-            title: `سؤال ${i}: ينص قانون هوك على أن الاستطالة تتناسب طردياً مع قوة الشد ضمن حدود المرونة.`,
+            title: `السؤال ${i}: إذا تضاعفت قوة الشد المؤثرة على نابض مرن لا يتجاوز حد المرونة، فإن معامل الصلابة $k$ يتضاعف أيضاً.`,
+            diagram: "",
             options: ['صواب', 'خطأ'],
-            correct: 0
+            correctIndex: 1
         });
     }
 
-    function startQuiz() {
-        const name = document.getElementById('student-name').value;
-        const code = document.getElementById('access-code').value;
-
+    function startExam() {
+        const name = document.getElementById('student-name').value.trim();
         if(!name) {
-            alert('يرجى إدخال اسم الطالب');
+            alert('يرجى كتابة اسم الطالب أولاً');
             return;
         }
 
-        /* 
-           تنبيه: تم إغلاق التحقق الصارم من قائمة الأكواد بناء على طلبك 
-           لكي تتمكن من قبول أي كود يدخله الطالب أو تحديد القواعد لاحقاً
-        */
-        
-        document.getElementById('login-section').classList.remove('active');
-        document.getElementById('quiz-section').classList.add('active');
-        renderQuestions();
+        document.getElementById('login-screen').classList.remove('active-section');
+        document.getElementById('exam-screen').classList.add('active-section');
+
+        buildQuestionGrid();
+        loadQuestion(0);
     }
 
-    function renderQuestions() {
-        const container = document.getElementById('questions-container');
-        container.innerHTML = '';
-        
-        questions.forEach((q, index) => {
-            let html = `<div class="question-card">
-                <p><strong>${q.title}</strong></p>
-                <div class="options-group">`;
-            
-            q.options.forEach((opt, optIndex) => {
-                html += `<label>
-                    <input type="radio" name="q${q.id}" value="${optIndex}"> ${opt}
-                </label>`;
-            });
-            
-            html += `</div></div>`;
-            container.innerHTML += html;
+    function buildQuestionGrid() {
+        const grid = document.getElementById('question-grid');
+        grid.innerHTML = '';
+        examQuestions.forEach((q, idx) => {
+            const btn = document.createElement('div');
+            btn.className = `q-node ${idx === 0 ? 'current' : ''}`;
+            btn.id = `grid-node-${idx}`;
+            btn.innerText = idx + 1;
+            btn.onclick = () => loadQuestion(idx);
+            grid.appendChild(btn);
         });
     }
 
-    let finalScore = 0;
-    function submitQuiz() {
-        finalScore = 0;
-        questions.forEach(q => {
-            const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
-            if(selected && parseInt(selected.value) === q.correct) {
-                finalScore++;
+    function loadQuestion(index) {
+        currentQuestionIndex = index;
+        
+        // Update Grid styling
+        document.querySelectorAll('.q-node').forEach((node, idx) => {
+            node.classList.remove('current');
+            if(idx === index) node.classList.add('current');
+        });
+
+        const q = examQuestions[index];
+        const container = document.getElementById('question-container');
+
+        let optionsHTML = '';
+        q.options.forEach((opt, optIdx) => {
+            const isChecked = userAnswers[q.id] === optIdx ? 'checked' : '';
+            optionsHTML += `
+                <label>
+                    <input type="radio" name="q_opt" value="${optIdx}" ${isChecked} onchange="saveAnswer(${q.id}, ${optIdx})">
+                    <span>${opt}</span>
+                </label>
+            `;
+        });
+
+        container.innerHTML = `
+            <div class="question-card">
+                <div class="q-title">${q.title}</div>
+                ${q.diagram}
+                <div class="q-options">${optionsHTML}</div>
+            </div>
+        `;
+
+        if(window.katex) {
+            katex.render();
+        }
+    }
+
+    function saveAnswer(questionId, optionIndex) {
+        userAnswers[questionId] = optionIndex;
+        const gridNode = document.getElementById(`grid-node-${currentQuestionIndex}`);
+        if(gridNode) gridNode.classList.add('answered');
+    }
+
+    function nextQuestion() {
+        if(currentQuestionIndex < examQuestions.length - 1) {
+            loadQuestion(currentQuestionIndex + 1);
+        }
+    }
+
+    function prevQuestion() {
+        if(currentQuestionIndex > 0) {
+            loadQuestion(currentQuestionIndex - 1);
+        }
+    }
+
+    function submitExam() {
+        let score = 0;
+        examQuestions.forEach(q => {
+            if(userAnswers[q.id] === q.correctIndex) {
+                score++;
             }
         });
 
-        document.getElementById('quiz-section').classList.remove('active');
-        document.getElementById('result-section').classList.add('active');
-        
-        document.getElementById('cert-name').innerText = document.getElementById('student-name').value;
-        document.getElementById('cert-score').innerText = `${finalScore} / 70`;
-        document.getElementById('cert-date').innerText = `تاريخ التسليم: ${new Date().toLocaleDateString('ar-EG')}`;
+        document.getElementById('exam-screen').classList.remove('active-section');
+        document.getElementById('result-screen').classList.add('active-section');
+
+        document.getElementById('cert-student-name').innerText = document.getElementById('student-name').value;
+        document.getElementById('cert-score').innerText = `${score} / 70`;
+        document.getElementById('cert-date').innerText = `تاريخ التقييم: ${new Date().toLocaleDateString('ar-EG')}`;
     }
 
-    // الآلة الحاسبة
+    // Calculator Functions
     function toggleCalc() {
-        const calc = document.getElementById('calc-modal');
+        const calc = document.getElementById('calc-drawer');
         calc.style.display = calc.style.display === 'block' ? 'none' : 'block';
     }
-    function calcInput(val) { document.getElementById('calc-display').value += val; }
-    function calcClear() { document.getElementById('calc-display').value = ''; }
+    function calcInput(val) {
+        document.getElementById('calc-screen').value += val;
+    }
+    function calcClear() {
+        document.getElementById('calc-screen').value = '';
+    }
     function calcSolve() {
         try {
-            document.getElementById('calc-display').value = eval(document.getElementById('calc-display').value);
+            document.getElementById('calc-screen').value = eval(document.getElementById('calc-screen').value);
         } catch(e) {
-            document.getElementById('calc-display').value = 'خطأ';
-        }
-    }
-
-    // إرسال واتساب
-    function sendWhatsapp() {
-        const phone = document.getElementById('parent-phone').value;
-        const name = document.getElementById('student-name').value;
-        if(!phone) { alert('أدخل رقم الهاتف أولاً'); return; }
-        
-        const msg = encodeURIComponent(`نتيجة اختبار الفيزياء (بكالوريا 2027)\nالطالب: ${name}\nالدرجة: ${finalScore} من 70\nالأستاذ: محمد أمين`);
-        window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
-    }
-
-    // مراجعة المعلم
-    function unlockReview() {
-        const pin = document.getElementById('teacher-pin').value;
-        if(pin === '2027') {
-            const review = document.getElementById('review-details');
-            review.style.display = 'block';
-            review.innerHTML = `<h4>تقرير الإجابات الصحيحة:</h4><p>إجمالي الإجابات الصحيحة: ${finalScore} من أصل 70 سؤالاً.</p>`;
-        } else {
-            alert('رمز PIN غير صحيح!');
+            document.getElementById('calc-screen').value = 'Error';
         }
     }
 </script>
+
 </body>
 </html>
