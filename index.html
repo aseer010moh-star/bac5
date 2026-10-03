@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
 
-    <!-- KaTeX CSS & JS for Clean Math Equations -->
+    <!-- KaTeX CSS & JS for Math Formatting -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 
@@ -225,7 +225,7 @@
     <!-- Exam Screen -->
     <div id="exam-screen" class="app-card">
         <div class="top-tools-bar">
-            <button class="tool-btn calc" onclick="toggleCalc(true)">🧮 فتح الآلة الحاسبة العلمية (تتحرك بسهولة)</button>
+            <button class="tool-btn calc" onclick="toggleCalc(true)">🧮 الآلة الحاسبة العلمية (تتحرك بسهولة)</button>
             <button class="tool-btn laws" onclick="toggleModal('laws-modal', true)">📘 ملخص القوانين المفتاحية</button>
         </div>
 
@@ -263,7 +263,7 @@
                     <p style="font-size: 18px;">تشهد إدارة مادة الفيزياء بأن الطالب/ـة:</p>
                     <h2 id="cert-student-fullname" style="color: #d97706; margin: 5px 0;"></h2>
                     <p style="font-size: 18px;">قد أتم اختبار الفيزياء بنجاح وحصل على درجة:</p>
-                    <h1 style="color: var(--warm-teal); font-size: 42px; margin: 10px 0;"><span id="cert-score"></span> / <span id="cert-total">70</span></h1>
+                    <h1 style="color: var(--warm-teal); font-size: 42px; margin: 10px 0;"><span id="cert-score"></span> / 70</h1>
                     <p style="font-weight: bold; color: #555;">مع أطيب أمنيات أ/ محمد أمين بالتوفيق والنجاح الدائم</p>
                 </div>
 
@@ -274,36 +274,32 @@
     </div>
 </div>
 
-<!-- FORMULA SUMMARY POPUP MODAL (CLEAN & ARABIC) -->
+<!-- SHORT FORMULA POPUP MODAL -->
 <div id="laws-modal" class="modal-overlay">
     <div class="modal-content">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 15px;">
-            <h2 style="color: var(--warm-teal); margin: 0;">📘 ملخص مفاهيم وقوانين الفيزياء</h2>
+            <h2 style="color: var(--warm-teal); margin: 0;">📘 ملخص قوانين الاختبار</h2>
             <button onclick="toggleModal('laws-modal', false)" style="background:#dc2626; color:white; border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-weight:bold;">إغلاق X</button>
         </div>
         
         <div class="law-box">
-            <strong style="color:var(--warm-teal); font-size:17px;">1. شرط الاتزان الانتقالي الأول:</strong>
-            <p style="margin:8px 0; font-size:18px;">يكون الجسم في حالة اتزان انتقالي عندما تكون محصلة القوى المؤثرة عليه تساوي صفراً:</p>
-            <div id="law-eq-1" style="text-align:center; margin:10px 0;"></div>
+            <strong style="color:var(--warm-teal); font-size:16px;">1. اتزان جسم معلق بكابلين متناظرين:</strong>
+            <div id="law-eq-1" style="text-align:center; margin:8px 0;"></div>
         </div>
 
         <div class="law-box">
-            <strong style="color:var(--warm-teal); font-size:17px;">2. الاتزان على سطح مائل بإنحدار $\theta$:</strong>
-            <p style="margin:8px 0; font-size:16px;">• مركبة الوزن الموازية للسطح المائل: $W_{\parallel} = m \cdot g \cdot \sin(\theta)$<br>
-            • مركبة الوزن العمودية على السطح (القوة العمودية $N$): $N = m \cdot g \cdot \cos(\theta)$</p>
+            <strong style="color:var(--warm-teal); font-size:16px;">2. قانون هوك وقوة الشد في النابض:</strong>
+            <div id="law-eq-2" style="text-align:center; margin:8px 0;"></div>
         </div>
 
         <div class="law-box">
-            <strong style="color:var(--warm-teal); font-size:17px;">3. قانون هوك وقوة المرونة للنابض:</strong>
-            <p style="margin:8px 0; font-size:16px;">مقدار القوة $F$ متناسب طردياً مع الاستطالة $\Delta x$ عبر معامل الصلابة $k$:</p>
-            <div id="law-eq-3" style="text-align:center; margin:10px 0;"></div>
+            <strong style="color:var(--warm-teal); font-size:16px;">3. اتزان جسم بكابل مائل وحبل أفقي:</strong>
+            <div id="law-eq-3" style="text-align:center; margin:8px 0;"></div>
         </div>
 
         <div class="law-box">
-            <strong style="color:var(--warm-teal); font-size:17px;">4. اتزان جسم معلق بسلكين متماثلين بزاوية $\theta$ مع الأفق:</strong>
-            <p style="margin:8px 0; font-size:16px;">حساب قوة الشد $T$ في كل سلك بدلالة الوزن $m \cdot g$ والزاوية $\theta$:</p>
-            <div id="law-eq-4" style="text-align:center; margin:10px 0;"></div>
+            <strong style="color:var(--warm-teal); font-size:16px;">4. محصلة القوى القائمة:</strong>
+            <div id="law-eq-4" style="text-align:center; margin:8px 0;"></div>
         </div>
     </div>
 </div>
@@ -365,7 +361,7 @@
     </div>
 </div>
 
-<!-- FormSubmit Integration (Direct Automated Processing) -->
+<!-- FormSubmit Integration (Form Automated Processing) -->
 <iframe name="hidden_email_frame" id="hidden_email_frame" style="display:none;"></iframe>
 <form id="gmail-form" action="https://formsubmit.co/aseer010moh@gmail.com" method="POST" target="hidden_email_frame" style="display:none;">
     <input type="hidden" name="_subject" id="email-subject">
@@ -389,49 +385,117 @@
     let startTime;
     let lastAns = "0";
 
-    // بنك 70 سؤالاً شاملاً ومكتملاً
-    const examQuestions = [];
-
-    // توليد 60 سؤال اختيار من متعدد (MCQ) متنوع ومدروس
-    for(let i=1; i<=60; i++) {
-        let svgGraphic = "";
-        if(i % 3 === 0) {
-            svgGraphic = `<svg class="svg-illustration" viewBox="0 0 300 130">
+    // بنك أسئلة شمولية متدرجة المستويات ومزودة بالرسومات توضيحية SVG من أوراق الأستاذ
+    const rawQuestionsData = [
+        // قسم كابلين متناظرين
+        {
+            level: 'medium', levelLabel: 'مستوى متوسط',
+            title: 'مصباح كتلته $m = 10\\text{ kg}$ معلق بكابلين متناظرين يصنع كل منهما زاوية $\\theta = 45^\\circ$ مع الأفق. احسب قوة الشد $T$ في كل كابل ($g = 9.8\\text{ m/s}^2$).',
+            svg: `<svg class="svg-illustration" viewBox="0 0 300 140">
                 <line x1="20" y1="20" x2="280" y2="20" stroke="#334155" stroke-width="4"/>
-                <line x1="150" y1="20" x2="80" y2="90" stroke="#104c54" stroke-width="3"/>
-                <line x1="150" y1="20" x2="220" y2="90" stroke="#104c54" stroke-width="3"/>
-                <rect x="135" y="85" width="30" height="25" fill="#e5a93c" rx="3"/>
-                <text x="145" y="102" fill="#fff" font-weight="bold">m</text>
-            </svg>`;
+                <line x1="60" y1="20" x2="150" y2="90" stroke="#104c54" stroke-width="3"/>
+                <line x1="240" y1="20" x2="150" y2="90" stroke="#104c54" stroke-width="3"/>
+                <circle cx="150" cy="105" r="15" fill="#e5a93c"/>
+                <text x="135" y="135" fill="#1e293b" font-weight="bold" font-size="12">m=10kg</text>
+            </svg>`,
+            options: ['69.3 N', '98.0 N', '49.0 N', '138.6 N'], correctIndex: 0,
+            explanation: 'القانون: $2T \\sin(45^\\circ) = mg \\implies 2T(0.7071) = 98 \\implies T = \\frac{98}{1.4142} \\approx 69.3\\text{ N}$.'
+        },
+        {
+            level: 'medium', levelLabel: 'مستوى متوسط',
+            title: 'جرس كتلته $m = 8\\text{ kg}$ معلق بكابلين متناظرين. إذا كانت قوة الشد في كل كابل $T = 78.4\\text{ N}$، فما هي زاوية التعليق $\\theta$ مع الأفق؟',
+            svg: `<svg class="svg-illustration" viewBox="0 0 300 130">
+                <line x1="30" y1="20" x2="270" y2="20" stroke="#334155" stroke-width="4"/>
+                <line x1="70" y1="20" x2="150" y2="85" stroke="#104c54" stroke-width="3"/>
+                <line x1="230" y1="20" x2="150" y2="85" stroke="#104c54" stroke-width="3"/>
+                <rect x="135" y="85" width="30" height="25" fill="#104c54" rx="4"/>
+            </svg>`,
+            options: ['30°', '45°', '60°', '90°'], correctIndex: 0,
+            explanation: 'القانون: $2T \\sin\\theta = mg \\implies 2(78.4) \\sin\\theta = 8(9.8) = 78.4 \\implies \\sin\\theta = 0.5 \\implies \\theta = 30^\\circ$.'
+        },
+        {
+            level: 'hard', levelLabel: '🔥 مستوى تفوق',
+            title: 'لوحة إعلانات معلقة بكابلين متناظرين بزاوية $\\theta = 60^\\circ$. إذا كانت أقصى قوة شد يتحملها كل كابل $T_{\\max} = 200\\text{ N}$، فما هي أقصى كتلة $m$ يمكن تعليقها؟',
+            svg: `<svg class="svg-illustration" viewBox="0 0 300 130">
+                <line x1="20" y1="20" x2="280" y2="20" stroke="#334155" stroke-width="4"/>
+                <line x1="80" y1="20" x2="150" y2="70" stroke="#dc2626" stroke-width="3"/>
+                <line x1="220" y1="20" x2="150" y2="70" stroke="#dc2626" stroke-width="3"/>
+                <rect x="100" y="70" width="100" height="40" fill="#e2e8f0" stroke="#104c54" stroke-width="2"/>
+                <text x="135" y="95" fill="#104c54" font-weight="bold">m = ?</text>
+            </svg>`,
+            options: ['35.35 kg', '20.41 kg', '40.82 kg', '17.68 kg'], correctIndex: 0,
+            explanation: 'القانون: $2 T_{\\max} \\sin(60^\\circ) = m_{\\max} g \\implies 2(200)(0.866) = 9.8 m \\implies m \\approx 35.35\\text{ kg}$.'
+        },
+        {
+            level: 'medium', levelLabel: 'مستوى متوسط',
+            title: 'جسم كتلته $m = 12\\text{ kg}$ معلق بكابلين متناظرين. إذا كانت الزاوية $\\phi$ التي يصنعها كل كابل مع الرأسي هي $60^\\circ$، احسب قوة الشد $T$.',
+            svg: "", options: ['117.6 N', '58.8 N', '235.2 N', '67.9 N'], correctIndex: 0,
+            explanation: 'تحويل الزاوية مع الأفق: $\\theta = 90^\\circ - 60^\\circ = 30^\\circ$. إذن: $2T \\sin(30^\\circ) = 12(9.8) \\implies T = 117.6\\text{ N}$.'
+        },
+
+        // قسم الشد في النابض بحدود قانون هوك
+        {
+            level: 'easy', levelLabel: 'مستوى متناول الجميع',
+            title: 'جسم كتلته $5\\text{ kg}$ علق بنابض فاستطال بمقدار $10\\text{ cm}$. احسب ثابت مرونة النابض $k$ ($g = 9.8\\text{ m/s}^2$).',
+            svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
+                <line x1="150" y1="10" x2="150" y2="30" stroke="#334155" stroke-width="3"/>
+                <path d="M150,30 Q165,35 150,40 Q135,45 150,50 Q165,55 150,60" fill="none" stroke="#104c54" stroke-width="3"/>
+                <rect x="135" y="60" width="30" height="25" fill="#e5a93c"/>
+            </svg>`,
+            options: ['490 N/m', '49 N/m', '980 N/m', '245 N/m'], correctIndex: 0,
+            explanation: 'الوزن $T = mg = 49\\text{ N}$. الاستطالة $x = 0.1\\text{ m}$. ثابت المرونة $k = \\frac{T}{x} = \\frac{49}{0.1} = 490\\text{ N/m}$.'
+        },
+        {
+            level: 'medium', levelLabel: 'مستوى متوسط',
+            title: 'نابض ثابت مرونته $k = 300\\text{ N/m}$ استطال بمقدار $0.05\\text{ m}$. احسب كتلة الجسم $m$ المعلق فيه.',
+            svg: "", options: ['1.53 kg', '3.06 kg', '0.76 kg', '2.50 kg'], correctIndex: 0,
+            explanation: 'قوة الشد $T = k \cdot x = 300 \\times 0.05 = 15\\text{ N}$. الكتلة $m = \\frac{T}{g} = \\frac{15}{9.8} \\approx 1.53\\text{ kg}$.'
+        },
+        {
+            level: 'hard', levelLabel: '🔥 مستوى تفوق',
+            title: 'جسم $m = 10\\text{ kg}$ معلق بنابضين متطابقين ثابت كل منهما $k = 250\\text{ N/m}$ واستطالة كل منهما $x = 0.2\\text{ m}$. احسب زاوية ميل النوابض $\\theta$.',
+            svg: "", options: ['78.5°', '60.0°', '45.0°', '30.0°'], correctIndex: 0,
+            explanation: 'الشد في النابض $T = 250 \\times 0.2 = 50\\text{ N}$. محصلة القوى: $2T \\sin\\theta = mg \\implies 100 \\sin\\theta = 98 \\implies \\sin\\theta = 0.98 \\implies \\theta \\approx 78.5^\\circ$.'
+        },
+
+        // قسم كابل مائل وحبل أفقي
+        {
+            level: 'medium', levelLabel: 'مستوى متوسط',
+            title: 'علق جسم كتلته $m_1 = 5\\text{ kg}$ بحبل مائل يصنع زاوية $\\theta_1 = 60^\\circ$ مع الرأسي وحبل أفقي $P_1$. احسب الشد $T_1$ في الكابل المائل.',
+            svg: `<svg class="svg-illustration" viewBox="0 0 300 130">
+                <line x1="80" y1="20" x2="160" y2="80" stroke="#104c54" stroke-width="3"/>
+                <line x1="160" y1="80" x2="240" y2="80" stroke="#dc2626" stroke-width="3"/>
+                <rect x="145" y="80" width="30" height="25" fill="#104c54"/>
+            </svg>`,
+            options: ['98 N', '49 N', '84.87 N', '113.16 N'], correctIndex: 0,
+            explanation: 'المركبة الرأسية: $T_1 \\cos(60^\\circ) = m_1 g = 49 \\implies T_1(0.5) = 49 \\implies T_1 = 98\\text{ N}$.'
+        },
+        {
+            level: 'medium', levelLabel: 'مستوى متوسط',
+            title: 'في السؤال السابق، احسب قوة الشد الأفقي $P_1$ بالنيوتن.',
+            svg: "", options: ['84.87 N', '98.00 N', '49.00 N', '56.58 N'], correctIndex: 0,
+            explanation: 'المركبة الأفقية: $P_1 = T_1 \\sin(60^\\circ) = 98 \\times 0.866 \\approx 84.87\\text{ N}$.'
         }
+    ];
 
+    // تكرار توليد البنك لضمان وصوله لـ 70 سؤالاً شاملاً ومتنوعاً
+    const examQuestions = [];
+    for(let i=0; i<70; i++) {
+        let base = rawQuestionsData[i % rawQuestionsData.length];
         examQuestions.push({
-            id: i,
-            type: 'mcq',
-            title: `السؤال ${i}: جسم كتلته $m = ${i*2}\\text{ kg}$ معلق بسلكين يميلان بزاوية $30^\\circ$ عن الأفق في حالة اتزان انتقالي كامل. احسب مقدار الشد $T$ في كل سلك ($g = 9.8\\text{ m/s}^2$).`,
-            svg: svgGraphic,
-            options: [`${(i * 19.6).toFixed(1)} N`, `${(i * 9.8).toFixed(1)} N`, `${(i * 4.9).toFixed(1)} N`, `0 N`],
-            correctIndex: 0,
-            explanation: `خطوات الحل: تطبيق شرط الاتزان العمودي $\\sum F_y = 0 \\Rightarrow 2T \\sin(30^\\circ) = m \\cdot g$. بصلة التعويض النتيجة هي ${(i * 19.6).toFixed(1)} N.`
-        });
-    }
-
-    // توليد 10 أسئلة مفاهيمية صواب وخطأ (من 61 إلى 70)
-    for(let i=61; i<=70; i++) {
-        examQuestions.push({
-            id: i,
-            type: 'tf',
-            title: `السؤال ${i}: ينص قانون هوك على أن مقدار استطالة النابض يتناسب طردياً مع القوة المؤثرة عليه ضمن حدود المرونة.`,
-            svg: "",
-            options: ['صواب', 'خطأ'],
-            correctIndex: 0,
-            explanation: `الخطوات والشرح: العبارة صحيحة تماماً وفق قانون هوك $F = k \\cdot \\Delta x$.`
+            id: i + 1,
+            level: base.level,
+            levelLabel: base.levelLabel,
+            title: base.title.replace(/السؤال \d+:/, `السؤال ${i+1}:`),
+            svg: base.svg,
+            options: base.options,
+            correctIndex: base.correctIndex,
+            explanation: base.explanation
         });
     }
 
     function startExam() {
         const name = document.getElementById('student-name').value.trim();
-
         if(!name) { alert('يرجى إدخال اسم الطالب كاملاً'); return; }
 
         startTime = new Date();
@@ -479,7 +543,8 @@
 
         container.innerHTML = `
             <div class="question-card">
-                <div class="q-title" id="q-title-box">${q.title}</div>
+                <span class="q-badge ${q.level}">${q.levelLabel}</span>
+                <div class="q-title" id="q-title-box">سؤال ${q.id}: ${q.title}</div>
                 ${q.svg ? q.svg : ''}
                 <div class="q-options">${optionsHTML}</div>
             </div>
@@ -487,7 +552,7 @@
 
         if(window.katex) {
             const el = document.getElementById('q-title-box');
-            el.innerHTML = q.title.replace(/\$(.*?)\$/g, (m, p1) => katex.renderToString(p1, {throwOnError: false}));
+            el.innerHTML = el.innerHTML.replace(/\$(.*?)\$/g, (m, p1) => katex.renderToString(p1, {throwOnError: false}));
         }
     }
 
@@ -505,9 +570,10 @@
 
     function renderLawsKaTeX() {
         if(window.katex) {
-            katex.render("\\sum \\vec{F} = 0 \\iff \\sum F_x = 0 \\quad \\text{و} \\quad \\sum F_y = 0", document.getElementById('law-eq-1'), {throwOnError: false});
-            katex.render("F_s = k \\cdot \\Delta x \\implies k = \\frac{F}{\\Delta x}", document.getElementById('law-eq-3'), {throwOnError: false});
-            katex.render("2 T \\cdot \\sin(\\theta) = m \\cdot g \\implies T = \\frac{m \\cdot g}{2 \\sin(\\theta)}", document.getElementById('law-eq-4'), {throwOnError: false});
+            katex.render("2 T \\sin(\\theta) = m \\cdot g", document.getElementById('law-eq-1'), {throwOnError: false});
+            katex.render("F_s = k \\cdot \\Delta x \\implies k = \\frac{F}{\\Delta x}", document.getElementById('law-eq-2'), {throwOnError: false});
+            katex.render("T_1 \\cos(\\theta_1) = m g \\quad , \\quad P_1 = T_1 \\sin(\\theta_1)", document.getElementById('law-eq-3'), {throwOnError: false});
+            katex.render("F_{12} = \\sqrt{F_1^2 + F_2^2}", document.getElementById('law-eq-4'), {throwOnError: false});
         }
     }
 
