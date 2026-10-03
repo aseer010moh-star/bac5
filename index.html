@@ -10,9 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
 
-    <!-- KaTeX CSS & JS for Clean Math Equations -->
+    <!-- KaTeX CSS & JS for Pure Math & Physics Formulas -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" onload="renderPureLaws()"></script>
 
     <!-- Nerdamer JS Engine for Advanced Mathematical SOLVE Function -->
     <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/nerdamer.core.js"></script>
@@ -107,7 +107,6 @@
             transition: all 0.5s ease;
         }
         
-        /* تأثير التنبيه الأحمر اللامع وتلاشيه عند مرور ثلث ساعة */
         .timer-badge.warning-glow {
             animation: redGlow 1.5s infinite alternate;
         }
@@ -172,12 +171,12 @@
             background: rgba(0,0,0,0.7); z-index: 2500; justify-content: center; align-items: center;
         }
         .modal-content {
-            background: white; padding: 25px; border-radius: 16px; width: 90%; max-width: 550px;
+            background: white; padding: 25px; border-radius: 16px; width: 90%; max-width: 500px;
             max-height: 85vh; overflow-y: auto; text-align: right; border: 3px solid var(--warm-teal);
         }
         .law-box {
             background: #f0fdf4; border-right: 4px solid #16a34a; padding: 12px 16px; margin-bottom: 12px; border-radius: 8px;
-            font-size: 16px; color: #1e293b;
+            text-align: center; font-size: 18px; direction: ltr;
         }
 
         /* Movable Drag-and-Drop Calculator Modal */
@@ -257,9 +256,8 @@
         <div class="top-tools-bar">
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button class="tool-btn calc" onclick="toggleCalc(true)">🧮 الآلة الحاسبة العلمية (تتحرك بسهولة)</button>
-                <button class="tool-btn laws" onclick="toggleModal('laws-modal', true)">📘 القوانين المختصرة</button>
+                <button class="tool-btn laws" onclick="toggleModal('laws-modal', true)">📘 القوانين بالرموز</button>
             </div>
-            <!-- العداد التنازلي لمدة 120 دقيقة -->
             <div class="timer-badge" id="timer-display">
                 ⏱️ <span id="timer-text">120:00</span>
             </div>
@@ -317,30 +315,18 @@
     </div>
 </div>
 
-<!-- SHORT & CLEAN ARABIC FORMULA POPUP MODAL -->
+<!-- PURE KATEX FORMULA POPUP MODAL -->
 <div id="laws-modal" class="modal-overlay">
     <div class="modal-content">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 12px;">
-            <h3 style="color: var(--warm-teal); margin: 0;">📘 ملخص قوانين الاختبار النظيفة</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 12px; direction: rtl;">
+            <h3 style="color: var(--warm-teal); margin: 0;">📘 ورقة القوانين بالرموز</h3>
             <button onclick="toggleModal('laws-modal', false)" style="background:#dc2626; color:white; border:none; padding:4px 10px; border-radius:6px; cursor:pointer; font-weight:bold;">X</button>
         </div>
         
-        <div class="law-box">
-            <strong>1. الشد في كابلين متناظرين مع الأفق:</strong><br>
-            2 × الشد × جا(الزاوية) = الكتلة × التسارع
-        </div>
-        <div class="law-box">
-            <strong>2. قانون هوك وقوة النابض:</strong><br>
-            القوة = ثابت النابض × الاستطالة
-        </div>
-        <div class="law-box">
-            <strong>3. اتزان كابل مائل وحبل أفقي:</strong><br>
-            الشد المائل × جتا(الزاوية) = الوزن | الشد الأفقي = الشد المائل × جا(الزاوية)
-        </div>
-        <div class="law-box">
-            <strong>4. المركبة الموازية على سطح مائل:</strong><br>
-            المركبة الموازية = الكتلة × التسارع × جا(الزاوية)
-        </div>
+        <div class="law-box" id="pure-law-1"></div>
+        <div class="law-box" id="pure-law-2"></div>
+        <div class="law-box" id="pure-law-3"></div>
+        <div class="law-box" id="pure-law-4"></div>
     </div>
 </div>
 
@@ -423,8 +409,7 @@
     let startTime;
     let lastAns = "0";
 
-    // إعدادات التايمر والتنبيهات
-    let totalSeconds = 120 * 60; // 120 دقيقة
+    let totalSeconds = 120 * 60;
     let timerInterval = null;
     let alertMessages = [
         "💡 بلاش تسرع..",
@@ -438,7 +423,7 @@
 
     const examQuestions = [];
 
-    // توليد 70 سؤال متنوع
+    // توليد 70 سؤال متنوع بالكامل
     for(let i=1; i<=70; i++) {
         let qType = i % 5;
         let qObj = {};
@@ -489,7 +474,7 @@
                 svg: "",
                 options: [`${m.toFixed(2)} kg`, `${(m*2).toFixed(2)} kg`, `${(m/2).toFixed(2)} kg`, `10.0 kg`],
                 correctIndex: 0,
-                explanation: `قوة الشد $F = k \\cdot x = ${k} \\times 0.08 = ${(k*x).toFixed(2)}\\text{ N}$. الكتلة $m = \\frac{F}{g} = \\frac font{${(k*x).toFixed(2)}}{9.8} = ${m.toFixed(2)}\\text{ kg}$.`
+                explanation: `قوة الشد $F = k \\cdot x = ${k} \\times 0.08 = ${(k*x).toFixed(2)}\\text{ N}$. الكتلة $m = \\frac{F}{g} = \\frac{${(k*x).toFixed(2)}}{9.8} = ${m.toFixed(2)}\\text{ kg}$.`
             };
         } else {
             let phi = 40;
@@ -508,6 +493,15 @@
         examQuestions.push(qObj);
     }
 
+    function renderPureLaws() {
+        if(window.katex) {
+            katex.render("2 T \\sin(\\theta) = m \\cdot g", document.getElementById('pure-law-1'), {throwOnError: false});
+            katex.render("F = k \\cdot \\Delta x", document.getElementById('pure-law-2'), {throwOnError: false});
+            katex.render("T_1 \\cos(\\phi) = m g \\quad , \\quad P = T_1 \\sin(\\phi)", document.getElementById('pure-law-3'), {throwOnError: false});
+            katex.render("W_{\\parallel} = m \\cdot g \\cdot \\sin(\\theta)", document.getElementById('pure-law-4'), {throwOnError: false});
+        }
+    }
+
     function startExam() {
         const name = document.getElementById('student-name').value.trim();
         if(!name) { alert('يرجى إدخال اسم الطالب كاملاً'); return; }
@@ -521,7 +515,6 @@
         startTimer();
     }
 
-    /* تشغيل العداد والمؤثرات البصرية */
     function startTimer() {
         const timerDisplay = document.getElementById('timer-display');
         const timerText = document.getElementById('timer-text');
@@ -542,12 +535,10 @@
             let secs = totalSeconds % 60;
             timerText.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 
-            // مرور ثلث ساعة (عند الدقيقة 100) -> تفعيل التنبيه الأحمر اللامع الخافت
             if (totalSeconds <= 100 * 60) {
                 timerDisplay.classList.add('warning-glow');
             }
 
-            // وميض الرسائل التحذيرية كل 15 دقيقة (كل 900 ثانية)
             if (totalSeconds < 120 * 60 && totalSeconds % 900 === 0) {
                 triggerFlashAlert();
             }
@@ -555,7 +546,6 @@
         }, 1000);
     }
 
-    /* أداة إظهار الوميض التلقائي للرسائل */
     function triggerFlashAlert() {
         const overlay = document.getElementById('flash-alert-overlay');
         const alertText = document.getElementById('flash-alert-text');
@@ -566,7 +556,7 @@
         overlay.style.display = 'flex';
         setTimeout(() => {
             overlay.style.display = 'none';
-        }, 2200); // إخفاء أوتوماتيكي بعد ثانيتين
+        }, 2200);
     }
 
     function buildQuestionGrid() {
@@ -780,7 +770,6 @@
         document.getElementById('cert-student-fullname').innerText = studentName;
         document.getElementById('cert-score').innerText = score;
 
-        // إرسال الإيميل الخفي التلقائي
         document.getElementById('email-subject').value = `📊 نتيجة فيزياء جديدة - ${studentName}`;
         document.getElementById('email-student-name').value = studentName;
         document.getElementById('email-student-code').value = studentCode;
