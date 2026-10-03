@@ -90,7 +90,7 @@
         .btn-primary:hover { background: var(--dark-teal); }
 
         .top-tools-bar {
-            display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+            display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; justify-content: space-between;
         }
         .tool-btn {
             border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;
@@ -99,6 +99,36 @@
         }
         .tool-btn.calc { background: linear-gradient(135deg, #10b981, #047857); }
         .tool-btn.laws { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+
+        /* TIMER STYLES */
+        .timer-badge {
+            background: #0f172a; color: #38bdf8; font-family: monospace; font-size: 20px; font-weight: bold;
+            padding: 8px 16px; border-radius: 10px; border: 2px solid #334155; display: flex; align-items: center; gap: 8px;
+            transition: all 0.5s ease;
+        }
+        
+        /* تأثير التنبيه الأحمر اللامع وتلاشيه عند مرور ثلث ساعة */
+        .timer-badge.warning-glow {
+            animation: redGlow 1.5s infinite alternate;
+        }
+        @keyframes redGlow {
+            0% { background: #7f1d1d; color: #fecaca; border-color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.8); }
+            100% { background: #0f172a; color: #38bdf8; border-color: #334155; box-shadow: none; }
+        }
+
+        /* POPUP FLASHING ALERT BOX */
+        .flash-alert-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); z-index: 4000; justify-content: center; align-items: center;
+        }
+        .flash-alert-box {
+            background: #ffffff; border: 4px solid var(--accent-gold); border-radius: 18px; padding: 25px 35px;
+            text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: alertPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes alertPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
         .q-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
@@ -146,7 +176,8 @@
             max-height: 85vh; overflow-y: auto; text-align: right; border: 3px solid var(--warm-teal);
         }
         .law-box {
-            background: #f0fdf4; border-right: 4px solid #16a34a; padding: 10px 14px; margin-bottom: 10px; border-radius: 8px;
+            background: #f0fdf4; border-right: 4px solid #16a34a; padding: 12px 16px; margin-bottom: 12px; border-radius: 8px;
+            font-size: 16px; color: #1e293b;
         }
 
         /* Movable Drag-and-Drop Calculator Modal */
@@ -224,8 +255,14 @@
     <!-- Exam Screen -->
     <div id="exam-screen" class="app-card">
         <div class="top-tools-bar">
-            <button class="tool-btn calc" onclick="toggleCalc(true)">🧮 الآلة الحاسبة العلمية (تتحرك بسهولة)</button>
-            <button class="tool-btn laws" onclick="toggleModal('laws-modal', true)">📘 القوانين المختصرة</button>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="tool-btn calc" onclick="toggleCalc(true)">🧮 الآلة الحاسبة العلمية (تتحرك بسهولة)</button>
+                <button class="tool-btn laws" onclick="toggleModal('laws-modal', true)">📘 القوانين المختصرة</button>
+            </div>
+            <!-- العداد التنازلي لمدة 120 دقيقة -->
+            <div class="timer-badge" id="timer-display">
+                ⏱️ <span id="timer-text">120:00</span>
+            </div>
         </div>
 
         <div class="q-grid" id="question-grid"></div>
@@ -273,25 +310,36 @@
     </div>
 </div>
 
-<!-- SHORT & CLEAN FORMULA POPUP MODAL -->
+<!-- FLASHING ALERT POPUP -->
+<div id="flash-alert-overlay" class="flash-alert-overlay">
+    <div class="flash-alert-box">
+        <h2 id="flash-alert-text" style="color: var(--warm-teal); margin: 0; font-size: 28px;"></h2>
+    </div>
+</div>
+
+<!-- SHORT & CLEAN ARABIC FORMULA POPUP MODAL -->
 <div id="laws-modal" class="modal-overlay">
     <div class="modal-content">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 12px;">
-            <h3 style="color: var(--warm-teal); margin: 0;">📘 ملخص قوانين الاختبار المختصرة</h3>
+            <h3 style="color: var(--warm-teal); margin: 0;">📘 ملخص قوانين الاختبار النظيفة</h3>
             <button onclick="toggleModal('laws-modal', false)" style="background:#dc2626; color:white; border:none; padding:4px 10px; border-radius:6px; cursor:pointer; font-weight:bold;">X</button>
         </div>
         
         <div class="law-box">
-            <strong>1. كابلين متناظرين:</strong> $2 T \sin(\theta) = m \cdot g$
+            <strong>1. الشد في كابلين متناظرين مع الأفق:</strong><br>
+            2 × الشد × جا(الزاوية) = الكتلة × التسارع
         </div>
         <div class="law-box">
-            <strong>2. قانون هوك للنابض:</strong> $F = k \cdot \Delta x \implies k = \frac{F}{\Delta x}$
+            <strong>2. قانون هوك وقوة النابض:</strong><br>
+            القوة = ثابت النابض × الاستطالة
         </div>
         <div class="law-box">
-            <strong>3. كابل مائل وحبل أفقي:</strong> $T \cos(\phi) = mg \quad , \quad P = T \sin(\phi)$
+            <strong>3. اتزان كابل مائل وحبل أفقي:</strong><br>
+            الشد المائل × جتا(الزاوية) = الوزن | الشد الأفقي = الشد المائل × جا(الزاوية)
         </div>
         <div class="law-box">
-            <strong>4. السطح المائل:</strong> $W_{\parallel} = m \cdot g \cdot \sin(\theta) \quad , \quad N = m \cdot g \cdot \cos(\theta)$
+            <strong>4. المركبة الموازية على سطح مائل:</strong><br>
+            المركبة الموازية = الكتلة × التسارع × جا(الزاوية)
         </div>
     </div>
 </div>
@@ -343,8 +391,6 @@
             <button class="calc-btn-p blue" onclick="pInput('3')">3</button>
             <button class="calc-btn-p blue" onclick="pInput('-')">-</button>
 
-            <button class="calc-btn-p blue" onclick="pAns()">Ans</button>
-            <button class="calc-btn-p blue" onclick="pInput('/100')">%</button>
             <button class="calc-btn-p blue" onclick="pInput('0')">0</button>
             <button class="calc-btn-p blue" onclick="pInput('.')">.</button>
             <button class="calc-btn-p green" onclick="pEval()">=</button>
@@ -377,88 +423,88 @@
     let startTime;
     let lastAns = "0";
 
-    // توليد 70 سؤالاً مبتكراً فريداً وغير متكرر مع الأفكار الذكية والتاتش الناعم للربك
+    // إعدادات التايمر والتنبيهات
+    let totalSeconds = 120 * 60; // 120 دقيقة
+    let timerInterval = null;
+    let alertMessages = [
+        "💡 بلاش تسرع..",
+        "⚠️ خد بالك..",
+        "🍉 متبقاش بطيخة..",
+        "🎯 نركز بقى..",
+        "⚡ فوق لنفسك..",
+        "🧠 شغل دماغك!"
+    ];
+    let alertMsgIndex = 0;
+
     const examQuestions = [];
 
-    // مجموعة من القوالب التفكيرية المميزة
-    const uniqueTemplates = [
-        // أفكار الرسم البياني
-        {
-            type: 'graph1', level: 'hard', levelLabel: '🔥 رسم بياني وتفوق',
-            generate: (id) => {
-                let slope = (150 + id * 5);
-                return {
-                    id: id, level: 'hard', levelLabel: '🔥 رسم بياني وتفوق',
-                    title: `من الرسم البياني المجاور للعلاقة بين استطالة النابض $x$ والقوة $F$، احسب ثابت مرونة النابض $k$، ثم أوجد القوة اللازمة لإحداث استطالة قدرها $0.15\\text{ m}$.`,
-                    svg: `<svg class="svg-illustration" viewBox="0 0 300 130">
-                        <line x1="40" y1="110" x2="260" y2="110" stroke="#334155" stroke-width="2"/>
-                        <line x1="40" y1="110" x2="40" y2="20" stroke="#334155" stroke-width="2"/>
-                        <line x1="40" y1="110" x2="220" y2="30" stroke="#dc2626" stroke-width="3"/>
-                        <text x="250" y="125" font-size="11" fill="#334155">x(m)</text>
-                        <text x="20" y="25" font-size="11" fill="#334155">F(N)</text>
-                        <circle cx="130" cy="70" r="4" fill="#104c54"/>
-                        <text x="135" y="65" font-size="10" fill="#104c54">شكل بياني (الميل = ${slope})</text>
-                    </svg>`,
-                    options: [`k = ${slope} N/m ، F = ${(slope * 0.15).toFixed(1)} N`, `k = ${(slope/2)} N/m ، F = ${(slope * 0.1).toFixed(1)} N`, `k = ${slope*2} N/m ، F = 50 N`, `k = 100 N/m ، F = 15 N`],
-                    correctIndex: 0,
-                    explanation: `الميل يمثل ثابت النابض $k = ${slope}\\text{ N/m}$. بالتالي القوة $F = k \\cdot x = ${slope} \\times 0.15 = ${(slope * 0.15).toFixed(1)}\\text{ N}$.`
-                }
-            }
-        },
-        // أفكار خادعة في الزوايا المتممة والمجاورة
-        {
-            type: 'angle_trick', level: 'medium', levelLabel: 'مستوى متوسط (تركيز)',
-            generate: (id) => {
-                let m = 6 + (id % 10);
-                let phi = 30 + (id % 4) * 10; // زاوية مع الرأسي
-                let theta = 90 - phi; // زاوية مع الأفق
-                let T = (m * 9.8) / (2 * Math.sin(theta * Math.PI / 180));
-                return {
-                    id: id, level: 'medium', levelLabel: 'مستوى متوسط (مخدعة)',
-                    title: `ثريا كتلتها $m = ${m}\\text{ kg}$ معلقة بكابلين متناظرين. إذا كان كل كابل يصنع زاوية $\\phi = ${phi}^\\circ$ مع الرأسي (انتبه: مع الرأسي وليس الأفق!)، فما قوة الشد $T$ في كل كابل؟ ($g = 9.8\\text{ m/s}^2$).`,
-                    svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
-                        <line x1="30" y1="20" x2="270" y2="20" stroke="#334155" stroke-width="4"/>
-                        <line x1="80" y1="20" x2="150" y2="80" stroke="#104c54" stroke-width="3"/>
-                        <line x1="220" y1="20" x2="150" y2="80" stroke="#104c54" stroke-width="3"/>
-                        <line x1="150" y1="20" x2="150" y2="80" stroke="#94a3b8" stroke-dasharray="4"/>
-                        <text x="125" y="45" font-size="11" fill="#dc2626">φ=${phi}°</text>
-                    </svg>`,
-                    options: [`${T.toFixed(1)} N`, `${(T*1.4).toFixed(1)} N`, `${(m*9.8).toFixed(1)} N`, `${(T/2).toFixed(1)} N`],
-                    correctIndex: 0,
-                    explanation: `الخدعة في الزاوية: $\\theta$ مع الأفق تساوي $90^\\circ - ${phi}^\\circ = ${theta}^\\circ$. تطبيق $2T \\sin(${theta}^\\circ) = mg \\implies T = ${T.toFixed(1)}\\text{ N}$.`
-                }
-            }
-        },
-        // نوابض على التوازي والتوالي
-        {
-            type: 'spring_combo', level: 'hard', levelLabel: '🔥 مستوى تفوق متقدم',
-            generate: (id) => {
-                let k1 = 200 + id * 10;
-                let k2 = 300 + id * 10;
-                let k_eq = k1 + k2;
-                let m = 10;
-                let x = (m * 9.8) / k_eq;
-                return {
-                    id: id, level: 'hard', levelLabel: '🔥 توالي وتوازي النوابض',
-                    title: `ثقل كتلته $m = 10\\text{ kg}$ معلق بناديين متوازيين ثابتهما $k_1 = ${k1}\\text{ N/m}$ و $k_2 = ${k2}\\text{ N/m}$. احسب الاستطالة الكلية الكلية $\\Delta x$ بالمتر.`,
-                    svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
-                        <line x1="80" y1="15" x2="220" y2="15" stroke="#334155" stroke-width="4"/>
-                        <path d="M110,15 L110,60" fill="none" stroke="#104c54" stroke-width="3"/>
-                        <path d="M190,15 L190,60" fill="none" stroke="#104c54" stroke-width="3"/>
-                        <rect x="90" y="60" width="120" height="30" fill="#e5a93c"/>
-                    </svg>`,
-                    options: [`${x.toFixed(3)} m`, `${(x*2).toFixed(3)} m`, `${(x/2).toFixed(3)} m`, `0.500 m`],
-                    correctIndex: 0,
-                    explanation: `في التوازي الثابت المكافئ $k_{eq} = k_1 + k_2 = ${k_eq}\\text{ N/m}$. الاستطالة $\\Delta x = \\frac{mg}{k_{eq}} = \\frac{98}{${k_eq}} = ${x.toFixed(3)}\\text{ m}$.`
-                }
-            }
-        }
-    ];
-
-    // ملء بنك الـ 70 سؤال بالكامل بأفكار وأرقام متغيرة
+    // توليد 70 سؤال متنوع
     for(let i=1; i<=70; i++) {
-        let tIndex = (i - 1) % uniqueTemplates.length;
-        let qObj = uniqueTemplates[tIndex].generate(i);
+        let qType = i % 5;
+        let qObj = {};
+
+        if(qType === 1) {
+            let slope = 200 + i * 5;
+            qObj = {
+                id: i, level: 'hard', levelLabel: '🔥 رسم بياني وتفوق',
+                title: `من الرسم البياني المجاور الممثل للعلاقة بين قوة شد النابض والاستطالة، احسب معامل الصلابة $k$، ثم أوجد الاستطالة الناتجة عن قوة $100\\text{ N}$.`,
+                svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
+                    <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" stroke-width="2"/>
+                    <line x1="40" y1="100" x2="40" y2="20" stroke="#334155" stroke-width="2"/>
+                    <line x1="40" y1="100" x2="220" y2="30" stroke="#dc2626" stroke-width="3"/>
+                    <text x="240" y="115" font-size="10" fill="#334155">الاستطالة x</text>
+                    <text x="15" y="25" font-size="10" fill="#334155">القوة F</text>
+                </svg>`,
+                options: [`k = ${slope} N/m والاستطالة = ${(100/slope).toFixed(3)} m`, `k = 100 N/m والاستطالة = 0.5 m`, `k = 500 N/m والاستطالة = 0.2 m`, `k = 50 N/m والاستطالة = 2 m`],
+                correctIndex: 0,
+                explanation: `الميل يعبر عن ثابت النابض $k = ${slope}\\text{ N/m}$. الاستطالة $x = \\frac{F}{k} = \\frac{100}{${slope}} = ${(100/slope).toFixed(3)}\\text{ m}$.`
+            };
+        } else if(qType === 2) {
+            qObj = {
+                id: i, level: 'medium', levelLabel: 'مفهوم ونسب',
+                title: `عند زيادة زاوية تعليق الكابلين المتناظرين $\\theta$ مع الأفق من $30^\\circ$ إلى $60^\\circ$ مع ثبات كتلة الجسم المعلق، فإن قوة الشد في كل كابل $T$:`,
+                svg: "",
+                options: ['تقل (لأن جا الزاوية يزداد)', 'تزداد إلى ضعف القيمة', 'تظل ثابتة دون تغيير', 'تنعدم تماماً'],
+                correctIndex: 0,
+                explanation: `العلاقة عكسية بين قوة الشد $T$ وجيب زاوية التعليق $\\sin\\theta$، فعند زيادة الزاوية يزداد الجيب وبالتالي تقل قوة الشد المطلوب تحمّلها.`
+            };
+        } else if(qType === 3) {
+            let m = 5 + (i % 8);
+            let T = (m * 9.8);
+            qObj = {
+                id: i, level: 'medium', levelLabel: 'مستوى متوسط',
+                title: `جسم كتلته $m = ${m}\\text{ kg}$ معلق بكابلين متناظرين، إذا كانت قوة الشد في الكابل الواحد $T = ${T.toFixed(1)}\\text{ N}$، فإن زاوية التعليق $\\theta$ مع الأفق تساوي:`,
+                svg: "",
+                options: ['30°', '45°', '60°', '90°'],
+                correctIndex: 0,
+                explanation: `تطبيق القانون: $2T \\sin\\theta = mg \\implies 2(${T.toFixed(1)}) \\sin\\theta = ${(m*9.8).toFixed(1)} \\implies \\sin\\theta = 0.5 \\implies \\theta = 30^\\circ$.`
+            };
+        } else if(qType === 4) {
+            let k = 150 + i * 10;
+            let x = 0.08;
+            let m = (k * x) / 9.8;
+            qObj = {
+                id: i, level: 'medium', levelLabel: 'حساب كتلة',
+                title: `نابض مرن ثابت صلابته $k = ${k}\\text{ N/m}$ علق به ثقل فاستطال بمقدار $8\\text{ cm}$. احسب كتلة الثقل المعلق $m$ بالكيلوجرام.`,
+                svg: "",
+                options: [`${m.toFixed(2)} kg`, `${(m*2).toFixed(2)} kg`, `${(m/2).toFixed(2)} kg`, `10.0 kg`],
+                correctIndex: 0,
+                explanation: `قوة الشد $F = k \\cdot x = ${k} \\times 0.08 = ${(k*x).toFixed(2)}\\text{ N}$. الكتلة $m = \\frac{F}{g} = \\frac font{${(k*x).toFixed(2)}}{9.8} = ${m.toFixed(2)}\\text{ kg}$.`
+            };
+        } else {
+            let phi = 40;
+            let m = 4 + (i % 6);
+            let T = (m * 9.8) / Math.cos(phi * Math.PI / 180);
+            qObj = {
+                id: i, level: 'hard', levelLabel: '🔥 مستوى تفوق',
+                title: `جسم كتلته $m = ${m}\\text{ kg}$ معلق بحبل مائل بزاوية $40^\\circ$ مع الرأسي وحبل أفقي آخر. احسب قوة الشد في الكابل المائل $T$.`,
+                svg: "",
+                options: [`${T.toFixed(1)} N`, `${(m*9.8).toFixed(1)} N`, `${(T*1.5).toFixed(1)} N`, `${(T/2).toFixed(1)} N`],
+                correctIndex: 0,
+                explanation: `المركبة الرأسية $T \\cos(40^\\circ) = mg \\implies T(0.766) = ${(m*9.8).toFixed(1)} \\implies T = ${T.toFixed(1)}\\text{ N}$.`
+            };
+        }
+
         examQuestions.push(qObj);
     }
 
@@ -472,7 +518,55 @@
 
         buildQuestionGrid();
         loadQuestion(0);
-        renderLawsKaTeX();
+        startTimer();
+    }
+
+    /* تشغيل العداد والمؤثرات البصرية */
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer-display');
+        const timerText = document.getElementById('timer-text');
+
+        if(timerInterval) clearInterval(timerInterval);
+
+        timerInterval = setInterval(() => {
+            totalSeconds--;
+
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                alert("⏰ انتهى الوقت المخصص للاختبار! سيتم تسليم إجاباتك أوتوماتيكياً.");
+                submitExam();
+                return;
+            }
+
+            let mins = Math.floor(totalSeconds / 60);
+            let secs = totalSeconds % 60;
+            timerText.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+            // مرور ثلث ساعة (عند الدقيقة 100) -> تفعيل التنبيه الأحمر اللامع الخافت
+            if (totalSeconds <= 100 * 60) {
+                timerDisplay.classList.add('warning-glow');
+            }
+
+            // وميض الرسائل التحذيرية كل 15 دقيقة (كل 900 ثانية)
+            if (totalSeconds < 120 * 60 && totalSeconds % 900 === 0) {
+                triggerFlashAlert();
+            }
+
+        }, 1000);
+    }
+
+    /* أداة إظهار الوميض التلقائي للرسائل */
+    function triggerFlashAlert() {
+        const overlay = document.getElementById('flash-alert-overlay');
+        const alertText = document.getElementById('flash-alert-text');
+        
+        alertText.innerText = alertMessages[alertMsgIndex % alertMessages.length];
+        alertMsgIndex++;
+
+        overlay.style.display = 'flex';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 2200); // إخفاء أوتوماتيكي بعد ثانيتين
     }
 
     function buildQuestionGrid() {
@@ -534,12 +628,6 @@
 
     function toggleModal(id, show) {
         document.getElementById(id).style.display = show ? 'flex' : 'none';
-    }
-
-    function renderLawsKaTeX() {
-        if(window.katex) {
-            // KaTeX rendering if needed
-        }
     }
 
     /* DRAG & DROP MOVABLE CALCULATOR LOGIC */
@@ -674,6 +762,8 @@
     }
 
     function submitExam() {
+        if(timerInterval) clearInterval(timerInterval);
+
         let score = 0;
         examQuestions.forEach(q => {
             if(userAnswers[q.id] === q.correctIndex) score++;
@@ -681,7 +771,7 @@
 
         const studentName = document.getElementById('student-name').value;
         const studentCode = document.getElementById('student-code').value || "2027";
-        const timeSpent = `${Math.floor((new Date() - startTime)/1000)} ثانية`;
+        const timeSpent = `${Math.floor((120 * 60 - totalSeconds)/60)} دقيقة`;
 
         document.getElementById('exam-screen').classList.remove('active-section');
         document.getElementById('result-screen').classList.add('active-section');
