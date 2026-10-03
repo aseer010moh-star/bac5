@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار 5 بكالوريا 2027 - الأستاذ محمد أمين</title>
+    <title>سلسلة اختبارات الأمين - بكالوريا 2027</title>
     
     <!-- KaTeX CSS & JS for Math and Physics -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -40,7 +40,7 @@
             border-bottom: 5px solid var(--accent-gold);
             margin-bottom: 25px;
         }
-        .header-card h1 { margin: 0; color: var(--warm-teal); }
+        .header-card h1 { margin: 0; color: var(--warm-teal); font-size: 28px; }
 
         .app-card {
             background: var(--card-bg);
@@ -87,6 +87,30 @@
         }
         .q-options input { margin-left: 12px; }
 
+        /* Calculator Styles */
+        .calc-btn-toggle {
+            background: var(--accent-gold); color: #000; font-weight: bold;
+            border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; margin-bottom: 15px;
+        }
+        .calc-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .calc-box {
+            background: #1e293b; padding: 20px; border-radius: 12px; width: 300px; text-align: center; color: white;
+        }
+        .calc-screen {
+            width: 100%; height: 45px; background: #0f172a; border: none; color: #38bdf8;
+            font-size: 20px; text-align: left; padding: 5px 10px; margin-bottom: 15px; border-radius: 6px; box-sizing: border-box;
+        }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .calc-btn {
+            padding: 12px; background: #334155; color: white; border: none; border-radius: 6px;
+            font-size: 16px; font-weight: bold; cursor: pointer;
+        }
+        .calc-btn:hover { background: #475569; }
+        .calc-btn.op { background: var(--accent-gold); color: black; }
+
         .cert-container {
             border: 6px double var(--warm-teal);
             padding: 30px; background: #fffdf5; border-radius: 15px;
@@ -110,7 +134,7 @@
 
 <div class="main-wrapper">
     <div class="header-card">
-        <h1>الأستاذ محمد أمين</h1>
+        <h1>سلسلة اختبارات الأمين</h1>
         <h3>اختبار 5 بكالوريا 2027 - الفيزياء والاتزان الانتقالي</h3>
     </div>
 
@@ -132,9 +156,12 @@
 
     <!-- Exam Screen -->
     <div id="exam-screen" class="app-card">
+        <button class="calc-btn-toggle" onclick="toggleCalc(true)">🧮 فتح الآلة الحاسبة العلمية</button>
+
         <div class="q-grid" id="question-grid"></div>
         <div id="question-container"></div>
-        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+
+        <div style="display: flex; justify-content: space-between; margin-top: 20px; flex-wrap: wrap; gap: 10px;">
             <button class="btn-primary" onclick="prevQuestion()">السؤال السابق</button>
             <button class="btn-primary" style="background: var(--accent-gold); color: black;" onclick="nextQuestion()">السؤال التالي</button>
             <button class="btn-primary" style="background: #dc2626;" onclick="submitExam()">تسليم الاختبار</button>
@@ -146,7 +173,7 @@
         <div style="border: 4px solid var(--warm-teal); padding: 25px; background: #f0fdf4; border-radius: 12px; text-align: center;">
             <h2 style="color: var(--warm-teal); margin-top:0;">تم تسليم الاختبار بنجاح ✅</h2>
             <p style="font-size: 18px;">شكرًا لك يا <strong id="student-display-name"></strong>.</p>
-            <p id="instant-status" style="color: #059669; font-weight: bold; font-size: 16px;">🚀 جاري إرسال النتيجة تلقائياً إلى بريد الأستاذ (Gmail)...</p>
+            <p id="instant-status" style="color: #059669; font-weight: bold; font-size: 16px;">🚀 جاري إرسال النتيجة تلقائياً إلى البريد الإلكتروني...</p>
         </div>
 
         <!-- Restricted Lock Area -->
@@ -154,8 +181,8 @@
             <h3 style="color: var(--warm-teal); margin-top: 0;">🔒 فتح الشهادة والتقرير التفصيلي</h3>
             <p style="color: #64748b; font-size: 14px;">أدخل رمز PIN المخصص من المعلم للاطلاع على الشهادة والتقرير والخطوات وحلول الأسئلة:</p>
             
-            <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: center;">
-                <!-- حقل مخفي بنجوم لرمز PIN -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
+                <!-- حقل الإدخال مخفي بنجوم تلقائياً -->
                 <input type="password" id="unlock-pin" class="form-input" placeholder="••••••••••" style="max-width: 220px;">
                 <button class="btn-primary" onclick="unlockReportAndCert()">فتح التقرير والشهادة</button>
             </div>
@@ -169,7 +196,7 @@
                     <h2 id="cert-student-fullname" style="color: #d97706; font-size: 28px; margin: 5px 0;"></h2>
                     <p style="font-size: 18px;">قد أتم اختبار الفيزياء والاتزان الانتقالي بنجاح وحصل على درجة:</p>
                     <h1 style="color: var(--warm-teal); font-size: 42px; margin: 10px 0;"><span id="cert-score"></span> / 70</h1>
-                    <p style="font-weight: bold; color: #555;">مع أطيب أمنيات الأستاذ محمد أمين بالتوفيق والنجاح الدائم</p>
+                    <p style="font-weight: bold; color: #555;">مع أطيب أمنيات أ/ محمد أمين بالتوفيق والنجاح الدائم</p>
                 </div>
 
                 <h3 style="color: var(--warm-teal); margin-top: 30px;">📝 تقرير مراجعة الإجابات والخطوات التفصيلية:</h3>
@@ -179,8 +206,44 @@
     </div>
 </div>
 
-<!-- FormSubmit Hidden Form sending to Teacher's Gmail -->
-<!-- ضع إيميلك الخاص هنا ليتم الإرسال عليه فوراً -->
+<!-- الآلة الحاسبة العلمية Modal -->
+<div id="calc-modal" class="calc-modal">
+    <div class="calc-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span>الآلة الحاسبة العلمية</span>
+            <button onclick="toggleCalc(false)" style="background:red; color:white; border:none; border-radius:4px; cursor:pointer;">X</button>
+        </div>
+        <input type="text" id="calc-screen" class="calc-screen" readonly>
+        <div class="calc-grid">
+            <button class="calc-btn" onclick="clearCalc()">C</button>
+            <button class="calc-btn" onclick="calcInput('(')">(</button>
+            <button class="calc-btn" onclick="calcInput(')')">)</button>
+            <button class="calc-btn op" onclick="calcInput('/')">÷</button>
+
+            <button class="calc-btn" onclick="calcInput('7')">7</button>
+            <button class="calc-btn" onclick="calcInput('8')">8</button>
+            <button class="calc-btn" onclick="calcInput('9')">9</button>
+            <button class="calc-btn op" onclick="calcInput('*')">×</button>
+
+            <button class="calc-btn" onclick="calcInput('4')">4</button>
+            <button class="calc-btn" onclick="calcInput('5')">5</button>
+            <button class="calc-btn" onclick="calcInput('6')">6</button>
+            <button class="calc-btn op" onclick="calcInput('-')">-</button>
+
+            <button class="calc-btn" onclick="calcInput('1')">1</button>
+            <button class="calc-btn" onclick="calcInput('2')">2</button>
+            <button class="calc-btn" onclick="calcInput('3')">3</button>
+            <button class="calc-btn op" onclick="calcInput('+')">+</button>
+
+            <button class="calc-btn" onclick="calcInput('0')">0</button>
+            <button class="calc-btn" onclick="calcInput('.')">.</button>
+            <button class="calc-btn" onclick="calcMath('sin')">sin</button>
+            <button class="calc-btn op" onclick="runCalc()">=</button>
+        </div>
+    </div>
+</div>
+
+<!-- نموذج إرسال التقرير للإيميل (استبدل your-email@gmail.com بإيميلك) -->
 <form id="gmail-form" action="https://formsubmit.co/your-email@gmail.com" method="POST" style="display:none;">
     <input type="hidden" name="_subject" id="email-subject">
     <input type="hidden" name="اسم الطالب" id="email-student-name">
@@ -194,7 +257,7 @@
 </form>
 
 <footer>
-    ما استعان عبدٌ بالله إلا وصل | جميع الحقوق محفوظة © للأستاذ محمد أمين - 2027
+    ما استعان عبدٌ بالله إلا وصل | جميع الحقوق محفوظة © أ/ محمد أمين - 2027
 </footer>
 
 <script>
@@ -293,6 +356,32 @@
     function nextQuestion() { if(currentQuestionIndex < examQuestions.length - 1) loadQuestion(currentQuestionIndex + 1); }
     function prevQuestion() { if(currentQuestionIndex > 0) loadQuestion(currentQuestionIndex - 1); }
 
+    /* Calculator Logic */
+    function toggleCalc(show) {
+        document.getElementById('calc-modal').style.display = show ? 'flex' : 'none';
+    }
+    function calcInput(val) {
+        document.getElementById('calc-screen').value += val;
+    }
+    function clearCalc() {
+        document.getElementById('calc-screen').value = '';
+    }
+    function runCalc() {
+        try {
+            document.getElementById('calc-screen').value = eval(document.getElementById('calc-screen').value);
+        } catch(e) {
+            document.getElementById('calc-screen').value = 'خطأ';
+        }
+    }
+    function calcMath(type) {
+        try {
+            let val = parseFloat(document.getElementById('calc-screen').value) || 0;
+            if(type === 'sin') document.getElementById('calc-screen').value = Math.sin(val * Math.PI / 180).toFixed(4);
+        } catch(e) {
+            document.getElementById('calc-screen').value = 'خطأ';
+        }
+    }
+
     function submitExam() {
         let score = 0;
         let wrongQuestions = [];
@@ -308,14 +397,12 @@
         const studentName = document.getElementById('student-name').value;
         const studentCode = document.getElementById('student-code').value || "2027";
         
-        // حساب الوقت المستغرق
         const endTime = new Date();
         const timeDiffSeconds = Math.floor((endTime - startTime) / 1000);
         const minutes = Math.floor(timeDiffSeconds / 60);
         const seconds = timeDiffSeconds % 60;
         const timeSpent = `${minutes} دقيقة و ${seconds} ثانية`;
 
-        // التقدير
         let rating = "ممتاز 🌟";
         if(score < 50) rating = "جيد جداً";
         if(score < 35) rating = "مقبول";
@@ -327,7 +414,6 @@
         document.getElementById('cert-student-fullname').innerText = studentName;
         document.getElementById('cert-score').innerText = score;
 
-        // تعبئة البيانات في النموذج الفوري وتمريرها بنفس الشكل بالضبط
         document.getElementById('email-subject').value = `📊 نتيجة اختبار فيزياء جديدة - ${studentName}`;
         document.getElementById('email-student-name').value = studentName;
         document.getElementById('email-student-code').value = studentCode;
@@ -336,7 +422,6 @@
         document.getElementById('email-time').value = timeSpent;
         document.getElementById('email-wrong-q').value = wrongQuestions.length > 0 ? wrongQuestions.join(' ، ') : "لا يوجد";
 
-        // إرسال كـ FormSubmit لخلفية Gmail بدون تحويل الصفحة
         sendToGmailViaFormSubmit();
     }
 
@@ -353,19 +438,17 @@
             document.getElementById('instant-status').innerText = "✅ تم إرسال نتيجة الطالب الفورية إلى بريدك (Gmail) بنجاح!";
         })
         .catch(error => {
-            document.getElementById('instant-status').innerText = "تم تسجيل التسليم! (تأكد من كتابة إيميلك الصحيح في سطر FormSubmit داخل الكود).";
+            document.getElementById('instant-status').innerText = "تم تسجيل التسليم بنجاح!";
         });
     }
 
-    // التحقق من الرمز الموحد وفتح التقرير والشهادة والخطوات
     function unlockReportAndCert() {
         const inputPin = document.getElementById('unlock-pin').value.trim();
         const errorMsg = document.getElementById('pin-error');
 
         if(inputPin === MASTER_PIN) {
             errorMsg.style.display = 'none';
-            const lockedSection = document.getElementById('locked-section');
-            lockedSection.style.display = 'block';
+            document.getElementById('locked-section').style.display = 'block';
 
             const reportDiv = document.getElementById('report-content');
             let html = '';
