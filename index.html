@@ -5,9 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سلسلة اختبارات الأمين - بكالوريا 2027</title>
     
-    <!-- KaTeX CSS & JS for Math and Physics -->
+    <!-- Google Fonts for Decorative Titles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <!-- KaTeX CSS & JS for Physics Formulas -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+    <!-- Nerdamer JS Engine for Advanced Mathematical SOLVE Function -->
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/nerdamer.core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/Algebra.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/Calculus.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/Solve.js"></script>
 
     <style>
         :root {
@@ -20,7 +31,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
             background: linear-gradient(135deg, var(--warm-teal), var(--dark-teal));
             color: var(--text-color);
             margin: 0;
@@ -31,16 +42,30 @@
 
         .main-wrapper { max-width: 950px; margin: 0 auto; }
 
+        /* Header with Metallic Gold & Drop Shadows */
         .header-card {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 20px 30px;
+            border-radius: 18px;
+            padding: 25px 30px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            border-bottom: 5px solid var(--accent-gold);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            border-bottom: 6px solid var(--accent-gold);
             margin-bottom: 25px;
         }
-        .header-card h1 { margin: 0; color: var(--warm-teal); font-size: 28px; }
+        .header-card h1 {
+            margin: 0;
+            font-family: 'Amiri', serif;
+            font-size: 38px;
+            color: var(--warm-teal);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.15), 0 0 10px rgba(229, 169, 60, 0.3);
+            letter-spacing: 1px;
+        }
+        .header-card h3 {
+            margin-top: 10px;
+            font-size: 20px;
+            color: #334155;
+            font-weight: 800;
+        }
 
         .app-card {
             background: var(--card-bg);
@@ -56,11 +81,13 @@
         .form-input {
             width: 100%; padding: 14px; border: 2px solid #b2dfdb;
             border-radius: 8px; font-size: 16px; box-sizing: border-box; outline: none;
+            font-family: inherit;
         }
 
         .btn-primary {
             background: var(--warm-teal); color: white; border: none;
             padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;
+            font-family: 'Cairo', sans-serif;
         }
         .btn-primary:hover { background: var(--dark-teal); }
 
@@ -87,29 +114,46 @@
         }
         .q-options input { margin-left: 12px; }
 
-        /* Calculator Styles */
+        /* EXAM CALCULATOR PRO STYLES */
         .calc-btn-toggle {
-            background: var(--accent-gold); color: #000; font-weight: bold;
-            border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; margin-bottom: 15px;
+            background: linear-gradient(135deg, #10b981, #047857); color: white; font-weight: bold;
+            border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); font-family: 'Cairo', sans-serif;
+            display: flex; align-items: center; gap: 8px;
         }
         .calc-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.75); z-index: 2000; justify-content: center; align-items: center;
         }
         .calc-box {
-            background: #1e293b; padding: 20px; border-radius: 12px; width: 300px; text-align: center; color: white;
+            background: #0f172a; padding: 20px; border-radius: 16px; width: 340px; text-align: center; color: white;
+            border: 2px solid #334155; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
-        .calc-screen {
-            width: 100%; height: 45px; background: #0f172a; border: none; color: #38bdf8;
-            font-size: 20px; text-align: left; padding: 5px 10px; margin-bottom: 15px; border-radius: 6px; box-sizing: border-box;
+        .calc-title-bar {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+            color: #38bdf8; font-weight: bold; font-size: 14px; letter-spacing: 1px;
         }
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .calc-btn {
-            padding: 12px; background: #334155; color: white; border: none; border-radius: 6px;
-            font-size: 16px; font-weight: bold; cursor: pointer;
+        .calc-display {
+            background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 10px; margin-bottom: 15px; text-align: right;
         }
-        .calc-btn:hover { background: #475569; }
-        .calc-btn.op { background: var(--accent-gold); color: black; }
+        .calc-eq-screen {
+            color: #94a3b8; font-size: 13px; min-height: 18px; font-family: monospace; word-break: break-all;
+        }
+        .calc-main-screen {
+            color: #38bdf8; font-size: 22px; font-weight: bold; min-height: 30px; font-family: monospace; overflow-x: auto;
+        }
+        .calc-grid-pro { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+        .calc-btn-p {
+            padding: 10px 0; background: #1e293b; color: #f8fafc; border: none; border-radius: 6px;
+            font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.1s;
+        }
+        .calc-btn-p:active { transform: scale(0.95); }
+        .calc-btn-p.purple { background: #6b21a8; color: white; } /* SOLVE */
+        .calc-btn-p.red { background: #991b1b; color: white; } /* DEL / C */
+        .calc-btn-p.brown { background: #9a3412; color: white; } /* Fractions */
+        .calc-btn-p.teal { background: #0f766e; color: white; } /* Functions */
+        .calc-btn-p.blue { background: #1d4ed8; color: white; } /* Operations & Numbers */
+        .calc-btn-p.green { background: #15803d; color: white; } /* Equal */
 
         .cert-container {
             border: 6px double var(--warm-teal);
@@ -127,7 +171,11 @@
         .review-item.correct { background: #f0fdf4; border-color: #16a34a; }
         .review-item.wrong { background: #fef2f2; border-color: #dc2626; }
 
-        footer { text-align: center; color: #e0f2f1; padding: 20px 0; font-size: 15px; }
+        footer { text-align: center; color: #e0f2f1; padding: 25px 0; font-size: 16px; }
+        .motto-banner {
+            font-family: 'Amiri', serif; font-size: 26px; color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(229, 169, 60, 0.5); margin-bottom: 5px; font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -156,7 +204,7 @@
 
     <!-- Exam Screen -->
     <div id="exam-screen" class="app-card">
-        <button class="calc-btn-toggle" onclick="toggleCalc(true)">🧮 فتح الآلة الحاسبة العلمية</button>
+        <button class="calc-btn-toggle" onclick="toggleCalc(true)">🧮 فتح الآلة الحاسبة العلمية (EXAM CALCULATOR PRO)</button>
 
         <div class="q-grid" id="question-grid"></div>
         <div id="question-container"></div>
@@ -173,7 +221,7 @@
         <div style="border: 4px solid var(--warm-teal); padding: 25px; background: #f0fdf4; border-radius: 12px; text-align: center;">
             <h2 style="color: var(--warm-teal); margin-top:0;">تم تسليم الاختبار بنجاح ✅</h2>
             <p style="font-size: 18px;">شكرًا لك يا <strong id="student-display-name"></strong>.</p>
-            <p id="instant-status" style="color: #059669; font-weight: bold; font-size: 16px;">🚀 جاري إرسال النتيجة تلقائياً إلى البريد الإلكتروني...</p>
+            <p id="instant-status" style="color: #059669; font-weight: bold; font-size: 16px;">🚀 جاري إرسال النتيجة تلقائياً إلى بريد الأستاذ (Gmail)...</p>
         </div>
 
         <!-- Restricted Lock Area -->
@@ -182,7 +230,7 @@
             <p style="color: #64748b; font-size: 14px;">أدخل رمز PIN المخصص من المعلم للاطلاع على الشهادة والتقرير والخطوات وحلول الأسئلة:</p>
             
             <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
-                <!-- حقل الإدخال مخفي بنجوم تلقائياً -->
+                <!-- حقل كلمة السر مخفي بنجوم كلياً -->
                 <input type="password" id="unlock-pin" class="form-input" placeholder="••••••••••" style="max-width: 220px;">
                 <button class="btn-primary" onclick="unlockReportAndCert()">فتح التقرير والشهادة</button>
             </div>
@@ -191,7 +239,7 @@
             <!-- Unlocked Content -->
             <div id="locked-section" style="display: none;">
                 <div class="cert-container">
-                    <h1 style="color: var(--warm-teal); margin: 0; font-size: 32px;">🎓 شهادة تقدير وتميز</h1>
+                    <h1 style="color: var(--warm-teal); margin: 0; font-size: 32px; font-family: 'Amiri', serif;">🎓 شهادة تقدير وتميز</h1>
                     <p style="font-size: 18px; margin: 15px 0;">تشهد إدارة مادة الفيزياء بأن الطالب/ـة:</p>
                     <h2 id="cert-student-fullname" style="color: #d97706; font-size: 28px; margin: 5px 0;"></h2>
                     <p style="font-size: 18px;">قد أتم اختبار الفيزياء والاتزان الانتقالي بنجاح وحصل على درجة:</p>
@@ -206,44 +254,70 @@
     </div>
 </div>
 
-<!-- الآلة الحاسبة العلمية Modal -->
+<!-- EXAM CALCULATOR PRO MODAL (SOLVE ENGINE INCLUDED) -->
 <div id="calc-modal" class="calc-modal">
     <div class="calc-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <span>الآلة الحاسبة العلمية</span>
-            <button onclick="toggleCalc(false)" style="background:red; color:white; border:none; border-radius:4px; cursor:pointer;">X</button>
+        <div class="calc-title-bar">
+            <span>EXAM CALCULATOR PRO</span>
+            <button onclick="toggleCalc(false)" style="background:#dc2626; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold; padding:2px 8px;">X</button>
         </div>
-        <input type="text" id="calc-screen" class="calc-screen" readonly>
-        <div class="calc-grid">
-            <button class="calc-btn" onclick="clearCalc()">C</button>
-            <button class="calc-btn" onclick="calcInput('(')">(</button>
-            <button class="calc-btn" onclick="calcInput(')')">)</button>
-            <button class="calc-btn op" onclick="calcInput('/')">÷</button>
+        <div class="calc-display">
+            <div id="calc-eq-screen" class="calc-eq-screen">EQ: 2*x + 5 = 15</div>
+            <div id="calc-main-screen" class="calc-main-screen">0</div>
+        </div>
+        <div class="calc-grid-pro">
+            <!-- Row 1 -->
+            <button class="calc-btn-p purple" onclick="runSolve()">SOLVE</button>
+            <button class="calc-btn-p blue" onclick="pInput('x')">x</button>
+            <button class="calc-btn-p brown" onclick="pInput('/')">a/b</button>
+            <button class="calc-btn-p teal" onclick="pInput('sin(')">sin</button>
+            <button class="calc-btn-p teal" onclick="pInput('cos(')">cos</button>
+            <button class="calc-btn-p teal" onclick="pInput('tan(')">tan</button>
 
-            <button class="calc-btn" onclick="calcInput('7')">7</button>
-            <button class="calc-btn" onclick="calcInput('8')">8</button>
-            <button class="calc-btn" onclick="calcInput('9')">9</button>
-            <button class="calc-btn op" onclick="calcInput('*')">×</button>
+            <!-- Row 2 -->
+            <button class="calc-btn-p teal" onclick="pInput('log(')">log</button>
+            <button class="calc-btn-p teal" onclick="pInput('log(')">ln</button>
+            <button class="calc-btn-p brown" onclick="pInput('/')">d/c</button>
+            <button class="calc-btn-p teal" onclick="pInput('^2')">x^2</button>
+            <button class="calc-btn-p teal" onclick="pInput('^')">x^y</button>
+            <button class="calc-btn-p teal" onclick="pInput('sqrt(')">sqrt</button>
 
-            <button class="calc-btn" onclick="calcInput('4')">4</button>
-            <button class="calc-btn" onclick="calcInput('5')">5</button>
-            <button class="calc-btn" onclick="calcInput('6')">6</button>
-            <button class="calc-btn op" onclick="calcInput('-')">-</button>
+            <!-- Row 3 -->
+            <button class="calc-btn-p blue" onclick="pInput('(')">(</button>
+            <button class="calc-btn-p blue" onclick="pInput(')')">)</button>
+            <button class="calc-btn-p blue" onclick="pInput('7')">7</button>
+            <button class="calc-btn-p blue" onclick="pInput('8')">8</button>
+            <button class="calc-btn-p blue" onclick="pInput('9')">9</button>
+            <button class="calc-btn-p blue" onclick="pInput('/')">/</button>
 
-            <button class="calc-btn" onclick="calcInput('1')">1</button>
-            <button class="calc-btn" onclick="calcInput('2')">2</button>
-            <button class="calc-btn" onclick="calcInput('3')">3</button>
-            <button class="calc-btn op" onclick="calcInput('+')">+</button>
+            <!-- Row 4 -->
+            <button class="calc-btn-p red" onclick="pClear()">C</button>
+            <button class="calc-btn-p teal" onclick="pInput('3.14159')">pi</button>
+            <button class="calc-btn-p blue" onclick="pInput('4')">4</button>
+            <button class="calc-btn-p blue" onclick="pInput('5')">5</button>
+            <button class="calc-btn-p blue" onclick="pInput('6')">6</button>
+            <button class="calc-btn-p blue" onclick="pInput('*')">*</button>
 
-            <button class="calc-btn" onclick="calcInput('0')">0</button>
-            <button class="calc-btn" onclick="calcInput('.')">.</button>
-            <button class="calc-btn" onclick="calcMath('sin')">sin</button>
-            <button class="calc-btn op" onclick="runCalc()">=</button>
+            <!-- Row 5 -->
+            <button class="calc-btn-p red" onclick="pDel()">DEL</button>
+            <button class="calc-btn-p teal" onclick="pInput('2.71828')">e</button>
+            <button class="calc-btn-p blue" onclick="pInput('1')">1</button>
+            <button class="calc-btn-p blue" onclick="pInput('2')">2</button>
+            <button class="calc-btn-p blue" onclick="pInput('3')">3</button>
+            <button class="calc-btn-p blue" onclick="pInput('-')">-</button>
+
+            <!-- Row 6 -->
+            <button class="calc-btn-p blue" onclick="pAns()">Ans</button>
+            <button class="calc-btn-p blue" onclick="pInput('/100')">%</button>
+            <button class="calc-btn-p blue" onclick="pInput('0')">0</button>
+            <button class="calc-btn-p blue" onclick="pInput('.')">.</button>
+            <button class="calc-btn-p green" onclick="pEval()">=</button>
+            <button class="calc-btn-p blue" onclick="pInput('+')">+</button>
         </div>
     </div>
 </div>
 
-<!-- نموذج إرسال التقرير للإيميل (استبدل your-email@gmail.com بإيميلك) -->
+<!-- FormSubmit Gmail Connector -->
 <form id="gmail-form" action="https://formsubmit.co/your-email@gmail.com" method="POST" style="display:none;">
     <input type="hidden" name="_subject" id="email-subject">
     <input type="hidden" name="اسم الطالب" id="email-student-name">
@@ -257,7 +331,8 @@
 </form>
 
 <footer>
-    ما استعان عبدٌ بالله إلا وصل | جميع الحقوق محفوظة © أ/ محمد أمين - 2027
+    <div class="motto-banner">ما استعان عبدٌ بالله إلا وصل</div>
+    جميع الحقوق محفوظة © أ/ محمد أمين - 2027
 </footer>
 
 <script>
@@ -266,6 +341,7 @@
     const examQuestions = [];
     const MASTER_PIN = "0109030166"; // الرمز الموحد المعتمد
     let startTime;
+    let lastAns = "0";
 
     // توليد الأسئلة 1 إلى 60
     for(let i=1; i<=60; i++) {
@@ -356,29 +432,80 @@
     function nextQuestion() { if(currentQuestionIndex < examQuestions.length - 1) loadQuestion(currentQuestionIndex + 1); }
     function prevQuestion() { if(currentQuestionIndex > 0) loadQuestion(currentQuestionIndex - 1); }
 
-    /* Calculator Logic */
+    /* EXAM CALCULATOR PRO SOLVER ENGINE LOGIC */
+    let calcExpr = "";
+
     function toggleCalc(show) {
         document.getElementById('calc-modal').style.display = show ? 'flex' : 'none';
     }
-    function calcInput(val) {
-        document.getElementById('calc-screen').value += val;
+
+    function pInput(val) {
+        const screen = document.getElementById('calc-main-screen');
+        if(screen.innerText === "0" || screen.innerText === "Error") screen.innerText = "";
+        screen.innerText += val;
     }
-    function clearCalc() {
-        document.getElementById('calc-screen').value = '';
+
+    function pClear() {
+        document.getElementById('calc-main-screen').innerText = "0";
+        document.getElementById('calc-eq-screen').innerText = "EQ: ready";
     }
-    function runCalc() {
+
+    function pDel() {
+        const screen = document.getElementById('calc-main-screen');
+        screen.innerText = screen.innerText.slice(0, -1);
+        if(screen.innerText === "") screen.innerText = "0";
+    }
+
+    function pAns() {
+        pInput(lastAns);
+    }
+
+    function pEval() {
+        const screen = document.getElementById('calc-main-screen');
         try {
-            document.getElementById('calc-screen').value = eval(document.getElementById('calc-screen').value);
+            let expr = screen.innerText.replace(/sin/g, 'Math.sin').replace(/cos/g, 'Math.cos').replace(/tan/g, 'Math.tan').replace(/sqrt/g, 'Math.sqrt').replace(/log/g, 'Math.log10');
+            let res = eval(expr);
+            lastAns = res.toString();
+            screen.innerText = res;
         } catch(e) {
-            document.getElementById('calc-screen').value = 'خطأ';
+            screen.innerText = "Error";
         }
     }
-    function calcMath(type) {
+
+    // SOLVE function to solve equation for 'x' automatically
+    function runSolve() {
+        const screen = document.getElementById('calc-main-screen');
+        const eqScreen = document.getElementById('calc-eq-screen');
+        let rawInput = screen.innerText;
+
+        eqScreen.innerText = `EQ: ${rawInput}`;
+
         try {
-            let val = parseFloat(document.getElementById('calc-screen').value) || 0;
-            if(type === 'sin') document.getElementById('calc-screen').value = Math.sin(val * Math.PI / 180).toFixed(4);
+            if(!rawInput.includes('x')) {
+                screen.innerText = "أدخل المجهول x";
+                return;
+            }
+
+            let sol;
+            if(rawInput.includes('=')) {
+                let parts = rawInput.split('=');
+                sol = nerdamer.solve(`${parts[0]} - (${parts[1]})`, 'x');
+            } else {
+                sol = nerdamer.solve(rawInput, 'x');
+            }
+
+            let resText = sol.toString().replace(/\[\vert{}\]/g, '');
+            if(resText.includes('/')) {
+                let evalVal = eval(resText);
+                screen.innerText = `${resText} (≈ ${evalVal.toFixed(2)})`;
+                lastAns = evalVal.toString();
+            } else {
+                screen.innerText = resText;
+                lastAns = resText;
+            }
+            eqScreen.innerText = `SOLVE => x = ${resText}`;
         } catch(e) {
-            document.getElementById('calc-screen').value = 'خطأ';
+            screen.innerText = "Error in SOLVE";
         }
     }
 
