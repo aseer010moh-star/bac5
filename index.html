@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@600;800;900&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
 
     <!-- KaTeX CSS & JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -27,11 +27,11 @@
             --accent-gold: #e5a93c;
             --light-bg: #e0f2f1;
             --card-bg: #ffffff;
-            --text-color: #1e293b;
+            --text-color: #0f172a;
         }
 
         body {
-            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Tajawal', 'Cairo', 'Segoe UI', Tahoma, sans-serif;
             background: linear-gradient(135deg, var(--warm-teal), var(--dark-teal));
             color: var(--text-color);
             margin: 0;
@@ -51,32 +51,39 @@
 
         .header-card {
             background: var(--card-bg);
-            border-radius: 18px;
-            padding: 25px 30px;
+            border-radius: 20px;
+            padding: 30px 20px;
             text-align: center;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-            border-bottom: 6px solid var(--accent-gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+            border-bottom: 7px solid var(--accent-gold);
             margin-bottom: 25px;
         }
 
-        /* عنوان فريد بظل فسفوري لامع وجذاب */
+        /* تكبير العنوان وإضافة خط مميز بظل فسفوري ساطع */
         .header-card h1 {
             margin: 0;
-            font-family: 'Amiri', serif;
-            font-size: 42px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            font-size: 50px;
             color: #104c54;
+            letter-spacing: 0.5px;
             text-shadow: 
-                0 0 5px #39ff14,
-                0 0 10px #39ff14,
-                0 0 20px #00ff66,
-                0 0 30px #00ff66,
-                2px 2px 4px rgba(0,0,0,0.3);
+                0 0 8px #39ff14,
+                0 0 15px #39ff14,
+                0 0 25px #00ff66,
+                2px 2px 5px rgba(0,0,0,0.25);
         }
-        .header-card h3 { margin-top: 10px; font-size: 20px; color: #334155; font-weight: 800; }
+        .header-card h3 { 
+            margin-top: 12px; 
+            font-size: 22px; 
+            color: #334155; 
+            font-weight: 800; 
+            font-family: 'Tajawal', sans-serif;
+        }
 
         .app-card {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.25);
             display: none;
@@ -84,33 +91,33 @@
         .active-section { display: block; }
 
         .form-group { margin-bottom: 20px; text-align: right; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--warm-teal); }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--warm-teal); font-size: 17px; }
         .form-input {
             width: 100%; padding: 14px; border: 2px solid #b2dfdb;
-            border-radius: 8px; font-size: 16px; box-sizing: border-box; outline: none; font-family: inherit;
+            border-radius: 10px; font-size: 16px; box-sizing: border-box; outline: none; font-family: 'Tajawal', sans-serif;
         }
 
         .btn-primary {
             background: var(--warm-teal); color: white; border: none;
-            padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;
-            font-family: 'Cairo', sans-serif;
+            padding: 13px 26px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s;
+            font-family: 'Cairo', sans-serif; font-size: 16px;
         }
-        .btn-primary:hover { background: var(--dark-teal); }
+        .btn-primary:hover { background: var(--dark-teal); transform: translateY(-1px); }
 
         .top-tools-bar {
             display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; justify-content: space-between;
         }
         .tool-btn {
-            border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;
+            border: none; padding: 12px 20px; border-radius: 10px; font-weight: bold; cursor: pointer;
             font-family: 'Cairo', sans-serif; color: white; display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 15px;
         }
         .tool-btn.calc { background: linear-gradient(135deg, #10b981, #047857); }
         .tool-btn.laws { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
 
         .timer-badge {
-            background: #0f172a; color: #38bdf8; font-family: monospace; font-size: 20px; font-weight: bold;
-            padding: 8px 16px; border-radius: 10px; border: 2px solid #334155; display: flex; align-items: center; gap: 8px;
+            background: #0f172a; color: #38bdf8; font-family: monospace; font-size: 22px; font-weight: bold;
+            padding: 8px 18px; border-radius: 10px; border: 2px solid #334155; display: flex; align-items: center; gap: 8px;
         }
 
         .flash-alert-overlay {
@@ -128,27 +135,31 @@
 
         .q-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
-            gap: 8px; background: var(--light-bg); padding: 15px; border-radius: 10px;
+            gap: 8px; background: var(--light-bg); padding: 15px; border-radius: 12px;
             margin-bottom: 25px; max-height: 150px; overflow-y: auto;
         }
         .q-node {
-            background: white; border: 1px solid #b2dfdb; border-radius: 6px;
-            padding: 8px 0; text-align: center; font-weight: bold; cursor: pointer;
+            background: white; border: 1px solid #b2dfdb; border-radius: 8px;
+            padding: 8px 0; text-align: center; font-weight: bold; cursor: pointer; font-family: 'Cairo', sans-serif;
         }
         .q-node.current { border: 2px solid var(--accent-gold); background: #fff8e1; }
         .q-node.answered { background: var(--warm-teal); color: white; }
 
         .question-card {
             background: #f8fafc; border-right: 6px solid var(--warm-teal);
-            padding: 20px; border-radius: 10px; margin-bottom: 20px;
+            padding: 22px; border-radius: 12px; margin-bottom: 20px;
         }
+        .q-title {
+            font-size: 19px; line-height: 1.6; font-weight: 700; color: #1e293b; margin-top: 5px;
+        }
+        
+        /* تنسيق الأوسمة البسيطة بدرجات الأسئلة فقط */
         .q-badge {
-            display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 10px;
+            display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 14px; font-weight: 800; margin-bottom: 12px;
+            font-family: 'Cairo', sans-serif;
         }
-        .q-badge.easy { background: #dcfce7; color: #15803d; }
-        .q-badge.medium { background: #fef9c3; color: #a16207; }
-        .q-badge.hard { background: #fee2e2; color: #b91c1c; }
-        .q-badge.pro { background: #f3e8ff; color: #6b21a8; border: 1px solid #c084fc; }
+        .q-badge.one-mark { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+        .q-badge.two-marks { background: #f3e8ff; color: #6b21a8; border: 1px solid #c084fc; }
 
         .svg-illustration {
             width: 100%; max-width: 380px; margin: 15px auto; display: block; background: #ffffff;
@@ -157,11 +168,11 @@
 
         .q-options label {
             display: flex; align-items: center; background: white;
-            padding: 12px 15px; margin-bottom: 10px; border-radius: 8px;
-            border: 1px solid #e2e8f0; cursor: pointer; transition: 0.2s;
+            padding: 14px 18px; margin-bottom: 12px; border-radius: 10px;
+            border: 1px solid #cbd5e1; cursor: pointer; transition: 0.2s; font-size: 17px; font-weight: 600;
         }
         .q-options label:hover { border-color: var(--accent-gold); background: #fffdf5; }
-        .q-options input { margin-left: 12px; }
+        .q-options input { margin-left: 12px; transform: scale(1.2); }
 
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -217,7 +228,7 @@
 
         footer { text-align: center; color: #e0f2f1; padding: 25px 0; font-size: 16px; }
         .motto-banner {
-            font-family: 'Amiri', serif; font-size: 26px; color: var(--accent-gold); margin-bottom: 5px; font-weight: bold;
+            font-family: 'Amiri', serif; font-size: 28px; color: var(--accent-gold); margin-bottom: 5px; font-weight: bold;
         }
     </style>
 </head>
@@ -226,13 +237,13 @@
 <div class="main-wrapper">
     <div class="header-card">
         <h1>سلسلة اختبارات الأمين</h1>
-        <h3>اختبار 5 بكالوريا 2027 - الفيزياء (40 سؤالاً دولياً - النتيجة من 60)</h3>
+        <h3>اختبار الفيزياء - بكالوريا 2027</h3>
     </div>
 
     <!-- Login Screen -->
     <div id="login-screen" class="app-card active-section">
         <div style="max-width: 400px; margin: 0 auto; text-align: center;">
-            <h2 style="color: var(--warm-teal); margin-top:0;">تسجيل الدخول للاختبار</h2>
+            <h2 style="color: var(--warm-teal); margin-top:0; font-family: 'Cairo', sans-serif;">تسجيل الدخول للاختبار</h2>
             <div class="form-group">
                 <label>اسم الطالب الثلاثي:</label>
                 <input type="text" id="student-name" class="form-input" placeholder="أدخل اسمك الكامل">
@@ -253,7 +264,7 @@
                 <button class="tool-btn laws" onclick="toggleModal('laws-modal', true)">📘 القوانين بالرموز</button>
             </div>
             <div class="timer-badge" id="timer-display">
-                ⏱️ <span id="timer-text">80:00</span>
+                ⏱️️ <span id="timer-text">80:00</span>
             </div>
         </div>
 
@@ -270,13 +281,13 @@
     <!-- Final Submission Screen -->
     <div id="result-screen" class="app-card">
         <div style="border: 4px solid var(--warm-teal); padding: 25px; background: #f0fdf4; border-radius: 12px; text-align: center;">
-            <h2 style="color: var(--warm-teal); margin-top:0;">تم تسليم الاختبار بنجاح ✅</h2>
+            <h2 style="color: var(--warm-teal); margin-top:0; font-family: 'Cairo', sans-serif;">تم تسليم الاختبار بنجاح ✅</h2>
             <p style="font-size: 18px;">شكرًا لك يا <strong id="student-display-name"></strong>.</p>
             <p id="instant-status" style="color: #059669; font-weight: bold; font-size: 16px;">🚀 تم إرسال نتيجة التقرير أوتوماتيكياً إلى إيميل الأستاذ بنجاح!</p>
         </div>
 
         <div class="report-box">
-            <h3 style="color: var(--warm-teal); margin-top: 0;">🔒 فتح الشهادة والتقرير التفصيلي</h3>
+            <h3 style="color: var(--warm-teal); margin-top: 0; font-family: 'Cairo', sans-serif;">🔒 فتح الشهادة والتقرير التفصيلي</h3>
             <p style="color: #64748b; font-size: 14px;">أدخل رمز PIN المخصص للاطلاع على التقرير والشهادة والخطوات:</p>
             
             <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
@@ -295,7 +306,7 @@
                     <p style="font-weight: bold; color: #555;">مع أطيب أمنيات أ/ محمد أمين بالتوفيق والنجاح الدائم</p>
                 </div>
 
-                <h3 style="color: var(--warm-teal); margin-top: 30px;">📝 تقرير مراجعة الإجابات والخطوات التفصيلية:</h3>
+                <h3 style="color: var(--warm-teal); margin-top: 30px; font-family: 'Cairo', sans-serif;">📝 تقرير مراجعة الإجابات والخطوات التفصيلية:</h3>
                 <div id="report-content"></div>
             </div>
         </div>
@@ -313,7 +324,7 @@
 <div id="laws-modal" class="modal-overlay">
     <div class="modal-content">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 12px; direction: rtl;">
-            <h3 style="color: var(--warm-teal); margin: 0;">📘 ورقة القوانين بالرموز</h3>
+            <h3 style="color: var(--warm-teal); margin: 0; font-family: 'Cairo', sans-serif;">📘 ورقة القوانين بالرموز</h3>
             <button onclick="toggleModal('laws-modal', false)" style="background:#dc2626; color:white; border:none; padding:4px 10px; border-radius:6px; cursor:pointer; font-weight:bold;">X</button>
         </div>
         
@@ -416,11 +427,11 @@
     ];
     let alertMsgIndex = 0;
 
-    // بنك 40 سؤالاً فريداً ومترجماً من اختبارات دولية بدون أي أسطح مائلة وبدون أي تكرار
+    // بنك الـ 40 سؤالاً بدون أي أسطح مائلة وبشارات الدرجات المقفلة
     const uniqueBank = [
-        // 20 سؤال مستوى متقدم/دولي (2 درجات لكل سؤال = 40 درجة)
+        // 20 سؤالاً (درجتان لكل سؤال = 40 درجة)
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (Cambridge A-Level)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `من الرسم البياني المجاور بين القوة $F$ والاستطالة $x$، احسب قيمة ثابت المرونة $k$، ثم أوجد الاستطالة عندما تؤثر قوة قدرها $500\\text{ N}$.`,
             svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
                 <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" stroke-width="2"/>
@@ -435,49 +446,49 @@
             explanation: `الميل يعطي ثابت المرونة $k = 250\\text{ N/m}$. الاستطالة $x = \\frac{F}{k} = \\frac{500}{250} = 2.0\\text{ m}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (SAT Physics)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `إشارة مرور معلقة بكابلين متناظرين يميل كل منهما بزاوية $30^\\circ$ مع الأفق. إذا كانت أقصى قوة شد يتحملها أي كابل هي $490\\text{ N}$، فما أقصى كتلة $m$ لإشارة المرور يمكن تعليقها بأمان؟ ($g = 9.8\\text{ m/s}^2$)`,
             options: [`50 kg`, `25 kg`, `100 kg`, `75 kg`],
             correctIndex: 0,
             explanation: `$2 T \\sin(30^\\circ) = m g \\implies 2 (490) (0.5) = 9.8 m \\implies m = 50\\text{ kg}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (AP Physics)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `نابضان ثابتا مرونتهما $k_1 = 300\\text{ N/m}$ و $k_2 = 600\\text{ N/m}$ متصلان على التوالي. إذا استطالا معاً بمقدار $0.15\\text{ m}$، احسب كتلة الثقل المعلق.`,
             options: [`3.06 kg`, `4.50 kg`, `1.50 kg`, `6.12 kg`],
             correctIndex: 0,
             explanation: `في التوالي $k_{eq} = 200\\text{ N/m}$. القوة $F = 200 \\times 0.15 = 30\\text{ N}$. الكتلة $m = \\frac{30}{9.8} = 3.06\\text{ kg}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (IB Physics)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `جسم كتلته $8\\text{ kg}$ معلق بكابل مائل يرافق حابلاً أفقياً $P$. إذا كان الشد المائل $T = 100\\text{ N}$، احسب مقدار قوة الشد الأفقي $P$. ($g = 9.8\\text{ m/s}^2$)`,
             options: [`62.0 N`, `78.4 N`, `45.2 N`, `100 N`],
             correctIndex: 0,
             explanation: `$T \\cos\\phi = mg \\implies 100 \\cos\\phi = 78.4 \\implies \\phi \\approx 38.37^\\circ$. الشد الأفقي $P = T \\sin\\phi = 100 \\times \\sin(38.37^\\circ) \\approx 62.0\\text{ N}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (Cambridge IGCSE)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `لتقليل الشد $T$ في كابلين يرفعان جسماً ثابت الكتلة إلى النصف، يجب تعديل زاوية التعليق مع الأفق $\\theta$ بحيث:`,
             options: [`يتضاعف جيبها sin(θ)`, `تقل الزاوية للنصف`, `تبقى ثابته`, `تتضاعف الزاوية مرتين`],
             correctIndex: 0,
             explanation: `العلاقة عكسية بين الشد $T$ وجيب الزاوية $\\sin\\theta$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (SAT Physics)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `نابض طوله الأصلي $20\\text{ cm}$، عند تعليق $2\\text{ kg}$ به أصبح طوله $25\\text{ cm}$. كم يصبح طوله الكلي عند تعليق كتلة إضافية $1.5\\text{ kg}$؟`,
             options: [`28.75 cm`, `30.00 cm`, `26.25 cm`, `35.00 cm`],
             correctIndex: 0,
             explanation: `الكتلة الكلية $3.5\\text{ kg}$ تنتج استطالة $8.75\\text{ cm}$. الطول الكلي = $20 + 8.75 = 28.75\\text{ cm}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (AP Physics)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `استطالة نابضين متماثلين متصلين على التوازي هي $x_1$ وعلى التوالي هي $x_2$ لنفس الثقل. احسب النسبة $\\frac{x_1}{x_2}$.`,
             options: [`1 / 4`, `1 / 2`, `4 / 1`, `2 / 1`],
             correctIndex: 0,
             explanation: `$x_1 = \\frac{mg}{2k}$ و $x_2 = \\frac{2mg}{k}$، فتكون النسبة $\\frac{1}{4}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (Edexcel A-Level)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `من الرسم البياني للصلابة والمرونة بين القوة $F$ والاستطالة $x$، أي الخطوط يمثل النابض الأكبر صلابة ومرونة؟`,
             svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
                 <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" stroke-width="2"/>
@@ -492,97 +503,97 @@
             explanation: `الميل الأكبر يعبر عن ثابت مرونة $k$ أعلى.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (GCE A-Level)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `سلك معدني مرن طوله الأصلي $L$ استطال بمقدار $x$ تحت قوة شد $F$. إذا تم قطع السلك إلى نصفين متساويين واستُخدم نصف واحد منهما تحت نفس القوة $F$، فإن استطالته الجديدة تكون:`,
             options: [`x / 2`, `x`, `2 x`, `x / 4`],
             correctIndex: 0,
             explanation: `نصف السلك يصبح ثابت مرونته ضعف الثابت الأصلي ($2k$)، فتكون الاستطالة النصف $x/2$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (Kangaroo Physics)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `نابضان متماثلان معلقان على التوازي ويحملان ثقلاً $W$. إذا انقطع أحد النابضين فجأة، فإن استطالة النابض المتبقي:`,
             options: [`تتضاعف للضعف`, `تقل للنصف`, `تبقى كما هي`, `تزداد أربعة أمثال`],
             correctIndex: 0,
             explanation: `كان كل نابض يحمل $W/2$، والآن أصبح يحمل $W$ كاملاً فتتضاعف الاستطالة للضعف.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (US Physics Olympiad)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `جسم معلق بحبلين يميل كل منهما بزاوية $\\theta$ مع الأفق. إذا زادت الزاوية $\\theta$ من $30^\\circ$ إلى $60^\\circ$ مع ثبات كتلة الجسم، فإن قوة الشد في كل حبل $T$:`,
             options: [`تقل بمقدار (1 / √3)`, `تزداد للضعف`, `تقل للنصف`, `تتضاعف ثلاث مرات`],
             correctIndex: 0,
             explanation: `$T_1 = \\frac{W}{2 \\sin 30^\\circ} = W$، بينما $T_2 = \\frac{W}{2 \\sin 60^\\circ} = \\frac{W}{\\sqrt{3}}$، وبالتالي تقل بمقدار $\\frac{1}{\\sqrt{3}}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (AP Physics 1)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `ثلاثة نوابض متماثلة ثابت كل منها $k$ متصلة كالتالي: نابضان على التوازي ومربوط معهما الثالث على التوالي. احسب ثابت المرونة المكافئ $k_{eq}$ للمجموعة.`,
             options: [`(2 / 3) k`, `3 k`, `(1 / 3) k`, `(3 / 2) k`],
             correctIndex: 0,
             explanation: `مجموعة التوازي $2k$. بالتوالي مع الثالث: $k_{eq} = \\frac{2k \\cdot k}{2k + k} = \\frac{2}{3} k$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (SAT Physics)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `عند ضغط نابض ثابت مرونته $200\\text{ N/m}$ بمقدار $0.04\\text{ m}$، ما مقدار القوة الإرجاعية الناشئة في النابض؟`,
             options: [`8 N`, `80 N`, `0.8 N`, `50 N`], correctIndex: 0, explanation: `$F = kx = 200 \\times 0.04 = 8\\text{ N}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (Edexcel IGCSE)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `كابلان غير متناظرين يحملان كتلّة متزنة $m$. إذا كانت زاوية الكابل الأول مع الأفق أكبر من زاوية الكابل الثاني، فإن الشد في الكابل الأول يكون:`,
             options: [`أصغر من الشد في الكابل الثاني`, `أكبر من الشد في الكابل الثاني`, `مساوياً للشد في الكابل الثاني`, `يعتمد على طول الحبل فقط`],
             correctIndex: 0,
             explanation: `الكابل الأكثر رأسية (الزاوية الأكبر مع الأفق) يتحمل مركبة رأسية أكبر ويكون الشد فيه أقل لتحقيق الاتزان.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (A-Level Physics)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `نابض استطال بمقدار $4\\text{ cm}$ عندما علق به ثقل $10\\text{ N}$. إذا وصلناه بنابض آخر متمثل له على التوالي وعلقنا نفس الثقل، تكون الاستطالة الكلية:`,
             options: [`8 cm`, `4 cm`, `2 cm`, `16 cm`], correctIndex: 0, explanation: `في التوالي تتضاعف الاستطالة الكلية لتصبح $4 + 4 = 8\\text{ cm}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (IB Physics SL)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `ثقل كتلته $5\\text{ kg}$ معلق بحبلين متناظرين يميلان بـ $45^\\circ$ مع الأفق. احسب قيمة الشد $T$ في كل حبل. ($g = 9.8\\text{ m/s}^2$)`,
             options: [`34.6 N`, `49.0 N`, `24.5 N`, `69.3 N`], correctIndex: 0, explanation: `$2 T \\sin(45^\\circ) = 5 \\times 9.8 \\implies 1.414 T = 49 \\implies T = 34.6\\text{ N}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (SAT Subject)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `في الرسم البياني بين القوة $F$ والاستطالة $x$، يعبر ميل المنحنى عن:`,
             options: [`ثابت المرونة k`, `الطاقة المفقودة`, `الكتلة المعلقة`, `تسارع الجاذبية`], correctIndex: 0, explanation: `الميل $\\frac{\\Delta F}{\\Delta x} = k$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (Cambridge IGCSE)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `نابض ثابت مرونته $k$. إذا تم تقصيره بقطع ربع طوله الأصلي، فإن ثابت المرونة للجزء المتبقي يصبح:`,
             options: [`(4 / 3) k`, `(3 / 4) k`, `4 k`, `3 k`], correctIndex: 0, explanation: `ثابت المرونة يتناسب عكسياً مع الطول الأصلي: $k' = \\frac{L}{0.75 L} k = \\frac{4}{3} k$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (AP Physics C)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `جسم كتلته $m$ معلق بحبل مائل بزاوية $\\phi$ مع الرأسي وحبل أفقي شدّه $P$. أي التعبيرات التالية تعبر عن الشد المائل $T$؟`,
             options: [`T = mg / cos(φ)`, `T = mg / sin(φ)`, `T = mg · tan(φ)`, `T = mg · cos(φ)`], correctIndex: 0, explanation: `من تحليل المركبة الرأسية: $T \\cos\\phi = mg \\implies T = \\frac{mg}{\\cos\\phi}$.`
         },
         {
-            points: 2, level: 'pro', levelLabel: '🌍 سؤال دولي (O-Level Physics)',
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `ما مقدار الاستطالة الحادثة في نابض ثابت مرونته $150\\text{ N/m}$ عند تعليق ثقل كتلته $3\\text{ kg}$؟ ($g = 9.8\\text{ m/s}^2$)`,
             options: [`0.196 m`, `0.020 m`, `0.500 m`, `0.098 m`], correctIndex: 0, explanation: `$x = \\frac{mg}{k} = \\frac{3 \\times 9.8}{150} = 0.196\\text{ m}$.`
         },
 
-        // 20 سؤالاً متوسطاً ومفاهيمياً (درجة واحدة لكل سؤال = 20 درجة)
-        { points: 1, level: 'medium', levelLabel: 'سؤال مفهوم', title: `ما هي الوحدة الفيزيائية الدولية لقياس ثابت المرونة $k$؟`, options: [`N/m`, `N·m`, `kg/m`, `J/m²`], correctIndex: 0, explanation: `$k = \\frac{F}{x} \\implies \\text{N/m}$.` },
-        { points: 1, level: 'medium', levelLabel: 'سؤال نظري', title: `قانون هوك يصف العلاقة بين القوة والاستطالة بشرط أن تكون القوة المؤثرة:`, options: [`ضمن حدود المرونة`, `أكبر من حد الكسر`, `مساوية للصفر`, `متغيرة اللحظة`], correctIndex: 0, explanation: `ينطبق قانون هوك فقط ضمن حدود المرونة.` },
-        { points: 1, level: 'medium', levelLabel: 'مسألة حسابية', title: `جسم كتلته $12\\text{ kg}$ معلق بكابلين متناظرين يميلان بزاوية $45^\\circ$ مع الأفق. احسب قوة الشد $T$.`, options: [`83.2 N`, `117.6 N`, `58.8 N`, `166.3 N`], correctIndex: 0, explanation: `$2 T \\sin(45^\\circ) = 12 \\times 9.8 \\implies T = 83.2\\text{ N}$.` },
-        { points: 1, level: 'medium', levelLabel: 'مسألة حسابية', title: `نابض ثابت مرونته $400\\text{ N/m}$. ما القوة اللازمة لضغطه بمقدار $6\\text{ cm}$؟`, options: [`24 N`, `2400 N`, `2.4 N`, `15 N`], correctIndex: 0, explanation: `$F = k \\cdot x = 400 \\times 0.06 = 24\\text{ N}$.` },
-        { points: 1, level: 'medium', levelLabel: 'حساب كتلة', title: `إذا كان الشد في كابل مائل يميل بزاوية $60^\\circ$ مع الأفق يساوي $50\\text{ N}$ في نظام كابلين متناظرين، احسب كتلة الجسم المعلق $m$.`, options: [`8.84 kg`, `10.2 kg`, `4.42 kg`, `5.10 kg`], correctIndex: 0, explanation: `$2(50)\\sin(60^\\circ) = mg \\implies 86.6 = 9.8m \\implies m = 8.84\\text{ kg}$.` },
-        { points: 1, level: 'medium', levelLabel: 'حساب زاوية', title: `جسم كتلته $10\\text{ kg}$ معلق بكابلين متناظرين الشد في كل منهما $98\\text{ N}$. احسب زاوية التعليق $\\theta$ مع الأفق.`, options: [`30°`, `45°`, `60°`, `90°`], correctIndex: 0, explanation: `$2(98)\\sin\\theta = 10(9.8) \\implies 196\\sin\\theta = 98 \\implies \\sin\\theta = 0.5 \\implies \\theta = 30^\\circ$.` },
-        { points: 1, level: 'medium', levelLabel: 'استطالة نابض', title: `نابض ثابت مرونته $k = 250\\text{ N/m}$ علق به ثقل كتلته $5\\text{ kg}$. احسب الاستطالة الحادثة $x$ بالمتر.`, options: [`0.196 m`, `0.500 m`, `0.020 m`, `0.098 m`], correctIndex: 0, explanation: `$x = \\frac{mg}{k} = \\frac{5 \\times 9.8}{250} = 0.196\\text{ m}$.` },
-        { points: 1, level: 'medium', levelLabel: 'حبل أفقي ومائل', title: `حبل مائل يحمل ثقلاً بزاوية $45^\\circ$ مع الرأسي، ومربوط بحبل أفقي شدّه $50\\text{ N}$. احسب وزن الثقل المعلق $W$.`, options: [`50 N`, `70.7 N`, `35.3 N`, `100 N`], correctIndex: 0, explanation: `بما أن الزاوية $45^\\circ$ فإن الشد الأفقي يساوي الوزن تماماً $W = 50\\text{ N}$.` },
-        { points: 1, level: 'medium', levelLabel: 'قوة النابض', title: `ما القوة الناتجة عن نابض استطال بمقدار $0.05\\text{ m}$ إذا كان ثابت مرونته $180\\text{ N/m}$؟`, options: [`9 N`, `90 N`, `3.6 N`, `0.9 N`], correctIndex: 0, explanation: `$F = k \\cdot x = 180 \\times 0.05 = 9\\text{ N}$.` },
-        { points: 1, level: 'medium', levelLabel: 'شد مائل', title: `جسم معلق بحبلين متناظرين زاوية كل منهما مع الأفق $60^\\circ$. إذا كان الشد في الكابل $100\\text{ N}$، احسب وزن الجسم الكلي $W$.`, options: [`173.2 N`, `100 N`, `200 N`, `86.6 N`], correctIndex: 0, explanation: `$W = 2 T \\sin(60^\\circ) = 2(100)(0.866) = 173.2\\text{ N}$.` },
-        { points: 1, level: 'medium', levelLabel: 'تأثير الكتلة', title: `عند مضاعفة الكتلة المعلقة بنادي مرن إلى ثلاثة أمثالها، فإن استطالة النابض:`, options: [`تزداد لثلاثة أمثال`, `تقل للثلث`, `تزداد للتسعة أمثال`, `تبقى ثابتة`], correctIndex: 0, explanation: `الاستطالة تتناسب طردياً مع القوة والكتلة $x \\propto m$.` },
-        { points: 1, level: 'medium', levelLabel: 'تعليق رأسي', title: `ثقل كتلته $4\\text{ kg}$ معلق بنادي استطال بمقدار $0.08\\text{ m}$. احسب ثابت مرونة النابض $k$.`, options: [`490 N/m`, `392 N/m`, `245 N/m`, `100 N/m`], correctIndex: 0, explanation: `$k = \\frac{mg}{x} = \\frac{4 \\times 9.8}{0.08} = 490\\text{ N/m}$.` },
-        { points: 1, level: 'medium', levelLabel: 'شد مائل', title: `جسم كتلته $m$ معلق بكابل مائل بزاوية $\\phi$ مع الرأسي، تكون المركبة الرأسية للشد مساوية لـ:`, options: [`T cos(φ)`, `T sin(φ)`, `T tan(φ)`, `T sec(φ)`], correctIndex: 0, explanation: `المجاورة للزاوية مع الرأسي تأخذ جتا الزاوية $\\cos\\phi$.` },
-        { points: 1, level: 'medium', levelLabel: 'شد أفقي', title: `في الاتزان بحبل مائل وحبل أفقي، تكون المركبة الأفقية للشد مساوية لـ:`, options: [`T sin(φ)`, `T cos(φ)`, `T mg`, `T / sin(φ)`], correctIndex: 0, explanation: `المركبة الأفقية المقابلة للزاوية الرأسية تأخذ جا الزاوية $\\sin\\phi$.` },
-        { points: 1, level: 'medium', levelLabel: 'تعليق متناظر', title: `في نظام الكابلين المتناظرين، إذا كانت زاوية التعليق $\\theta = 30^\\circ$ مع الأفق، فإن الشد في الكابل الواحد $T$ يطابق:`, options: [`وزن الجسم mg`, `نصف الوزن mg/2`, `ضعف الوزن 2mg`, `ثلاثة أضعاف الوزن`], correctIndex: 0, explanation: `لأن $2 T \\sin(30^\\circ) = mg \\implies 2 T (0.5) = mg \\implies T = mg$.` },
-        { points: 1, level: 'medium', levelLabel: 'مقارنة صلابة', title: `نابض (أ) استطال $2\\text{ cm}$ تحت قوة $10\\text{ N}$، ونابض (ب) استطال $4\\text{ cm}$ تحت نفس القوة. النسبة بين ثابتي مرونتهما $k_A / k_B$ هي:`, options: [`2 : 1`, `1 : 2`, `4 : 1`, `1 : 1`], correctIndex: 0, explanation: `$k_A = 500\\text{ N/m}$ و $k_B = 250\\text{ N/m} \\implies 500/250 = 2$.` },
-        { points: 1, level: 'medium', levelLabel: 'تأثير الزاوية', title: `تصل قوة الشد في كابلين ينقلان جهازا ثقيلاً إلى أدنى قيمة ممكنة عندما تكون زاوية التعليق مع الأفق:`, options: [`90°`, `60°`, `45°`, `30°`], correctIndex: 0, explanation: `عند $90^\\circ$ يكون جيب الزاوية أكبر ما يمكن $\\sin(90^\\circ) = 1$ فيقل الشد للحد الأدنى.` },
-        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'ثابت المرونة $k$ خاصية تميز هيكل ومادة النابض ولا يتبدل بتغير القوة المؤثرة ضمن حدود المرونة.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة.' },
-        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'زيادة زاوية التعليق $\\theta$ مع الأفق في نظام كابلين متناظرين تزيد من قيمة الشد $T$ في الكابل.', options: ['صح', 'خطأ'], correctIndex: 1, explanation: 'عبارة خاطئة، زيادة الزاوية تقلل الشد.' },
-        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'الشد الأفقي لثقل معلق بحبل مائل يحسب من العلاقة $P = T \\sin\\phi$.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة.' }
+        // 20 سؤالاً (درجة واحدة لكل سؤال = 20 درجة)
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `ما هي الوحدة الفيزيائية الدولية لقياس ثابت المرونة $k$؟`, options: [`N/m`, `N·m`, `kg/m`, `J/m²`], correctIndex: 0, explanation: `$k = \\frac{F}{x} \\implies \\text{N/m}$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `قانون هوك يصف العلاقة بين القوة والاستطالة بشرط أن تكون القوة المؤثرة:`, options: [`ضمن حدود المرونة`, `أكبر من حد الكسر`, `مساوية للصفر`, `متغيرة اللحظة`], correctIndex: 0, explanation: `ينطبق قانون هوك فقط ضمن حدود المرونة.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `جسم كتلته $12\\text{ kg}$ معلق بكابلين متناظرين يميلان بزاوية $45^\\circ$ مع الأفق. احسب قوة الشد $T$.`, options: [`83.2 N`, `117.6 N`, `58.8 N`, `166.3 N`], correctIndex: 0, explanation: `$2 T \\sin(45^\\circ) = 12 \\times 9.8 \\implies T = 83.2\\text{ N}$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `نابض ثابت مرونته $400\\text{ N/m}$. ما القوة اللازمة لضغطه بمقدار $6\\text{ cm}$؟`, options: [`24 N`, `2400 N`, `2.4 N`, `15 N`], correctIndex: 0, explanation: `$F = k \\cdot x = 400 \\times 0.06 = 24\\text{ N}$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `إذا كان الشد في كابل مائل يميل بزاوية $60^\\circ$ مع الأفق يساوي $50\\text{ N}$ في نظام كابلين متناظرين، احسب كتلة الجسم المعلق $m$.`, options: [`8.84 kg`, `10.2 kg`, `4.42 kg`, `5.10 kg`], correctIndex: 0, explanation: `$2(50)\\sin(60^\\circ) = mg \\implies 86.6 = 9.8m \\implies m = 8.84\\text{ kg}$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `جسم كتلته $10\\text{ kg}$ معلق بكابلين متناظرين الشد في كل منهما $98\\text{ N}$. احسب زاوية التعليق $\\theta$ مع الأفق.`, options: [`30°`, `45°`, `60°`, `90°`], correctIndex: 0, explanation: `$2(98)\\sin\\theta = 10(9.8) \\implies 196\\sin\\theta = 98 \\implies \\sin\\theta = 0.5 \\implies \\theta = 30^\\circ$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `نابض ثابت مرونته $k = 250\\text{ N/m}$ علق به ثقل كتلته $5\\text{ kg}$. احسب الاستطالة الحادثة $x$ بالمتر.`, options: [`0.196 m`, `0.500 m`, `0.020 m`, `0.098 m`], correctIndex: 0, explanation: `$x = \\frac{mg}{k} = \\frac{5 \\times 9.8}{250} = 0.196\\text{ m}$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `حبل مائل يحمل ثقلاً بزاوية $45^\\circ$ مع الرأسي، ومربوط بحبل أفقي شدّه $50\\text{ N}$. احسب وزن الثقل المعلق $W$.`, options: [`50 N`, `70.7 N`, `35.3 N`, `100 N`], correctIndex: 0, explanation: `بما أن الزاوية $45^\\circ$ فإن الشد الأفقي يساوي الوزن تماماً $W = 50\\text{ N}$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `ما القوة الناتجة عن نابض استطال بمقدار $0.05\\text{ m}$ إذا كان ثابت مرونته $180\\text{ N/m}$؟`, options: [`9 N`, `90 N`, `3.6 N`, `0.9 N`], correctIndex: 0, explanation: `$F = k \\cdot x = 180 \\times 0.05 = 9\\text{ N}$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `جسم معلق بحبلين متناظرين زاوية كل منهما مع الأفق $60^\\circ$. إذا كان الشد في الكابل $100\\text{ N}$، احسب وزن الجسم الكلي $W$.`, options: [`173.2 N`, `100 N`, `200 N`, `86.6 N`], correctIndex: 0, explanation: `$W = 2 T \\sin(60^\\circ) = 2(100)(0.866) = 173.2\\text{ N}$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `عند مضاعفة الكتلة المعلقة بنادي مرن إلى ثلاثة أمثالها، فإن استطالة النابض:`, options: [`تزداد لثلاثة أمثال`, `تقل للثلث`, `تزداد للتسعة أمثال`, `تبقى ثابتة`], correctIndex: 0, explanation: `الاستطالة تتناسب طردياً مع القوة والكتلة $x \\propto m$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `ثقل كتلته $4\\text{ kg}$ معلق بنادي استطال بمقدار $0.08\\text{ m}$. احسب ثابت مرونة النابض $k$.`, options: [`490 N/m`, `392 N/m`, `245 N/m`, `100 N/m`], correctIndex: 0, explanation: `$k = \\frac{mg}{x} = \\frac{4 \\times 9.8}{0.08} = 490\\text{ N/m}$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `جسم كتلته $m$ معلق بكابل مائل بزاوية $\\phi$ مع الرأسي، تكون المركبة الرأسية للشد مساوية لـ:`, options: [`T cos(φ)`, `T sin(φ)`, `T tan(φ)`, `T sec(φ)`], correctIndex: 0, explanation: `المجاورة للزاوية مع الرأسي تأخذ جتا الزاوية $\\cos\\phi$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `في الاتزان بحبل مائل وحبل أفقي، تكون المركبة الأفقية للشد مساوية لـ:`, options: [`T sin(φ)`, `T cos(φ)`, `T mg`, `T / sin(φ)`], correctIndex: 0, explanation: `المركبة الأفقية المقابلة للزاوية الرأسية تأخذ جا الزاوية $\\sin\\phi$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `في نظام الكابلين المتناظرين، إذا كانت زاوية التعليق $\\theta = 30^\\circ$ مع الأفق، فإن الشد في الكابل الواحد $T$ يطابق:`, options: [`وزن الجسم mg`, `نصف الوزن mg/2`, `ضعف الوزن 2mg`, `ثلاثة أضعاف الوزن`], correctIndex: 0, explanation: `لأن $2 T \\sin(30^\\circ) = mg \\implies 2 T (0.5) = mg \\implies T = mg$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `نابض (أ) استطال $2\\text{ cm}$ تحت قوة $10\\text{ N}$، ونابض (ب) استطال $4\\text{ cm}$ تحت نفس القوة. النسبة بين ثابتي مرونتهما $k_A / k_B$ هي:`, options: [`2 : 1`, `1 : 2`, `4 : 1`, `1 : 1`], correctIndex: 0, explanation: `$k_A = 500\\text{ N/m}$ و $k_B = 250\\text{ N/m} \\implies 500/250 = 2$.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `تصل قوة الشد في كابلين ينقلان جهازا ثقيلاً إلى أدنى قيمة ممكنة عندما تكون زاوية التعليق مع الأفق:`, options: [`90°`, `60°`, `45°`, `30°`], correctIndex: 0, explanation: `عند $90^\\circ$ يكون جيب الزاوية أكبر ما يمكن $\\sin(90^\\circ) = 1$ فيقل الشد للحد الأدنى.` },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: 'ثابت المرونة $k$ خاصية تميز هيكل ومادة النابض ولا يتبدل بتغير القوة المؤثرة ضمن حدود المرونة.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة.' },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: 'زيادة زاوية التعليق $\\theta$ مع الأفق في نظام كابلين متناظرين تزيد من قيمة الشد $T$ في الكابل.', options: ['صح', 'خطأ'], correctIndex: 1, explanation: 'عبارة خاطئة، زيادة الزاوية تقلل الشد.' },
+        { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: 'الشد الأفقي لثقل معلق بحبل مائل يحسب من العلاقة $P = T \\sin\\phi$.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة.' }
     ];
 
     let examQuestions = [];
