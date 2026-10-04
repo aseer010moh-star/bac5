@@ -227,84 +227,134 @@
         .review-item.correct { background: #f0fdf4; border-color: #16a34a; }
         .review-item.wrong { background: #fef2f2; border-color: #dc2626; }
 
-        /* تصميم الشهادة الفخمة المعتمدة على الصورة الأصلية مع إسقاط النصوص بالدقة الملمترية */
-        .cert-wrapper {
-            position: relative;
+        /* ==================== تصميم الشهادة الفخمة بنظام HTML المحلي 100% ==================== */
+        .cert-outer-container {
             width: 100%;
             max-width: 850px;
             margin: 20px auto;
+            background: #06101e;
+            padding: 15px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+        }
+
+        .cert-inner-card {
+            background: #fffdf9;
+            border: 4px solid #d4af37;
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            background: #020c1b;
+            padding: 35px 25px;
+            position: relative;
+            text-align: center;
+            box-shadow: inset 0 0 15px rgba(212,175,55,0.2);
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            color: #0f172a;
         }
-        .cert-bg-img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .cert-overlay-layer {
+
+        .cert-inner-card::before {
+            content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 6px; left: 6px; right: 6px; bottom: 6px;
+            border: 1.5px dashed #b38728;
+            border-radius: 8px;
             pointer-events: none;
         }
-        
-        /* ضبط نصوص الشهادة بالضبط المتر فوق القالب الأصلي */
-        .cert-field {
-            position: absolute;
-            color: #0b2545;
-            font-weight: 900;
-            font-family: 'Cairo', sans-serif;
-            white-space: nowrap;
-        }
-        
-        /* اسم الطالب المظبوط محاذاته بجانب إلى الطالب/ة مباشرة */
-        .cert-student-name {
-            top: 45.2%;
-            right: 35%;
-            font-size: 2.2vw;
-            color: #0369a1;
-            text-align: right;
-        }
 
-        /* الدرجة الأولى (درجة الطالب) داخل الصندوق الذهبي الأول */
-        .cert-score-val {
-            top: 54.8%;
-            right: 48.8%;
-            font-size: 2vw;
-            color: #b45309;
-            width: 9.5%;
-            text-align: center;
-            transform: translateX(50%);
-        }
-
-        /* الدرجة الكلية (60) داخل الصندوق الذهبي الثاني */
-        .cert-score-max {
-            top: 54.8%;
-            right: 65.2%;
-            font-size: 2vw;
-            color: #1e293b;
-            width: 9.5%;
-            text-align: center;
-            transform: translateX(50%);
-        }
-
-        /* تاريخ اليوم مظبوط فوق خانة تاريخ الإصدار */
-        .cert-date-val {
-            top: 78.5%;
-            right: 29.5%;
-            font-size: 1.3vw;
-            color: #334155;
-            text-align: center;
-            transform: translateX(50%);
+        .cert-header-title {
+            font-family: 'Reem Kufi', 'Amiri', serif;
+            font-size: 38px;
             font-weight: 800;
+            color: #b38728;
+            margin: 0 0 5px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
-        @media (min-width: 850px) {
-            .cert-student-name { font-size: 22px; }
-            .cert-score-val { font-size: 20px; }
-            .cert-score-max { font-size: 20px; }
-            .cert-date-val { font-size: 13px; }
+        .cert-teacher-sub {
+            font-size: 18px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 25px;
+        }
+
+        .cert-row-student {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .cert-student-box {
+            color: #0284c7;
+            font-size: 22px;
+            font-weight: 900;
+            border-bottom: 2px stroke #0284c7;
+            padding: 0 15px;
+        }
+
+        .cert-row-score {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cert-score-badge {
+            background: #ffffff;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 4px 18px;
+            font-size: 20px;
+            font-weight: 900;
+            color: #b45309;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .cert-wishes {
+            font-family: 'Amiri', serif;
+            font-size: 22px;
+            color: #b38728;
+            font-weight: bold;
+            margin: 25px 0 35px 0;
+        }
+
+        .cert-footer-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding: 0 20px;
+        }
+
+        .cert-footer-item {
+            text-align: center;
+        }
+
+        .cert-footer-item .title { font-size: 14px; color: #64748b; font-weight: bold; margin-bottom: 4px; }
+        .cert-footer-item .val { font-size: 16px; color: #0284c7; font-weight: 900; }
+
+        .cert-seal-icon {
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle, #f59e0b, #b45309);
+            border: 3px solid #fef3c7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(180,83,9,0.4);
+            margin: 0 auto;
         }
 
         footer { text-align: center; color: #e0f2f1; padding: 25px 0; font-size: 16px; }
@@ -379,25 +429,48 @@
 
             <div id="locked-section" style="display: none;">
                 
-                <div style="text-align: center; margin-bottom: 15px;">
-                    <button class="btn-primary" style="background: linear-gradient(135deg, #d97706, #b45309); font-size: 18px; padding: 12px 30px;" onclick="downloadCertificate()">📥 تحميل شهادة التقدير كصورة</button>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #d97706, #b45309); font-size: 18px; padding: 12px 30px;" onclick="downloadCertificate()">📥 تحميل شهادة التقدير كصورة عالية الجودة</button>
                 </div>
 
-                <!-- الشهادة الأصلية بصورتك وشكلها الفخم -->
-                <div class="cert-wrapper" id="certificate-node">
-                    <!-- الصورة القالب الأصلية -->
-                    <img src="https://i.ibb.co/3yxP5tD/physics-cert-template.png" class="cert-bg-img" alt="قالب الشهادة الفخم" crossorigin="anonymous">
-                    
-                    <!-- الطبقة المتقاطعة المسؤولة عن تنزيل النصوص والبيانات في أماكنها الدقيقة -->
-                    <div class="cert-overlay-layer">
-                        <div class="cert-field cert-student-name" id="cert-student-name-val">مريوم صافي</div>
-                        <div class="cert-field cert-score-val" id="cert-score-val">13</div>
-                        <div class="cert-field cert-score-max">60</div>
-                        <div class="cert-field cert-date-val" id="cert-date-val">2026/10/04</div>
+                <!-- شهادة التقدير المصممة بـ HTML محلية نقية 100% لتفادي الحظر أو انقصاص الصورة -->
+                <div class="cert-outer-container" id="certificate-node">
+                    <div class="cert-inner-card">
+                        <div class="cert-header-title">شَهَادَةُ تَقْدِيرٍ</div>
+                        <div class="cert-teacher-sub">من أ/ محمد أمين نظير — معلم الفيزياء</div>
+
+                        <div class="cert-row-student">
+                            <span>إلى الطالب/ة:</span>
+                            <span class="cert-student-box" id="cert-student-name-val">مريوم صافي</span>
+                        </div>
+
+                        <div class="cert-row-score">
+                            <span>بمناسبة الحصول على درجة رقم</span>
+                            <span class="cert-score-badge" id="cert-score-val">13</span>
+                            <span>من</span>
+                            <span class="cert-score-badge">60</span>
+                            <span>في الاختبار</span>
+                        </div>
+
+                        <div class="cert-wishes">༺ مع تمنياتنا لك بمزيد من التفوق والنجاح ༻</div>
+
+                        <div class="cert-footer-grid">
+                            <div class="cert-footer-item" style="text-align: right;">
+                                <div class="title">مع تحياتي</div>
+                                <div class="val">Mr / Mohamad Ameen</div>
+                            </div>
+                            
+                            <div class="cert-seal-icon">⚛</div>
+
+                            <div class="cert-footer-item" style="text-align: left;">
+                                <div class="title">تاريخ الإصدار:</div>
+                                <div class="val" id="cert-date-val">2026/10/04</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <h3 style="color: var(--warm-teal); margin-top: 30px; font-family: 'Cairo', sans-serif;">📝 تقرير مراجعة الإجابات والخطوات التفصيلية:</h3>
+                <h3 style="color: var(--warm-teal); margin-top: 35px; font-family: 'Cairo', sans-serif;">📝 تقرير مراجعة الإجابات والخطوات التفصيلية:</h3>
                 <div id="report-content"></div>
             </div>
         </div>
@@ -519,7 +592,7 @@
     ];
     let alertMsgIndex = 0;
 
-    // بنك الـ 40 سؤالاً كاملاً دون أي حذف
+    // بنك الأسئلة
     const uniqueBank = [
         {
             points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
@@ -875,7 +948,7 @@
 
         document.getElementById('student-display-name').innerText = studentName;
 
-        // تحديث بيانات الشهادة الأصلية تلقائياً
+        // تحديث بيانات الشهادة
         document.getElementById('cert-student-name-val').textContent = studentName;
         document.getElementById('cert-score-val').textContent = finalCalculatedScore;
         
@@ -930,7 +1003,7 @@
         const certElement = document.getElementById('certificate-node');
         const studentName = document.getElementById('student-name').value || "الطالب";
         
-        html2canvas(certElement, { scale: 3, useCORS: true }).then(canvas => {
+        html2canvas(certElement, { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
             const link = document.createElement('a');
             link.download = `شهادة_تقدير_${studentName}.png`;
             link.href = canvas.toDataURL('image/png');
