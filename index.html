@@ -1,341 +1,1389 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>اختبار الفيزياء - أ/ محمد أمين نظير</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سلسلة اختبارات الأمين - بكالوريا 2027</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&family=Cairo:wght@600;800;900&family=Tajawal:wght@500;700;800&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" onload="renderPureLaws()"></script>
+    
+    <!-- Nerdamer JS Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/nerdamer.core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/Algebra.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/Calculus.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/Solve.js"></script>
+    
+    <!-- html2canvas for Download Certificate -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    * {
-      box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
-    }
+    <style>
+        :root {
+            --warm-teal: #104c54;
+            --dark-teal: #0a3339;
+            --accent-gold: #e5a93c;
+            --light-bg: #e0f2f1;
+            --card-bg: #ffffff;
+            --text-color: #0f172a;
+        }
 
-    body {
-      background-color: #f4f6f9;
-      margin: 0;
-      padding: 20px;
-      color: #333;
-    }
+        body {
+            font-family: 'Tajawal', 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, var(--warm-teal), var(--dark-teal));
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            direction: rtl;
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
+        body.protected-blur {
+            filter: blur(12px);
+            pointer-events: none;
+        }
 
-    h1 {
-      text-align: center;
-      color: #0d2b2a;
-      margin-bottom: 5px;
-    }
+        .main-wrapper {
+            max-width: 950px;
+            margin: 0 auto;
+        }
 
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
-      font-size: 16px;
-    }
+        .header-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+            border-bottom: 7px solid var(--accent-gold);
+            margin-bottom: 25px;
+        }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
+        .header-card h1 {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            font-size: 50px;
+            color: #104c54;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px #39ff14, 0 0 15px #39ff14, 0 0 25px #00ff66, 2px 2px 5px rgba(0,0,0,0.25);
+        }
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
+        .header-card h3 {
+            margin-top: 12px;
+            font-size: 22px;
+            color: #334155;
+            font-weight: 800;
+            font-family: 'Tajawal', sans-serif;
+        }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+        .app-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            display: none;
+        }
 
-    .question-card {
-      background: #fafafa;
-      border: 1px solid #eaeeef;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
+        .active-section {
+            display: block;
+        }
 
-    .question-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #1a3636;
-      margin-bottom: 12px;
-    }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
 
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--warm-teal);
+            font-size: 17px;
+        }
 
-    .option-label {
-      display: flex;
-      align-items: center;
-      padding: 10px 15px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #b2dfdb;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            font-family: 'Tajawal', sans-serif;
+        }
 
-    .option-label input {
-      margin-left: 10px;
-    }
+        .btn-primary {
+            background: var(--warm-teal);
+            color: white;
+            border: none;
+            padding: 13px 26px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+        }
 
-    .btn-submit {
-      width: 100%;
-      background-color: #0d2b2a;
-      color: #d4af37;
-      border: none;
-      padding: 14px;
-      font-size: 18px;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+        .btn-primary:hover {
+            background: var(--dark-teal);
+            transform: translateY(-1px);
+        }
 
-    /* تصميم الشهادة الأفقي */
-    #certificate-wrapper {
-      display: none;
-      margin-top: 20px;
-    }
+        .top-tools-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .certificate-border {
-      border: 4px solid #d4af37;
-      padding: 8px;
-      border-radius: 12px;
-      background-color: #0d2b2a;
-    }
+        .tool-btn {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 15px;
+        }
 
-    .certificate-container {
-      background-color: #fdfbf7;
-      border: 2px dashed #d4af37;
-      border-radius: 8px;
-      padding: 40px 50px;
-      text-align: center;
-    }
+        .tool-btn.calc { background: linear-gradient(135deg, #10b981, #047857); }
+        .tool-btn.laws { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
 
-    .cert-header {
-      font-size: 42px;
-      color: #d4af37;
-      font-weight: 800;
-      margin-bottom: 5px;
-    }
+        .timer-badge {
+            background: #0f172a;
+            color: #38bdf8;
+            font-family: monospace;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 8px 18px;
+            border-radius: 10px;
+            border: 2px solid #334155;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .cert-sub {
-      font-size: 20px;
-      color: #1a3636;
-      font-weight: 700;
-      margin-bottom: 25px;
-    }
+        .flash-alert-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .cert-to {
-      font-size: 18px;
-      color: #555;
-      margin-bottom: 5px;
-    }
+        .flash-alert-box {
+            background: #ffffff;
+            border: 4px solid var(--accent-gold);
+            border-radius: 18px;
+            padding: 25px 40px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: alertPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
-    .cert-name {
-      font-size: 32px;
-      color: #0284c7;
-      font-weight: bold;
-      border-bottom: 2px solid #0284c7;
-      display: inline-block;
-      padding: 0 35px 5px 35px;
-      margin-bottom: 20px;
-    }
+        @keyframes alertPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
-    .cert-body {
-      font-size: 20px;
-      color: #222;
-      margin-bottom: 20px;
-    }
+        .q-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+            gap: 8px;
+            background: var(--light-bg);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
 
-    .cert-score {
-      display: inline-block;
-      background-color: #fff9e6;
-      border: 2px solid #d4af37;
-      padding: 4px 18px;
-      border-radius: 8px;
-      font-size: 22px;
-      font-weight: bold;
-      color: #854d0e;
-      margin: 0 8px;
-    }
+        .q-node {
+            background: white;
+            border: 1px solid #b2dfdb;
+            border-radius: 8px;
+            padding: 8px 0;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+        }
 
-    .cert-wishes {
-      font-size: 19px;
-      color: #b45309;
-      font-weight: bold;
-      margin-top: 20px;
-    }
+        .q-node.current {
+            border: 2px solid var(--accent-gold);
+            background: #fff8e1;
+        }
 
-    .cert-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-top: 40px;
-      padding: 0 20px;
-    }
+        .q-node.answered {
+            background: var(--warm-teal);
+            color: white;
+        }
 
-    .teacher-sig {
-      font-size: 18px;
-      font-weight: bold;
-      color: #0284c7;
-    }
+        .question-card {
+            background: #f8fafc;
+            border-right: 6px solid var(--warm-teal);
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
 
-    .btn-print {
-      display: block;
-      margin: 20px auto 0 auto;
-      background-color: #0284c7;
-      color: #fff;
-      border: none;
-      padding: 10px 25px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+        .q-title {
+            font-size: 19px;
+            line-height: 1.6;
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 5px;
+        }
 
-    /* تجهيز الطباعة بالوضع الأفقي A4 */
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #certificate-wrapper, #certificate-wrapper * {
-        visibility: visible;
-      }
-      #certificate-wrapper {
-        display: block !important;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-      }
-      .btn-print {
-        display: none;
-      }
-      @page {
-        size: A4 landscape;
-        margin: 0;
-      }
-    }
-  </style>
+        .q-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .q-badge.one-mark { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+        .q-badge.two-marks { background: #f3e8ff; color: #6b21a8; border: 1px solid #c084fc; }
+
+        .svg-illustration {
+            width: 100%;
+            max-width: 380px;
+            margin: 15px auto;
+            display: block;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .q-options label {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .q-options label:hover {
+            border-color: var(--accent-gold);
+            background: #fffdf5;
+        }
+
+        .q-options input {
+            margin-left: 12px;
+            transform: scale(1.2);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2500;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            text-align: right;
+            border: 3px solid var(--warm-teal);
+        }
+
+        .law-box {
+            background: #f0fdf4;
+            border-right: 4px solid #16a34a;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            direction: ltr;
+        }
+
+        #calc-movable-modal {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            z-index: 3000;
+            cursor: move;
+            touch-action: none;
+        }
+
+        .calc-box {
+            background: #0f172a;
+            padding: 18px;
+            border-radius: 16px;
+            width: 310px;
+            text-align: center;
+            color: white;
+            border: 2px solid #334155;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .calc-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #38bdf8;
+            font-weight: bold;
+            font-size: 13px;
+            user-select: none;
+        }
+
+        .calc-display {
+            background: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 12px;
+            text-align: right;
+        }
+
+        .calc-eq-screen {
+            color: #94a3b8;
+            font-size: 12px;
+            min-height: 16px;
+            font-family: monospace;
+        }
+
+        .calc-main-screen {
+            color: #38bdf8;
+            font-size: 20px;
+            font-weight: bold;
+            min-height: 28px;
+            font-family: monospace;
+        }
+
+        .calc-grid-pro {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 5px;
+        }
+
+        .calc-btn-p {
+            padding: 9px 0;
+            background: #1e293b;
+            color: #f8fafc;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .calc-btn-p.purple { background: #6b21a8; color: white; }
+        .calc-btn-p.red { background: #991b1b; color: white; }
+        .calc-btn-p.brown { background: #9a3412; color: white; }
+        .calc-btn-p.teal { background: #0f766e; color: white; }
+        .calc-btn-p.blue { background: #1d4ed8; color: white; }
+        .calc-btn-p.green { background: #15803d; color: white; }
+
+        .report-box {
+            margin-top: 25px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #cbd5e1;
+            text-align: right;
+        }
+
+        .review-item {
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-right: 5px solid #94a3b8;
+        }
+
+        .review-item.correct { background: #f0fdf4; border-color: #16a34a; }
+        .review-item.wrong { background: #fef2f2; border-color: #dc2626; }
+
+        /* ==================== تصميم الشهادة الفخمة بنظام HTML المحلي 100% ==================== */
+        .cert-outer-container {
+            width: 800px;
+            margin: 20px auto;
+            background: linear-gradient(135deg, #0a192f 0%, #06101e 100%);
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+        }
+
+        .cert-inner-card {
+            background: #fffdf9;
+            border: 6px double #d4af37;
+            border-radius: 12px;
+            padding: 40px 30px;
+            position: relative;
+            text-align: center;
+            box-shadow: inset 0 0 25px rgba(212,175,55,0.15);
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            color: #0f172a;
+        }
+
+        .cert-inner-card::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1.5px dashed #b38728;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .cert-header-title {
+            font-family: 'Reem Kufi', 'Amiri', serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: #b38728;
+            margin: 0 0 5px 0;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .cert-teacher-sub {
+            font-size: 19px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 25px;
+        }
+
+        .cert-row-student {
+            font-size: 21px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 22px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .cert-student-box {
+            color: #0284c7;
+            font-size: 24px;
+            font-weight: 900;
+            border-bottom: 2px solid #0284c7;
+            padding: 0 15px;
+        }
+
+        .cert-row-score {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cert-score-badge {
+            background: #ffffff;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 4px 18px;
+            font-size: 22px;
+            font-weight: 900;
+            color: #b45309;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .cert-wishes {
+            font-family: 'Amiri', serif;
+            font-size: 24px;
+            color: #b38728;
+            font-weight: bold;
+            margin: 25px 0 35px 0;
+        }
+
+        .cert-footer-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding: 0 20px;
+        }
+
+        .cert-footer-item {
+            text-align: center;
+        }
+
+        .cert-footer-item .title {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .cert-footer-item .val {
+            font-size: 17px;
+            color: #0284c7;
+            font-weight: 900;
+        }
+
+        .cert-seal-icon {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #f59e0b, #b45309);
+            border: 3px solid #fef3c7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 26px;
+            box-shadow: 0 4px 10px rgba(180,83,9,0.4);
+            margin: 0 auto;
+        }
+
+        footer {
+            text-align: center;
+            color: #e0f2f1;
+            padding: 25px 0;
+            font-size: 16px;
+        }
+
+        .motto-banner {
+            font-family: 'Amiri', serif;
+            font-size: 28px;
+            color: var(--accent-gold);
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
-<div class="container" id="quiz-container">
-  <h1>اختبار مادة الفيزياء</h1>
-  <div class="subtitle">إعداد الأستاذ / محمد أمين نظير</div>
-
-  <form id="quiz-form">
-    <div class="form-group">
-      <label for="studentName">اسم الطالب / الطالبة:</label>
-      <input type="text" id="studentName" placeholder="اكتب اسمك الثلاثي هنا..." required>
+<div class="main-wrapper">
+    <div class="header-card">
+        <h1>سلسلة اختبارات الأمين</h1>
+        <h3>اختبار الفيزياء - بكالوريا 2027</h3>
     </div>
 
-    <!-- الأسئلة -->
-    <div class="question-card">
-      <div class="question-title">1. ما هي وحدة قياس شدة التيار الكهربي في النظام الدولي؟</div>
-      <div class="options">
-        <label class="option-label"><input type="radio" name="q1" value="20" required> أمبير (Ampere)</label>
-        <label class="option-label"><input type="radio" name="q1" value="0"> فولط (Volt)</label>
-        <label class="option-label"><input type="radio" name="q1" value="0"> أوم (Ohm)</label>
-      </div>
+    <!-- Login Screen -->
+    <div id="login-screen" class="app-card active-section">
+        <div style="max-width: 400px; margin: 0 auto; text-align: center;">
+            <h2 style="color: var(--warm-teal); margin-top:0; font-family: 'Cairo', sans-serif;">تسجيل الدخول للاختبار</h2>
+            <div class="form-group">
+                <label>اسم الطالب الثلاثي:</label>
+                <input type="text" id="student-name" class="form-input" placeholder="أدخل اسمك الكامل">
+            </div>
+            <div class="form-group">
+                <label>كود الطالب:</label>
+                <input type="password" id="student-code" class="form-input" placeholder="••••••••••">
+            </div>
+            <button class="btn-primary" style="width: 100%; font-size:18px;" onclick="startExam()">بدء الاختبار</button>
+        </div>
     </div>
 
-    <div class="question-card">
-      <div class="question-title">2. صيغة قانون أوم الكهربي هي:</div>
-      <div class="options">
-        <label class="option-label"><input type="radio" name="q2" value="20" required> V = I × R</label>
-        <label class="option-label"><input type="radio" name="q2" value="0"> P = V / I</label>
-        <label class="option-label"><input type="radio" name="q2" value="0"> F = m × a</label>
-      </div>
+    <!-- Exam Screen -->
+    <div id="exam-screen" class="app-card">
+        <div class="top-tools-bar">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="tool-btn calc" onclick="toggleCalc(true)">🧮 الآلة الحاسبة العلمية</button>
+                <button class="tool-btn laws" onclick="toggleModal('laws-modal', true)">📘 القوانين بالرموز</button>
+            </div>
+            <div class="timer-badge" id="timer-display">
+                ⏱ <span id="timer-text">80:00</span>
+            </div>
+        </div>
+
+        <div class="q-grid" id="question-grid"></div>
+        <div id="question-container"></div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 20px; flex-wrap: wrap; gap: 10px;">
+            <button class="btn-primary" onclick="prevQuestion()">السؤال السابق</button>
+            <button class="btn-primary" style="background: var(--accent-gold); color: black;" onclick="nextQuestion()">السؤال التالي</button>
+            <button class="btn-primary" style="background: #dc2626;" onclick="submitExam()">تسليم الاختبار</button>
+        </div>
     </div>
 
-    <div class="question-card">
-      <div class="question-title">3. جهاز يستخدم لقياس القوة الدافعة الكهربية:</div>
-      <div class="options">
-        <label class="option-label"><input type="radio" name="q3" value="20" required> الفولتميتر</label>
-        <label class="option-label"><input type="radio" name="q3" value="0"> الأميتر</label>
-        <label class="option-label"><input type="radio" name="q3" value="0"> الأوميتر</label>
-      </div>
-    </div>
+    <!-- Final Submission Screen -->
+    <div id="result-screen" class="app-card">
+        <div style="border: 4px solid var(--warm-teal); padding: 25px; background: #f0fdf4; border-radius: 12px; text-align: center;">
+            <h2 style="color: var(--warm-teal); margin-top:0; font-family: 'Cairo', sans-serif;">تم تسليم الاختبار بنجاح ✅</h2>
+            <p style="font-size: 18px;">شكرًا لك يا <strong id="student-display-name"></strong>.</p>
+            <p id="instant-status" style="color: #059669; font-weight: bold; font-size: 16px;">🚀 تم إرسال نتيجة التقرير أوتوماتيكياً إلى إيميل الأستاذ بنجاح!</p>
+        </div>
 
-    <button type="button" class="btn-submit" onclick="submitQuiz()">إنهاء الاختبار واستخراج الشهادة</button>
-  </form>
+        <div class="report-box">
+            <h3 style="color: var(--warm-teal); margin-top: 0; font-family: 'Cairo', sans-serif;">🔒 فتح الشهادة والتقرير التفصيلي</h3>
+            <p style="color: #64748b; font-size: 14px;">أدخل رمز PIN المخصص للاطلاع على التقرير والشهادة والخطوات:</p>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
+                <input type="password" id="unlock-pin" class="form-input" placeholder="••••••••••" style="max-width: 220px;">
+                <button class="btn-primary" onclick="unlockReportAndCert()">فتح التقرير والشهادة</button>
+            </div>
+            <p id="pin-error" style="color: #dc2626; font-weight: bold; display: none;">❌ الرمز غير صحيح!</p>
+
+            <div id="locked-section" style="display: none;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #d97706, #b45309); font-size: 18px; padding: 12px 30px;" onclick="downloadCertificate()">📥 تحميل شهادة التقدير كصورة عالية الجودة</button>
+                </div>
+
+                <!-- شهادة التقدير المصممة بـ HTML محلية نقية 100% لتفادي الحظر أو انقصاص الصورة -->
+                <div class="cert-outer-container" id="certificate-node">
+                    <div class="cert-inner-card">
+                        <div class="cert-header-title">شَهَادَةُ تَقْدِيرٍ</div>
+                        <div class="cert-teacher-sub">من أ/ محمد أمين نظير — معلم الفيزياء</div>
+                        
+                        <div class="cert-row-student">
+                            <span>إلى الطالب/ة:</span>
+                            <span class="cert-student-box" id="cert-student-name-val">مريوم صافي</span>
+                        </div>
+                        
+                        <div class="cert-row-score">
+                            <span>بمناسبة الحصول على درجة رقم</span>
+                            <span class="cert-score-badge" id="cert-score-val">13</span>
+                            <span>من</span>
+                            <span class="cert-score-badge">60</span>
+                            <span>في الاختبار</span>
+                        </div>
+                        
+                        <div class="cert-wishes">༺ مع تمنياتنا لك بمزيد من التفوق والنجاح ༻</div>
+                        
+                        <div class="cert-footer-grid">
+                            <div class="cert-footer-item" style="text-align: right;">
+                                <div class="title">مع تحياتي</div>
+                                <div class="val">Mr / Mohamad Ameen</div>
+                            </div>
+                            <div class="cert-seal-icon">⚛</div>
+                            <div class="cert-footer-item" style="text-align: left;">
+                                <div class="title">تاريخ الإصدار:</div>
+                                <div class="val" id="cert-date-val">2026/10/04</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--warm-teal); margin-top: 35px; font-family: 'Cairo', sans-serif;">📝 تقرير مراجعة الإجابات والخطوات التفصيلية:</h3>
+                <div id="report-content"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- قسم الشهادة الأفقي -->
-<div id="certificate-wrapper">
-  <div class="certificate-border">
-    <div class="certificate-container">
-      <div class="cert-header">شهادة تقدير</div>
-      <div class="cert-sub">من الأستاذ / محمد أمين نظير — معلم الفيزياء</div>
-
-      <div>
-        <div class="cert-to">إلى الطالب / ة:</div>
-        <div class="cert-name" id="displayStudentName"></div>
-      </div>
-
-      <div class="cert-body">
-        بمناسبة الحصول على درجة <span class="cert-score" id="displayScore">0 من 60</span> في الاختبار
-      </div>
-
-      <div class="cert-wishes">✨ مع تمنياتنا لك بمزيد من التفوق والنجاح ✨</div>
-
-      <div class="cert-footer">
-        <div><strong>تاريخ الإصدار:</strong> <span id="displayDate"></span></div>
-        <div><strong>مع تحياتي:</strong><br><span class="teacher-sig">Mr / Mohamad Ameen</span></div>
-      </div>
+<!-- FLASHING ALERT POPUP -->
+<div id="flash-alert-overlay" class="flash-alert-overlay">
+    <div class="flash-alert-box">
+        <h2 id="flash-alert-text" style="color: var(--warm-teal); margin: 0; font-size: 30px;"></h2>
     </div>
-  </div>
-  <button class="btn-print" onclick="window.print()">🖨️ طباعة / حفظ الشهادة PDF</button>
 </div>
+
+<!-- PURE KATEX FORMULA POPUP MODAL -->
+<div id="laws-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 12px; direction: rtl;">
+            <h3 style="color: var(--warm-teal); margin: 0; font-family: 'Cairo', sans-serif;">📘 ورقة القوانين بالرموز</h3>
+            <button onclick="toggleModal('laws-modal', false)" style="background:#dc2626; color:white; border:none; padding:4px 10px; border-radius:6px; cursor:pointer; font-weight:bold;">X</button>
+        </div>
+        <div class="law-box" id="pure-law-1"></div>
+        <div class="law-box" id="pure-law-2"></div>
+        <div class="law-box" id="pure-law-3"></div>
+        <div class="law-box" id="pure-law-4"></div>
+    </div>
+</div>
+
+<!-- MOVABLE CALCULATOR -->
+<div id="calc-movable-modal">
+    <div class="calc-box">
+        <div class="calc-title-bar" id="calc-drag-header">
+            <span>🧮 EXAM CALCULATOR PRO</span>
+            <button onclick="toggleCalc(false)" style="background:#dc2626; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold; padding:2px 8px;">X</button>
+        </div>
+        <div class="calc-display">
+            <div id="calc-eq-screen" class="calc-eq-screen">EQ: ready</div>
+            <div id="calc-main-screen" class="calc-main-screen">0</div>
+        </div>
+        <div class="calc-grid-pro">
+            <button class="calc-btn-p purple" onclick="runSolve()">SOLVE</button>
+            <button class="calc-btn-p blue" onclick="pInput('x')">x</button>
+            <button class="calc-btn-p brown" onclick="pInput('/')">a/b</button>
+            <button class="calc-btn-p teal" onclick="pInput('sin(')">sin</button>
+            <button class="calc-btn-p teal" onclick="pInput('cos(')">cos</button>
+            <button class="calc-btn-p teal" onclick="pInput('tan(')">tan</button>
+            <button class="calc-btn-p teal" onclick="pInput('log(')">log</button>
+            <button class="calc-btn-p teal" onclick="pInput('log(')">ln</button>
+            <button class="calc-btn-p brown" onclick="pInput('/')">d/c</button>
+            <button class="calc-btn-p teal" onclick="pInput('^2')">x^2</button>
+            <button class="calc-btn-p teal" onclick="pInput('^')">x^y</button>
+            <button class="calc-btn-p teal" onclick="pInput('sqrt(')">sqrt</button>
+            <button class="calc-btn-p blue" onclick="pInput('(')">(</button>
+            <button class="calc-btn-p blue" onclick="pInput(')')">)</button>
+
+            <button class="calc-btn-p blue" onclick="pInput('7')">7</button>
+            <button class="calc-btn-p blue" onclick="pInput('8')">8</button>
+            <button class="calc-btn-p blue" onclick="pInput('9')">9</button>
+            <button class="calc-btn-p blue" onclick="pInput('/')">/</button>
+            <button class="calc-btn-p red" onclick="pClear()">C</button>
+            <button class="calc-btn-p teal" onclick="pInput('3.14159')">pi</button>
+
+            <button class="calc-btn-p blue" onclick="pInput('4')">4</button>
+            <button class="calc-btn-p blue" onclick="pInput('5')">5</button>
+            <button class="calc-btn-p blue" onclick="pInput('6')">6</button>
+            <button class="calc-btn-p blue" onclick="pInput('*')">*</button>
+            <button class="calc-btn-p red" onclick="pDel()">DEL</button>
+            <button class="calc-btn-p teal" onclick="pInput('2.71828')">e</button>
+
+            <button class="calc-btn-p blue" onclick="pInput('1')">1</button>
+            <button class="calc-btn-p blue" onclick="pInput('2')">2</button>
+            <button class="calc-btn-p blue" onclick="pInput('3')">3</button>
+            <button class="calc-btn-p blue" onclick="pInput('-')">-</button>
+            <button class="calc-btn-p blue" onclick="pInput('0')">0</button>
+            <button class="calc-btn-p blue" onclick="pInput('.')">.</button>
+            <button class="calc-btn-p green" onclick="pEval()">=</button>
+            <button class="calc-btn-p blue" onclick="pInput('+')">+</button>
+        </div>
+    </div>
+</div>
+
+<!-- FormSubmit Integration -->
+<iframe name="hidden_email_frame" id="hidden_email_frame" style="display:none;"></iframe>
+<form id="gmail-form" action="https://formsubmit.co/aseer010moh@gmail.com" method="POST" target="hidden_email_frame" style="display:none;">
+    <input type="hidden" name="_subject" id="email-subject">
+    <input type="hidden" name="اسم الطالب" id="email-student-name">
+    <input type="hidden" name="كود الطالب" id="email-student-code">
+    <input type="hidden" name="الدرجة" id="email-score">
+    <input type="hidden" name="الوقت المستغرق" id="email-time">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+</form>
+
+<footer>
+    <div class="motto-banner">ما استعان عبدٌ بالله إلا وصل</div>
+    جميع الحقوق محفوظة © أ/ محمد أمين - 2027
+</footer>
 
 <script>
-  function submitQuiz() {
-    const nameInput = document.getElementById('studentName').value.trim();
-    if (!nameInput) {
-      alert('لطفاً، قم بكتابة اسمك أولاً!');
-      return;
+    let currentQuestionIndex = 0;
+    const userAnswers = {};
+    const MASTER_PIN = "0109030166";
+    let startTime;
+    let finalCalculatedScore = 0;
+    let totalSeconds = 80 * 60; // 80 دقيقة
+    let timerInterval = null;
+
+    let alertMessages = [
+        "🎯 ركز",
+        "💪 شد حيلك",
+        "⚡ فوق لنفسك",
+        "⚠️ خد بالك",
+        "🧠 م تركز بقى",
+        "🤲 اهدا بقى واستعن بالله",
+        "🍉 يابطيخة ركز"
+    ];
+    let alertMsgIndex = 0;
+
+    // بنك الأسئلة
+    const uniqueBank = [
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `من الرسم البياني المجاور بين القوة $F$ والاستطالة $x$، احسب قيمة ثابت المرونة $k$، ثم أوجد الاستطالة عندما تؤثر قوة قدرها $500\\text{ N}$.`,
+            svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
+                    <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" stroke-width="2"/>
+                    <line x1="40" y1="100" x2="40" y2="20" stroke="#334155" stroke-width="2"/>
+                    <line x1="40" y1="100" x2="220" y2="30" stroke="#dc2626" stroke-width="3"/>
+                    <text x="230" y="115" font-size="10" fill="#334155">x(m)</text>
+                    <text x="10" y="25" font-size="10" fill="#334155">F(N)</text>
+                    <text x="120" y="55" font-size="11" fill="#104c54">الميل = 250 N/m</text>
+                  </svg>`,
+            options: [`k = 250 N/m واستطالة = 2.0 m`, `k = 500 N/m واستطالة = 1.0 m`, `k = 125 N/m واستطالة = 4.0 m`, `k = 250 N/m واستطالة = 0.5 m`],
+            correctIndex: 0,
+            explanation: `الميل يعطي ثابت المرونة $k = 250\\text{ N/m}$. الاستطالة $x = \\frac{F}{k} = \\frac{500}{250} = 2.0\\text{ m}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `إشارة مرور معلقة بكابلين متناظرين يميل كل منهما بزاوية $30^\\circ$ مع الأفق. إذا كانت أقصى قوة شد يتحملها أي كابل هي $490\\text{ N}$، فما أقصى كتلة $m$ لإشارة المرور يمكن تعليقها بأمان؟ ($g = 9.8\\text{ m/s}^2$)`,
+            options: [`50 kg`, `25 kg`, `100 kg`, `75 kg`],
+            correctIndex: 0,
+            explanation: `$2 T \\sin(30^\\circ) = m g \\implies 2 (490) (0.5) = 9.8 m \\implies m = 50\\text{ kg}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `نابضان ثابتا مرونتهما $k_1 = 300\\text{ N/m}$ و $k_2 = 600\\text{ N/m}$ متصلان على التوالي. إذا استطالا معاً بمقدار $0.15\\text{ m}$، احسب كتلة الثقل المعلق.`,
+            options: [`3.06 kg`, `4.50 kg`, `1.50 kg`, `6.12 kg`],
+            correctIndex: 0,
+            explanation: `في التوالي $k_{eq} = 200\\text{ N/m}$. القوة $F = 200 \\times 0.15 = 30\\text{ N}$. الكتلة $m = \\frac{30}{9.8} = 3.06\\text{ kg}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `جسم كتلته $8\\text{ kg}$ معلق بكابل مائل يرافق حابلاً أفقياً $P$. إذا كان الشد المائل $T = 100\\text{ N}$، احسب مقدار قوة الشد الأفقي $P$. ($g = 9.8\\text{ m/s}^2$)`,
+            options: [`62.0 N`, `78.4 N`, `45.2 N`, `100 N`],
+            correctIndex: 0,
+            explanation: `$T \\cos\\phi = mg \\implies 100 \\cos\\phi = 78.4 \\implies \\phi \\approx 38.37^\\circ$. الشد الأفقي $P = T \\sin\\phi = 100 \\times \\sin(38.37^\\circ) \\approx 62.0\\text{ N}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `لتقليل الشد $T$ في كابلين يرفعان جسماً ثابت الكتلة إلى النصف، يجب تعديل زاوية التعليق مع الأفق $\\theta$ بحيث:`,
+            options: [`يتضاعف جيبها sin(θ)`, `تقل الزاوية للنصف`, `تبقى ثابته`, `تتضاعف الزاوية مرتين`],
+            correctIndex: 0,
+            explanation: `العلاقة عكسية بين الشد $T$ وجيب الزاوية $\\sin\\theta$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `نابض طوله الأصلي $20\\text{ cm}$، عند تعليق $2\\text{ kg}$ به أصبح طوله $25\\text{ cm}$. كم يصبح طوله الكلي عند تعليق كتلة إضافية $1.5\\text{ kg}$؟`,
+            options: [`28.75 cm`, `30.00 cm`, `26.25 cm`, `35.00 cm`],
+            correctIndex: 0,
+            explanation: `الكتلة الكلية $3.5\\text{ kg}$ تنتج استطالة $8.75\\text{ cm}$. الطول الكلي = $20 + 8.75 = 28.75\\text{ cm}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `استطالة نابضين متماثلين متصلين على التوازي هي $x_1$ وعلى التوالي هي $x_2$ لنفس الثقل. احسب النسبة $\\frac{x_1}{x_2}$.`,
+            options: [`1 / 4`, `1 / 2`, `4 / 1`, `2 / 1`],
+            correctIndex: 0,
+            explanation: `$x_1 = \\frac{mg}{2k}$ و $x_2 = \\frac{2mg}{k}$، فتكون النسبة $\\frac{1}{4}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `من الرسم البياني للصلابة والمرونة بين القوة $F$ والاستطالة $x$، أي الخطوط يمثل النابض الأكبر صلابة ومرونة؟`,
+            svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
+                    <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" stroke-width="2"/>
+                    <line x1="40" y1="100" x2="40" y2="20" stroke="#334155" stroke-width="2"/>
+                    <line x1="40" y1="100" x2="160" y2="20" stroke="#104c54" stroke-width="3"/>
+                    <line x1="40" y1="100" x2="240" y2="50" stroke="#e5a93c" stroke-width="3"/>
+                    <text x="170" y="25" font-size="11" fill="#104c54">الخط (أ)</text>
+                    <text x="245" y="55" font-size="11" fill="#e5a93c">الخط (ب)</text>
+                  </svg>`,
+            options: [`الخط (أ) لأن زاوية ميله أكبر`, `الخط (ب) لأن استطالته أكبر`, `كلاهما متساويان`, `لا يمكن تحديد ذلك`],
+            correctIndex: 0,
+            explanation: `الميل الأكبر يعبر عن ثابت مرونة $k$ أعلى.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `سلك معدني مرن طوله الأصلي $L$ استطال بمقدار $x$ تحت قوة شد $F$. إذا تم قطع السلك إلى نصفين متساويين واستُخدم نصف واحد منهما تحت نفس القوة $F$، فإن استطالته الجديدة تكون:`,
+            options: [`x / 2`, `x`, `2 x`, `x / 4`],
+            correctIndex: 0,
+            explanation: `نصف السلك يصبح ثابت مرونته ضعف الثابت الأصلي ($2k$)، فتكون الاستطالة النصف $x/2$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `نابضان متماثلان معلقان على التوازي ويحملان ثقلاً $W$. إذا انقطع أحد النابضين فجأة، فإن استطالة النابض المتبقي:`,
+            options: [`تتضاعف للضعف`, `تقل للنصف`, `تبقى كما هي`, `تزداد أربعة أمثال`],
+            correctIndex: 0,
+            explanation: `كان كل نابض يحمل $W/2$، والآن أصبح يحمل $W$ كاملاً فتتضاعف الاستطالة للضعف.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `جسم معلق بحبلين يميل كل منهما بزاوية $\\theta$ مع الأفق. إذا زادت الزاوية $\\theta$ من $30^\\circ$ إلى $60^\\circ$ مع ثبات كتلة الجسم، فإن قوة الشد في كل حبل $T$:`,
+            options: [`تقل بمقدار (1 / √3)`, `تزداد للضعف`, `تقل للنصف`, `تتضاعف ثلاث مرات`],
+            correctIndex: 0,
+            explanation: `$T_1 = \\frac{W}{2 \\sin 30^\\circ} = W$، بينما $T_2 = \\frac{W}{2 \\sin 60^\\circ} = \\frac{W}{\\sqrt{3}}$، وبالتالي تقل بمقدار $\\frac{1}{\\sqrt{3}}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `ثلاثة نوابض متماثلة ثابت كل منها $k$ متصلة كالتالي: نابضان على التوازي ومربوط معهما الثالث على التوالي. احسب ثابت المرونة المكافئ $k_{eq}$ للمجموعة.`,
+            options: [`(2 / 3) k`, `3 k`, `(1 / 3) k`, `(3 / 2) k`],
+            correctIndex: 0,
+            explanation: `مجموعة التوازي $2k$. بالتوالي مع الثالث: $k_{eq} = \\frac{2k \\cdot k}{2k + k} = \\frac{2}{3} k$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `عند ضغط نابض ثابت مرونته $200\\text{ N/m}$ بمقدار $0.04\\text{ m}$، ما مقدار القوة الإرجاعية الناشئة في النابض؟`,
+            options: [`8 N`, `80 N`, `0.8 N`, `50 N`],
+            correctIndex: 0,
+            explanation: `$F = kx = 200 \\times 0.04 = 8\\text{ N}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `كابلان غير متناظرين يحملان كتلّة متزنة $m$. إذا كانت زاوية الكابل الأول مع الأفق أكبر من زاوية الكابل الثاني، فإن الشد في الكابل الأول يكون:`,
+            options: [`أصغر من الشد في الكابل الثاني`, `أكبر من الشد في الكابل الثاني`, `مساوياً للشد في الكابل الثاني`, `يعتمد على طول الحبل فقط`],
+            correctIndex: 0,
+            explanation: `الكابل الأكثر رأسية (الزاوية الأكبر مع الأفق) يتحمل مركبة رأسية أكبر ويكون الشد فيه أقل لتحقيق الاتزان.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `نابض استطال بمقدار $4\\text{ cm}$ عندما علق به ثقل $10\\text{ N}$. إذا وصلناه بنابض آخر متمثل له على التوالي وعلقنا نفس الثقل، تكون الاستطالة الكلية:`,
+            options: [`8 cm`, `4 cm`, `2 cm`, `16 cm`],
+            correctIndex: 0,
+            explanation: `في التوالي تتضاعف الاستطالة الكلية لتصبح $4 + 4 = 8\\text{ cm}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `ثقل كتلته $5\\text{ kg}$ معلق بحبلين متناظرين يميلان بـ $45^\\circ$ مع الأفق. احسب قيمة الشد $T$ في كل حبل. ($g = 9.8\\text{ m/s}^2$)`,
+            options: [`34.6 N`, `49.0 N`, `24.5 N`, `69.3 N`],
+            correctIndex: 0,
+            explanation: `$2 T \\sin(45^\\circ) = 5 \\times 9.8 \\implies 1.414 T = 49 \\implies T = 34.6\\text{ N}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `في الرسم البياني بين القوة $F$ والاستطالة $x$، يعبر ميل المنحنى عن:`,
+            options: [`ثابت المرونة k`, `الطاقة المفقودة`, `الكتلة المعلقة`, `تسارع الجاذبية`],
+            correctIndex: 0,
+            explanation: `الميل $\\frac{\\Delta F}{\\Delta x} = k$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `نابض ثابت مرونته $k$. إذا تم تقصيره بقطع ربع طوله الأصلي، فإن ثابت المرونة للجزء المتبقي يصبح:`,
+            options: [`(4 / 3) k`, `(3 / 4) k`, `4 k`, `3 k`],
+            correctIndex: 0,
+            explanation: `ثابت المرونة يتناسب عكسياً مع الطول الأصلي: $k' = \\frac{L}{0.75 L} k = \\frac{4}{3} k$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `جسم كتلته $m$ معلق بحبل مائل بزاوية $\\phi$ مع الرأسي وحبل أفقي شدّه $P$. أي التعبيرات التالية تعبر عن الشد المائل $T$؟`,
+            options: [`T = mg / cos(φ)`, `T = mg / sin(φ)`, `T = mg · tan(φ)`, `T = mg · cos(φ)`],
+            correctIndex: 0,
+            explanation: `من تحليل المركبة الرأسية: $T \\cos\\phi = mg \\implies T = \\frac{mg}{\\cos\\phi}$.`
+        },
+        {
+            points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
+            title: `ما مقدار الاستطالة الحادثة في نابض ثابت مرونته $150\\text{ N/m}$ عند تعليق ثقل كتلته $3\\text{ kg}$؟ ($g = 9.8\\text{ m/s}^2$)`,
+            options: [`0.196 m`, `0.020 m`, `0.500 m`, `0.098 m`],
+            correctIndex: 0,
+            explanation: `$x = \\frac{mg}{k} = \\frac{3 \\times 9.8}{150} = 0.196\\text{ m}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `ما هي الوحدة الفيزيائية الدولية لقياس ثابت المرونة $k$؟`,
+            options: [`N/m`, `N·m`, `kg/m`, `J/m²`],
+            correctIndex: 0,
+            explanation: `$k = \\frac{F}{x} \\implies \\text{N/m}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `قانون هوك يصف العلاقة بين القوة والاستطالة بشرط أن تكون القوة المؤثرة:`,
+            options: [`ضمن حدود المرونة`, `أكبر من حد الكسر`, `مساوية للصفر`, `متغيرة اللحظة`],
+            correctIndex: 0,
+            explanation: `ينطبق قانون هوك فقط ضمن حدود المرونة.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `جسم كتلته $12\\text{ kg}$ معلق بكابلين متناظرين يميلان بزاوية $45^\\circ$ مع الأفق. احسب قوة الشد $T$.`,
+            options: [`83.2 N`, `117.6 N`, `58.8 N`, `166.3 N`],
+            correctIndex: 0,
+            explanation: `$2 T \\sin(45^\\circ) = 12 \\times 9.8 \\implies T = 83.2\\text{ N}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `نابض ثابت مرونته $400\\text{ N/m}$. ما القوة اللازمة لضغطه بمقدار $6\\text{ cm}$؟`,
+            options: [`24 N`, `2400 N`, `2.4 N`, `15 N`],
+            correctIndex: 0,
+            explanation: `$F = k \\cdot x = 400 \\times 0.06 = 24\\text{ N}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `إذا كان الشد في كابل مائل يميل بزاوية $60^\\circ$ مع الأفق يساوي $50\\text{ N}$ في نظام كابلين متناظرين، احسب كتلة الجسم المعلق $m$.`,
+            options: [`8.84 kg`, `10.2 kg`, `4.42 kg`, `5.10 kg`],
+            correctIndex: 0,
+            explanation: `$2(50)\\sin(60^\\circ) = mg \\implies 86.6 = 9.8m \\implies m = 8.84\\text{ kg}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `جسم كتلته $10\\text{ kg}$ معلق بكابلين متناظرين الشد في كل منهما $98\\text{ N}$. احسب زاوية التعليق $\\theta$ مع الأفق.`,
+            options: [`30°`, `45°`, `60°`, `90°`],
+            correctIndex: 0,
+            explanation: `$2(98)\\sin\\theta = 10(9.8) \\implies 196\\sin\\theta = 98 \\implies \\sin\\theta = 0.5 \\implies \\theta = 30^\\circ$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `نابض ثابت مرونته $k = 250\\text{ N/m}$ علق به ثقل كتلته $5\\text{ kg}$. احسب الاستطالة الحادثة $x$ بالمتر.`,
+            options: [`0.196 m`, `0.500 m`, `0.020 m`, `0.098 m`],
+            correctIndex: 0,
+            explanation: `$x = \\frac{mg}{k} = \\frac{5 \\times 9.8}{250} = 0.196\\text{ m}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `حبل مائل يحمل ثقلاً بزاوية $45^\\circ$ مع الرأسي، ومربوط بحبل أفقي شدّه $50\\text{ N}$. احسب وزن الثقل المعلق $W$.`,
+            options: [`50 N`, `70.7 N`, `35.3 N`, `100 N`],
+            correctIndex: 0,
+            explanation: `بما أن الزاوية $45^\\circ$ فإن الشد الأفقي يساوي الوزن تماماً $W = 50\\text{ N}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `ما القوة الناتجة عن نابض استطال بمقدار $0.05\\text{ m}$ إذا كان ثابت مرونته $180\\text{ N/m}$؟`,
+            options: [`9 N`, `90 N`, `3.6 N`, `0.9 N`],
+            correctIndex: 0,
+            explanation: `$F = k \\cdot x = 180 \\times 0.05 = 9\\text{ N}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `جسم معلق بحبلين متناظرين زاوية كل منهما مع الأفق $60^\\circ$. إذا كان الشد في الكابل $100\\text{ N}$، احسب وزن الجسم الكلي $W$.`,
+            options: [`173.2 N`, `100 N`, `200 N`, `86.6 N`],
+            correctIndex: 0,
+            explanation: `$W = 2 T \\sin(60^\\circ) = 2(100)(0.866) = 173.2\\text{ N}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `عند مضاعفة الكتلة المعلقة بنادي مرن إلى ثلاثة أمثالها، فإن استطالة النابض:`,
+            options: [`تزداد لثلاثة أمثال`, `تقل للثلث`, `تزداد للتسعة أمثال`, `تبقى ثابتة`],
+            correctIndex: 0,
+            explanation: `الاستطالة تتناسب طردياً مع القوة والكتلة $x \\propto m$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `ثقل كتلته $4\\text{ kg}$ معلق بنادي استطال بمقدار $0.08\\text{ m}$. احسب ثابت مرونة النابض $k$.`,
+            options: [`490 N/m`, `392 N/m`, `245 N/m`, `100 N/m`],
+            correctIndex: 0,
+            explanation: `$k = \\frac{mg}{x} = \\frac{4 \\times 9.8}{0.08} = 490\\text{ N/m}$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `جسم كتلته $m$ معلق بكابل مائل بزاوية $\\phi$ مع الرأسي، تكون المركبة الرأسية للشد مساوية لـ:`,
+            options: [`T cos(φ)`, `T sin(φ)`, `T tan(φ)`, `T sec(φ)`],
+            correctIndex: 0,
+            explanation: `المجاورة للزاوية مع الرأسي تأخذ جتا الزاوية $\\cos\\phi$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `في الاتزان بحبل مائل وحبل أفقي، تكون المركبة الأفقية للشد مساوية لـ:`,
+            options: [`T sin(φ)`, `T cos(φ)`, `T mg`, `T / sin(φ)`],
+            correctIndex: 0,
+            explanation: `المركبة الأفقية المقابلة للزاوية الرأسية تأخذ جا الزاوية $\\sin\\phi$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `في نظام الكابلين المتناظرين، إذا كانت زاوية التعليق $\\theta = 30^\\circ$ مع الأفق، فإن الشد في الكابل الواحد $T$ يطابق:`,
+            options: [`وزن الجسم mg`, `نصف الوزن mg/2`, `ضعف الوزن 2mg`, `ثلاثة أضعاف الوزن`],
+            correctIndex: 0,
+            explanation: `لأن $2 T \\sin(30^\\circ) = mg \\implies 2 T (0.5) = mg \\implies T = mg$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `نابض (أ) استطال $2\\text{ cm}$ تحت قوة $10\\text{ N}$، ونابض (ب) استطال $4\\text{ cm}$ تحت نفس القوة. النسبة بين ثابتي مرونتهما $k_A / k_B$ هي:`,
+            options: [`2 : 1`, `1 : 2`, `4 : 1`, `1 : 1`],
+            correctIndex: 0,
+            explanation: `$k_A = 500\\text{ N/m}$ و $k_B = 250\\text{ N/m} \\implies 500/250 = 2$.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: `تصل قوة الشد في كابلين ينقلان جهازا ثقيلاً إلى أدنى قيمة ممكنة عندما تكون زاوية التعليق مع الأفق:`,
+            options: [`90°`, `60°`, `45°`, `30°`],
+            correctIndex: 0,
+            explanation: `عند $90^\\circ$ يكون جيب الزاوية أكبر ما يمكن $\\sin(90^\\circ) = 1$ فيقل الشد للحد الأدنى.`
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: 'ثابت المرونة $k$ خاصية تميز هيكل ومادة النابض ولا يتبدل بتغير القوة المؤثرة ضمن حدود المرونة.',
+            options: ['صح', 'خطأ'],
+            correctIndex: 0,
+            explanation: 'عبارة صحيحة.'
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: 'زيادة زاوية التعليق $\\theta$ مع الأفق في نظام كابلين متناظرين تزيد من قيمة الشد $T$ في الكابل.',
+            options: ['صح', 'خطأ'],
+            correctIndex: 1,
+            explanation: 'عبارة خاطئة، زيادة الزاوية تقلل الشد.'
+        },
+        {
+            points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)',
+            title: 'الشد الأفقي لثقل معلق بحبل مائل يحسب من العلاقة $P = T \\sin\\phi$.',
+            options: ['صح', 'خطأ'],
+            correctIndex: 0,
+            explanation: 'عبارة صحيحة.'
+        }
+    ];
+
+    let examQuestions = [];
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
     }
 
-    const q1 = document.querySelector('input[name="q1"]:checked');
-    const q2 = document.querySelector('input[name="q2"]:checked');
-    const q3 = document.querySelector('input[name="q3"]:checked');
-
-    if (!q1 || !q2 || !q3) {
-      alert('يرجى الإجابة على جميع الأسئلة قبل تسليم الاختبار!');
-      return;
+    function startExam() {
+        const name = document.getElementById('student-name').value.trim();
+        if(!name) {
+            alert('يرجى إدخال اسم الطالب كاملاً');
+            return;
+        }
+        startTime = new Date();
+        examQuestions = shuffleArray(uniqueBank).map((q, idx) => ({ ...q, id: idx + 1 }));
+        document.getElementById('login-screen').classList.remove('active-section');
+        document.getElementById('exam-screen').classList.add('active-section');
+        buildQuestionGrid();
+        loadQuestion(0);
+        startTimer();
+        setupBlurProtection();
     }
 
-    const score = parseInt(q1.value) + parseInt(q2.value) + parseInt(q3.value);
+    function setupBlurProtection() {
+        window.addEventListener('blur', () => {
+            document.body.classList.add('protected-blur');
+        });
+        window.addEventListener('focus', () => {
+            document.body.classList.remove('protected-blur');
+        });
+    }
 
-    // تحديث بيانات الشهادة
-    document.getElementById('displayStudentName').innerText = nameInput;
-    document.getElementById('displayScore').innerText = score + ' من 60';
-    
-    // تاريخ اليوم تلقائياً
-    const today = new Date();
-    document.getElementById('displayDate').innerText = today.toLocaleDateString('ar-EG');
+    function startTimer() {
+        const timerText = document.getElementById('timer-text');
+        if(timerInterval) clearInterval(timerInterval);
+        
+        timerInterval = setInterval(() => {
+            totalSeconds--;
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                alert("⏰ انتهى الوقت المخصص للاختبار!");
+                submitExam();
+                return;
+            }
+            let mins = Math.floor(totalSeconds / 60);
+            let secs = totalSeconds % 60;
+            timerText.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 
-    // إخفاء الاختبار وإظهار الشهادة
-    document.getElementById('quiz-container').style.display = 'none';
-    document.getElementById('certificate-wrapper').style.display = 'block';
-    window.scrollTo(0, 0);
-  }
+            if (totalSeconds < 80 * 60 && totalSeconds % 600 === 0) {
+                triggerFlashAlert();
+            }
+        }, 1000);
+    }
+
+    function triggerFlashAlert() {
+        const overlay = document.getElementById('flash-alert-overlay');
+        const alertText = document.getElementById('flash-alert-text');
+        alertText.innerText = alertMessages[alertMsgIndex % alertMessages.length];
+        alertMsgIndex++;
+        overlay.style.display = 'flex';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 2500);
+    }
+
+    function buildQuestionGrid() {
+        const grid = document.getElementById('question-grid');
+        grid.innerHTML = '';
+        examQuestions.forEach((q, idx) => {
+            const btn = document.createElement('div');
+            btn.className = `q-node ${idx === 0 ? 'current' : ''}`;
+            btn.id = `grid-node-${idx}`;
+            btn.innerText = idx + 1;
+            btn.onclick = () => loadQuestion(idx);
+            grid.appendChild(btn);
+        });
+    }
+
+    function loadQuestion(index) {
+        currentQuestionIndex = index;
+        document.querySelectorAll('.q-node').forEach((node, idx) => {
+            node.classList.remove('current');
+            if(idx === index) node.classList.add('current');
+        });
+
+        const q = examQuestions[index];
+        const container = document.getElementById('question-container');
+        
+        let optionsHTML = '';
+        q.options.forEach((opt, optIdx) => {
+            const isChecked = userAnswers[q.id] === optIdx ? 'checked' : '';
+            optionsHTML += `
+                <label>
+                    <input type="radio" name="q_opt" value="${optIdx}" ${isChecked} onchange="saveAnswer(${q.id}, ${optIdx})">
+                    <span>${opt}</span>
+                </label>
+            `;
+        });
+
+        container.innerHTML = `
+            <div class="question-card">
+                <span class="q-badge ${q.level}">${q.levelLabel}</span>
+                <div class="q-title" id="q-title-box">سؤال ${q.id}: ${q.title}</div>
+                ${q.svg ? q.svg : ''}
+                <div class="q-options">${optionsHTML}</div>
+            </div>
+        `;
+
+        if(window.katex) {
+            const el = document.getElementById('q-title-box');
+            el.innerHTML = el.innerHTML.replace(/\$(.*?)\$/g, (m, p1) => katex.renderToString(p1, {throwOnError: false}));
+        }
+    }
+
+    function saveAnswer(questionId, optionIndex) {
+        userAnswers[questionId] = optionIndex;
+        document.getElementById(`grid-node-${currentQuestionIndex}`).classList.add('answered');
+    }
+
+    function nextQuestion() {
+        if(currentQuestionIndex < examQuestions.length - 1) loadQuestion(currentQuestionIndex + 1);
+    }
+
+    function prevQuestion() {
+        if(currentQuestionIndex > 0) loadQuestion(currentQuestionIndex - 1);
+    }
+
+    function toggleModal(id, show) {
+        document.getElementById(id).style.display = show ? 'flex' : 'none';
+    }
+
+    function renderPureLaws() {
+        if(window.katex) {
+            katex.render("2 T \\sin(\\theta) = m \\cdot g", document.getElementById('pure-law-1'), {throwOnError: false});
+            katex.render("F = k \\cdot \\Delta x", document.getElementById('pure-law-2'), {throwOnError: false});
+            katex.render("T_1 \\cos(\\phi) = m g \\quad , \\quad P = T_1 \\sin(\\phi)", document.getElementById('pure-law-3'), {throwOnError: false});
+            katex.render("k_{eq} = k_1 + k_2 \\quad (Parallel)", document.getElementById('pure-law-4'), {throwOnError: false});
+        }
+    }
+
+    function toggleCalc(show) {
+        document.getElementById('calc-movable-modal').style.display = show ? 'block' : 'none';
+    }
+
+    function pInput(val) {
+        const screen = document.getElementById('calc-main-screen');
+        if(screen.innerText === "0" || screen.innerText === "Error") screen.innerText = "";
+        screen.innerText += val;
+    }
+
+    function pClear() {
+        document.getElementById('calc-main-screen').innerText = "0";
+        document.getElementById('calc-eq-screen').innerText = "EQ: ready";
+    }
+
+    function pDel() {
+        const screen = document.getElementById('calc-main-screen');
+        screen.innerText = screen.innerText.slice(0, -1);
+        if(screen.innerText === "") screen.innerText = "0";
+    }
+
+    function pEval() {
+        const screen = document.getElementById('calc-main-screen');
+        try {
+            let expr = screen.innerText.replace(/sin/g, 'Math.sin').replace(/cos/g, 'Math.cos').replace(/tan/g, 'Math.tan').replace(/sqrt/g, 'Math.sqrt');
+            let res = eval(expr);
+            screen.innerText = res;
+        } catch(e) {
+            screen.innerText = "Error";
+        }
+    }
+
+    function runSolve() {
+        const screen = document.getElementById('calc-main-screen');
+        let rawInput = screen.innerText;
+        try {
+            let sol = nerdamer.solve(rawInput, 'x');
+            screen.innerText = sol.toString().replace(/\[\vert{}\]/g, '');
+        } catch(e) {
+            screen.innerText = "Error in SOLVE";
+        }
+    }
+
+    function submitExam() {
+        if(timerInterval) clearInterval(timerInterval);
+        
+        finalCalculatedScore = 0;
+        examQuestions.forEach(q => {
+            if(userAnswers[q.id] === q.correctIndex) finalCalculatedScore += q.points || 1;
+        });
+
+        const studentName = document.getElementById('student-name').value;
+        const studentCode = document.getElementById('student-code').value || "2027";
+        const timeSpent = `${Math.floor((80 * 60 - totalSeconds)/60)} دقيقة`;
+
+        document.getElementById('exam-screen').classList.remove('active-section');
+        document.getElementById('result-screen').classList.add('active-section');
+        document.getElementById('student-display-name').innerText = studentName;
+
+        // تحديث بيانات الشهادة
+        document.getElementById('cert-student-name-val').textContent = studentName;
+        document.getElementById('cert-score-val').textContent = finalCalculatedScore;
+        const today = new Date();
+        const dateStr = `${today.getFullYear()}/${(today.getMonth()+1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}`;
+        document.getElementById('cert-date-val').textContent = dateStr;
+
+        document.getElementById('email-subject').value = `📊 نتيجة فيزياء جديدة - ${studentName}`;
+        document.getElementById('email-student-name').value = studentName;
+        document.getElementById('email-student-code').value = studentCode;
+        document.getElementById('email-score').value = `${finalCalculatedScore} / 60`;
+        document.getElementById('email-time').value = timeSpent;
+        document.getElementById('gmail-form').submit();
+    }
+
+    function unlockReportAndCert() {
+        const inputPin = document.getElementById('unlock-pin').value.trim();
+        if(inputPin === MASTER_PIN) {
+            document.getElementById('pin-error').style.display = 'none';
+            document.getElementById('locked-section').style.display = 'block';
+
+            let html = '';
+            examQuestions.forEach((q, idx) => {
+                const userAns = userAnswers[q.id];
+                const isCorrect = userAns === q.correctIndex;
+                html += `
+                    <div class="review-item ${isCorrect ? 'correct' : 'wrong'}">
+                        <strong>س${idx + 1}: ${q.title} (${q.points || 1} درجات)</strong><br>
+                        إجابة الطالب: <span style="font-weight:bold; color:${isCorrect ? '#16a34a' : '#dc2626'};">${userAns !== undefined ? q.options[userAns] : 'لم يتم الإجابة'}</span> | الإجابة الصحيحة: <strong>${q.options[q.correctIndex]}</strong><br>
+                        <div style="margin-top:8px; padding-top:5px; border-top:1px dashed #ccc; color:#334155;">
+                            🔍 <strong>خطوات الحل وشرح الفكرة:</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('report-content').innerHTML = html;
+
+            if(window.katex) {
+                document.querySelectorAll('.review-item').forEach(el => {
+                    el.innerHTML = el.innerHTML.replace(/\$(.*?)\$/g, (m, p1) => katex.renderToString(p1, {throwOnError: false}));
+                });
+            }
+        } else {
+            document.getElementById('pin-error').style.display = 'block';
+        }
+    }
+
+    function downloadCertificate() {
+        const certElement = document.getElementById('certificate-node');
+        const studentName = document.getElementById('student-name').value || "الطالب";
+
+        html2canvas(certElement, {
+            scale: 3,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: null,
+            logging: false
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `شهادة_تقدير_${studentName}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    }
 </script>
 
 </body>
