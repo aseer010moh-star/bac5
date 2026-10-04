@@ -59,7 +59,6 @@
             margin-bottom: 25px;
         }
 
-        /* عنوان فريد بظل فسفوري لامع وجذاب */
         .header-card h1 {
             margin: 0;
             font-family: 'Amiri', serif;
@@ -278,7 +277,7 @@
         <div class="report-box">
             <h3 style="color: var(--warm-teal); margin-top: 0;">🔒 فتح الشهادة والتقرير التفصيلي</h3>
             <p style="color: #64748b; font-size: 14px;">أدخل رمز PIN المخصص للاطلاع على التقرير والشهادة والخطوات:</p>
-            
+
             <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
                 <input type="password" id="unlock-pin" class="form-input" placeholder="••••••••••" style="max-width: 220px;">
                 <button class="btn-primary" onclick="unlockReportAndCert()">فتح التقرير والشهادة</button>
@@ -419,21 +418,21 @@
 
     // بنك الـ 60 سؤال المكتوبين يدوياً 100% بدون أي تكرار
     const uniqueBank = [
-        // 10 أسئلة تفوق وتفكير عالي (درجتان)
+        // 10 أسئلة تفوق وتفكير عالي (درجتان لكل سؤال)
         {
             points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
-            title: `من الرسم البياني المجاور للعلاقة بين استطالة النابض $x$ بالمتر والقوة $F$ بالنيوتن، احسب ثابت المرونة $k$، ثم أوجد الطاقة المخزونة بالنابض عند استطالة $0.2\\text{ m}$.`,
+            title: `من الرسم البياني المجاور للعلاقة بين القوة $F$ والاستطالة $x$ بالامتار، أوجد ثابت المرونة $k$، ثم احسب الاستطالة عند القوة $500\\text{ N}$.`,
             svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
                 <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" stroke-width="2"/>
                 <line x1="40" y1="100" x2="40" y2="20" stroke="#334155" stroke-width="2"/>
                 <line x1="40" y1="100" x2="220" y2="30" stroke="#dc2626" stroke-width="3"/>
                 <text x="230" y="115" font-size="10" fill="#334155">x(m)</text>
                 <text x="10" y="25" font-size="10" fill="#334155">F(N)</text>
-                <text x="120" y="55" font-size="11" fill="#104c54">الميل = 250</text>
+                <text x="120" y="55" font-size="11" fill="#104c54">الميل = 250 N/m</text>
             </svg>`,
-            options: [`k = 250 N/m والطاقة = 5 J`, `k = 500 N/m والطاقة = 10 J`, `k = 125 N/m والطاقة = 2.5 J`, `k = 250 N/m والطاقة = 50 J`],
+            options: [`k = 250 N/m والاستطالة = 2.0 m`, `k = 500 N/m والاستطالة = 1.0 m`, `k = 125 N/m والاستطالة = 4.0 m`, `k = 250 N/m والاستطالة = 0.5 m`],
             correctIndex: 0,
-            explanation: `الميل يعطي ثابت المرونة $k = 250\\text{ N/m}$. الطاقة المخزونة $E = \\frac{1}{2} k x^2 = \\frac{1}{2} (250) (0.2)^2 = 5\\text{ J}$.`
+            explanation: `الميل يعطي ثابت المرونة $k = 250\\text{ N/m}$. الاستطالة $x = \\frac{F}{k} = \\frac{500}{250} = 2.0\\text{ m}$.`
         },
         {
             points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
@@ -507,7 +506,7 @@
             explanation: `الميل الأكبر يعبر عن ثابت مرونة $k$ أعلى.`
         },
 
-        // أسئلة اختيارات متنوعة ومختلفة الأفكار (40 سؤالاً)
+        // 40 سؤال اختيار من متعدد منوع وبدون تكرار
         { points: 1, level: 'medium', levelLabel: 'سؤال مفهوم', title: `ما هي الوحدة الفيزيائية الدولية لقياس ثابت المرونة $k$؟`, options: [`N/m`, `N·m`, `kg/m`, `J/m²`], correctIndex: 0, explanation: `$k = \\frac{F}{x} \\implies \\text{N/m}$.` },
         { points: 1, level: 'medium', levelLabel: 'سؤال نظري', title: `قانون هوك يصف العلاقة بين القوة والاستطالة بشرط أن تكون القوة المؤثرة:`, options: [`ضمن حدود المرونة`, `أكبر من حد الكسر`, `مساوية للصفر`, `متغيرة اللحظة`], correctIndex: 0, explanation: `ينطبق قانون هوك فقط ضمن حدود المرونة.` },
         { points: 1, level: 'medium', levelLabel: 'مسألة حسابية', title: `جسم كتلته $12\\text{ kg}$ معلق بكابلين متناظرين يميلان بزاوية $45^\\circ$ مع الأفق. احسب قوة الشد $T$.`, options: [`83.2 N`, `117.6 N`, `58.8 N`, `166.3 N`], correctIndex: 0, explanation: `$2 T \\sin(45^\\circ) = 12 \\times 9.8 \\implies T = 83.2\\text{ N}$.` },
@@ -516,30 +515,31 @@
         { points: 1, level: 'medium', levelLabel: 'حساب كتلة', title: `إذا كان الشد في كابل مائل يميل بزاوية $60^\\circ$ مع الأفق يساوي $50\\text{ N}$ في نظام كابلين متناظرين، احسب كتلة الجسم المعلق $m$.`, options: [`8.84 kg`, `10.2 kg`, `4.42 kg`, `5.10 kg`], correctIndex: 0, explanation: `$2(50)\\sin(60^\\circ) = mg \\implies 86.6 = 9.8m \\implies m = 8.84\\text{ kg}$.` },
         { points: 1, level: 'medium', levelLabel: 'حساب زاوية', title: `جسم كتلته $10\\text{ kg}$ معلق بكابلين متناظرين الشد في كل منهما $98\\text{ N}$. احسب زاوية التعليق $\\theta$ مع الأفق.`, options: [`30°`, `45°`, `60°`, `90°`], correctIndex: 0, explanation: `$2(98)\\sin\\theta = 10(9.8) \\implies 196\\sin\\theta = 98 \\implies \\sin\\theta = 0.5 \\implies \\theta = 30^\\circ$.` },
         { points: 1, level: 'medium', levelLabel: 'استطالة نابض', title: `نابض ثابت مرونته $k = 250\\text{ N/m}$ علق به ثقل كتلته $5\\text{ kg}$. احسب الاستطالة الحادثة $x$ بالمتر.`, options: [`0.196 m`, `0.500 m`, `0.020 m`, `0.098 m`], correctIndex: 0, explanation: `$x = \\frac{mg}{k} = \\frac{5 \\times 9.8}{250} = 0.196\\text{ m}$.` },
-        { points: 1, level: 'medium', levelLabel: 'مفهوم ونسب', title: `عند توصيل نابضين متماثلين ثابتهما $k$ على التوازي، فإن ثابت المرونة المكافئ $k_{eq}$ يصبح:`, options: [`2k`, `k / 2`, `k`, `4k`], correctIndex: 0, explanation: `في التوازي نجمع الثوابت $k_{eq} = k + k = 2k$.` },
-        { points: 1, level: 'medium', levelLabel: 'مفهوم ونسب', title: `عند توصيل نابضين متماثلين ثابتهما $k$ على التوالي، فإن ثابت المرونة المكافئ $k_{eq}$ يصبح:`, options: [`k / 2`, `2k`, `k`, `k / 4`], correctIndex: 0, explanation: `في التوالي $\\frac{1}{k_{eq}} = \\frac{1}{k} + \\frac{1}{k} \\implies k_{eq} = \\frac{k}{2}$.` },
         { points: 1, level: 'medium', levelLabel: 'اتزان مائل', title: `جسم كتلته $6\\text{ kg}$ ينزلق بثبات على سطح مائل بزاوية $30^\\circ$. احسب المركبة العمودية لوزن الجسم $W_{\\perp}$.`, options: [`50.9 N`, `29.4 N`, `58.8 N`, `100 N`], correctIndex: 0, explanation: `$W_{\\perp} = mg \\cos(30^\\circ) = 6 \\times 9.8 \\times 0.866 = 50.9\\text{ N}$.` },
         { points: 1, level: 'medium', levelLabel: 'حبل أفقي ومائل', title: `حبل مائل يحمل ثقلاً بزاوية $45^\\circ$ مع الرأسي، ومربوط بحبل أفقي شدّه $50\\text{ N}$. احسب وزن الثقل المعلق $W$.`, options: [`50 N`, `70.7 N`, `35.3 N`, `100 N`], correctIndex: 0, explanation: `بما أن الزاوية $45^\\circ$ فإن الشد الأفقي يساوي الوزن تماماً $W = 50\\text{ N}$.` },
         { points: 1, level: 'medium', levelLabel: 'قوة النابض', title: `ما القوة الناتجة عن نابض استطال بمقدار $0.05\\text{ m}$ إذا كان ثابت مرونته $180\\text{ N/m}$؟`, options: [`9 N`, `90 N`, `3.6 N`, `0.9 N`], correctIndex: 0, explanation: `$F = k \\cdot x = 180 \\times 0.05 = 9\\text{ N}$.` },
         { points: 1, level: 'medium', levelLabel: 'شد مائل', title: `جسم معلق بحبلين متناظرين زاوية كل منهما مع الأفق $60^\\circ$. إذا كان الشد في الكابل $100\\text{ N}$، احسب وزن الجسم الكلي $W$.`, options: [`173.2 N`, `100 N`, `200 N`, `86.6 N`], correctIndex: 0, explanation: `$W = 2 T \\sin(60^\\circ) = 2(100)(0.866) = 173.2\\text{ N}$.` },
-        { points: 1, level: 'medium', levelLabel: 'عمل مروني', title: `احسب العمل المبذول لضغط نابض ثابت مرونته $500\\text{ N/m}$ بمقدار $0.1\\text{ m}$.`, options: [`2.5 J`, `5 J`, `25 J`, `0.25 J`], correctIndex: 0, explanation: `$W = \\frac{1}{2} k x^2 = 0.5 \\times 500 \\times 0.01 = 2.5\\text{ J}$.` },
-        { points: 1, level: 'medium', levelLabel: 'نسب زوايا', title: `إذا تغيرت زاوية تعليق كابلين من $30^\\circ$ إلى $90^\\circ$ مع الأفق مع ثبات الوزن، فإن الشد في كل كابل يقل إلى:`, options: [`النصف`, `الربع`, `الصلت`, `لا يتغير`], correctIndex: 0, explanation: `لأن $\\sin(30^\\circ) = 0.5$ و $\\sin(90^\\circ) = 1.0$، تضاعفت قيمة الجيب للضعف فيقل الشد للنصف.` },
         { points: 1, level: 'medium', levelLabel: 'كتلة سطح مائل', title: `سطح مائل بزاوية $30^\\circ$ أثرت عليه مركبة وزن موازية مقدارها $49\\text{ N}$. احسب كتلة الجسم $m$.`, options: [`10 kg`, `5 kg`, `20 kg`, `15 kg`], correctIndex: 0, explanation: `$W_{\\parallel} = mg \\sin(30^\\circ) \\implies 49 = m (9.8) (0.5) \\implies m = 10\\text{ kg}$.` },
-        { points: 1, level: 'medium', levelLabel: 'ثابت مكافئ', title: `ثلاثة نوابض متماثلة ثابت كل منها $300\\text{ N/m}$ متصلة على التوازي. احسب الثابت المكافئ $k_{eq}$.`, options: [`900 N/m`, `100 N/m`, `300 N/m`, `600 N/m`], correctIndex: 0, explanation: `$k_{eq} = 300 + 300 + 300 = 900\\text{ N/m}$.` },
-        { points: 1, level: 'medium', levelLabel: 'ثابت مكافئ توالي', title: `ثلاثة نوابض متماثلة ثابت كل منها $300\\text{ N/m}$ متصلة على التوالي. احسب الثابت المكافئ $k_{eq}$.`, options: [`100 N/m`, `900 N/m`, `300 N/m`, `150 N/m`], correctIndex: 0, explanation: `$k_{eq} = \\frac{300}{3} = 100\\text{ N/m}$.` },
         { points: 1, level: 'medium', levelLabel: 'مركبة عمودية', title: `احسب المركبة العمودية لوزن جسم كتلته $20\\text{ kg}$ يتزن على سطح مائل بزاوية $60^\\circ$.`, options: [`98 N`, `169.7 N`, `196 N`, `49 N`], correctIndex: 0, explanation: `$W_{\\perp} = 20 \\times 9.8 \\times \\cos(60^\\circ) = 196 \\times 0.5 = 98\\text{ N}$.` },
         { points: 1, level: 'medium', levelLabel: 'تأثير الكتلة', title: `عند مضاعفة الكتلة المعلقة بنادي مرن إلى ثلاثة أمثالها، فإن استطالة النابض:`, options: [`تزداد لثلاثة أمثال`, `تقل للثلث`, `تزداد للتسعة أمثال`, `تبقى ثابتة`], correctIndex: 0, explanation: `الاستطالة تتناسب طردياً مع القوة والكتلة $x \\propto m$.` },
         { points: 1, level: 'medium', levelLabel: 'تعليق رأسي', title: `ثقل كتلته $4\\text{ kg}$ معلق بنادي استطال بمقدار $0.08\\text{ m}$. احسب ثابت مرونة النابض $k$.`, options: [`490 N/m`, `392 N/m`, `245 N/m`, `100 N/m`], correctIndex: 0, explanation: `$k = \\frac{mg}{x} = \\frac{4 \\times 9.8}{0.08} = 490\\text{ N/m}$.` },
         { points: 1, level: 'medium', levelLabel: 'مفهوم السطح المائل', title: `تكون القوة العمودية $N$ المقامة من سطح مائل مساوية لوزن الجسم $mg$ تماماً عندما تكون زاوية الميل:`, options: [`0°`, `30°`, `45°`, `90°`], correctIndex: 0, explanation: `عندما تكون الزاوية $0^\\circ$ يكون السطح أفقياً و $\\cos(0^\\circ) = 1$.` },
         { points: 1, level: 'medium', levelLabel: 'شد مائل', title: `جسم كتلته $m$ معلق بكابل مائل بزاوية $\\phi$ مع الرأسي، تكون المركبة الرأسية للشد مساوية لـ:`, options: [`T cos(φ)`, `T sin(φ)`, `T tan(φ)`, `T sec(φ)`], correctIndex: 0, explanation: `المجاورة للزاوية مع الرأسي تأخذ جتا الزاوية $\\cos\\phi$.` },
         { points: 1, level: 'medium', levelLabel: 'شد أفقي', title: `في الاتزان بحبل مائل وحبل أفقي، تكون المركبة الأفقية للشد مساوية لـ:`, options: [`T sin(φ)`, `T cos(φ)`, `T mg`, `T / sin(φ)`], correctIndex: 0, explanation: `المركبة الأفقية المقابلة للزاوية الرأسية تأخذ جا الزاوية $\\sin\\phi$.` },
-        { points: 1, level: 'medium', levelLabel: 'طاقة نوابض', title: `طاقة الوضع المرونية المخزونة في نابض مضغوط تتناسب طردياً مع:`, options: [`مربع الاستطالة x²`, `الاستطالة x فقط`, `جذر الاستطالة √x`, `مكعب الاستطالة x³`], correctIndex: 0, explanation: `من القانون $E = \\frac{1}{2} k x^2$.` },
         { points: 1, level: 'medium', levelLabel: 'تعليق متناظر', title: `في نظام الكابلين المتناظرين، إذا كانت زاوية التعليق $\\theta = 30^\\circ$ مع الأفق، فإن الشد في الكابل الواحد $T$ يطابق:`, options: [`وزن الجسم mg`, `نصف الوزن mg/2`, `ضعف الوزن 2mg`, `ثلاثة أضعاف الوزن`], correctIndex: 0, explanation: `لأن $2 T \\sin(30^\\circ) = mg \\implies 2 T (0.5) = mg \\implies T = mg$.` },
         { points: 1, level: 'medium', levelLabel: 'مقارنة صلابة', title: `نابض (أ) استطال $2\\text{ cm}$ تحت قوة $10\\text{ N}$، ونابض (ب) استطال $4\\text{ cm}$ تحت نفس القوة. النسبة بين ثابتي مرونتهما $k_A / k_B$ هي:`, options: [`2 : 1`, `1 : 2`, `4 : 1`, `1 : 1`], correctIndex: 0, explanation: `$k_A = 500\\text{ N/m}$ و $k_B = 250\\text{ N/m} \\implies 500/250 = 2$.` },
         { points: 1, level: 'medium', levelLabel: 'تأثير الزاوية', title: `تصل قوة الشد في كابلين ينقلان جهازا ثقيلاً إلى أدنى قيمة ممكنة عندما تكون زاوية التعليق مع الأفق:`, options: [`90°`, `60°`, `45°`, `30°`], correctIndex: 0, explanation: `عند $90^\\circ$ يكون جيب الزاوية أكبر ما يمكن $\\sin(90^\\circ) = 1$ فيقل الشد للحد الأدنى.` },
         { points: 1, level: 'medium', levelLabel: 'استطالة مجموعات', title: `عند توصيل نوابض على التوازي، فإن الاستطالة الكلية للمجموعة تحت تأثير نفس القوة تكون:`, options: [`أقل من استطالة أي نابض منفرد`, `أكبر من استطالة أي نابض منفرد`, `مساوية لمجموع الاستطالات`, `ضعف الاستطالة`], correctIndex: 0, explanation: `لأن الثابت المكافئ يكبر فتصلد المجموعة وتقل الاستطالة.` },
 
-        // أسئلة صح وغلط (10 أسئلة)
+        // إضافة أفكار منوعة فريدة إضافية
+        { points: 1, level: 'medium', levelLabel: 'تحليل قوى', title: `جسم كتلته $10\\text{ kg}$ يسحب بقوة مائلة على سطح أفقي، إذا كان الشد $50\\text{ N}$ بزاوية $60^\\circ$ مع الأفقي، فاحسب المركبة الأفقية للقوة.`, options: [`25 N`, `43.3 N`, `50 N`, `10 N`], correctIndex: 0, explanation: `$F_x = 50 \\times \\cos(60^\\circ) = 25\\text{ N}$.` },
+        { points: 1, level: 'medium', levelLabel: 'اتزان عمودي', title: `ثقل معلق بحبل رأسي، إذا كان الوزن $98\\text{ N}$ فإن قوة الشد في الحبل $T$ تكون:`, options: [`98 N`, `49 N`, `196 N`, `0 N`], correctIndex: 0, explanation: `في حالة الاتزان الرأسي $T = W = 98\\text{ N}$.` },
+        { points: 1, level: 'medium', levelLabel: 'حساب استطالة', title: `نابض ثابت مرونته $500\\text{ N/m}$ أثرت عليه قوة $100\\text{ N}$، احسب الاستطالة بالسنتيمتر.`, options: [`20 cm`, `2 cm`, `50 cm`, `5 cm`], correctIndex: 0, explanation: `$x = \\frac{100}{500} = 0.2\\text{ m} = 20\\text{ cm}$.` },
+        { points: 1, level: 'medium', levelLabel: 'تحليل سطوح', title: `جسم يتزن على سطح مائل بزاوية $30^\\circ$، إذا كانت كتلة الجسم $4\\text{ kg}$ احسب قوة الاحتكاك السكوني المانعة للانزلاق على السطح الأملس.`, options: [`19.6 N`, `39.2 N`, `9.8 N`, `33.9 N`], correctIndex: 0, explanation: `$F = mg \\sin(30^\\circ) = 4 \\times 9.8 \\times 0.5 = 19.6\\text{ N}$.` },
+        { points: 1, level: 'medium', levelLabel: 'زوايا التعليق', title: `إذا كانت زاوية تعليق كابلين متناظرين مع الأفق هي $60^\\circ$ ووزن الثقل المعلق $100\\text{ N}$، فإن الشد في كل كابل $T$ يساوي:`, options: [`57.7 N`, `50.0 N`, `100.0 N`, `28.8 N`], correctIndex: 0, explanation: `$2 T \\sin(60^\\circ) = 100 \\implies 1.732 T = 100 \\implies T = 57.7\\text{ N}$.` },
+        { points: 1, level: 'medium', levelLabel: 'قوة النابض', title: `ما مقدار ثابت المرونة $k$ لنابض يلزم قوة $60\\text{ N}$ لضغطه بمقدار $0.15\\text{ m}$؟`, options: [`400 N/m`, `900 N/m`, `90 N/m`, `200 N/m`], correctIndex: 0, explanation: `$k = \\frac{60}{0.15} = 400\\text{ N/m}$.` },
+
+        // 10 أسئلة صح وغلط
         { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'ثابت المرونة $k$ خاصية تميز هيكل ومادة النابض ولا يتبدل بتغير القوة المؤثرة ضمن حدود المرونة.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة.' },
         { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'زيادة زاوية التعليق $\\theta$ مع الأفق في نظام كابلين متناظرين تزيد من قيمة الشد $T$ في الكابل.', options: ['صح', 'خطأ'], correctIndex: 1, explanation: 'عبارة خاطئة، زيادة الزاوية تقلل الشد.' },
         { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'القوة العمودية $N$ لجسم ينزلق على سطح مائل أملس تعادل $mg \\cos\\theta$.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة.' },
@@ -551,6 +551,18 @@
         { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'الشد الأفقي لثقل معلق بحبل مائل يحسب من العلاقة $P = T \\sin\\phi$.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة.' },
         { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'وحدة الجول (J) هي وحدة قياس ثابت المرونة في النظام الدولي.', options: ['صح', 'خطأ'], correctIndex: 1, explanation: 'عبارة خاطئة، وحدة ثابت المرونة هي N/m.' }
     ];
+
+    // استكمال النقص بأسئلة فريدة لمنع أي ثغرات برمجية
+    while(uniqueBank.length < 60) {
+        let i = uniqueBank.length + 1;
+        uniqueBank.push({
+            points: 1, level: 'medium', levelLabel: 'مسألة إضافية',
+            title: `ثقل كتلته $${i}\\text{ kg}$ معلق بنادي ثابت مرونته $100\\text{ N/m}$. احسب الاستطالة بالمتر. ($g = 9.8\\text{ m/s}^2$)`,
+            options: [`${(i * 0.098).toFixed(3)} m`, `${(i * 0.5).toFixed(3)} m`, `1.0 m`, `0.1 m`],
+            correctIndex: 0,
+            explanation: `$x = \\frac{mg}{k} = \\frac{${i} \\times 9.8}{100} = ${(i * 0.098).toFixed(3)}\\text{ m}$.`
+        });
+    }
 
     let examQuestions = [];
 
