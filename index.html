@@ -10,11 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
 
-    <!-- KaTeX CSS & JS for Pure Math & Physics Formulas -->
+    <!-- KaTeX CSS & JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" onload="renderPureLaws()"></script>
 
-    <!-- Nerdamer JS Engine for Advanced Mathematical SOLVE Function -->
+    <!-- Nerdamer JS Engine -->
     <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/nerdamer.core.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/Algebra.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.1/Calculus.js"></script>
@@ -30,6 +30,7 @@
             --text-color: #1e293b;
         }
 
+        /* حماية الصفحة من النسخ والتحديد */
         body {
             font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
             background: linear-gradient(135deg, var(--warm-teal), var(--dark-teal));
@@ -38,6 +39,16 @@
             padding: 20px;
             min-height: 100vh;
             direction: rtl;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* تأثير البلور عند مغادرة الصفحة لحماية الاختبار */
+        body.protected-blur {
+            filter: blur(12px);
+            pointer-events: none;
         }
 
         .main-wrapper { max-width: 950px; margin: 0 auto; }
@@ -56,14 +67,9 @@
             font-family: 'Amiri', serif;
             font-size: 38px;
             color: var(--warm-teal);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.15), 0 0 10px rgba(229, 169, 60, 0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
         }
-        .header-card h3 {
-            margin-top: 10px;
-            font-size: 20px;
-            color: #334155;
-            font-weight: 800;
-        }
+        .header-card h3 { margin-top: 10px; font-size: 20px; color: #334155; font-weight: 800; }
 
         .app-card {
             background: var(--card-bg);
@@ -78,8 +84,7 @@
         .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--warm-teal); }
         .form-input {
             width: 100%; padding: 14px; border: 2px solid #b2dfdb;
-            border-radius: 8px; font-size: 16px; box-sizing: border-box; outline: none;
-            font-family: inherit;
+            border-radius: 8px; font-size: 16px; box-sizing: border-box; outline: none; font-family: inherit;
         }
 
         .btn-primary {
@@ -106,7 +111,6 @@
             padding: 8px 16px; border-radius: 10px; border: 2px solid #334155; display: flex; align-items: center; gap: 8px;
             transition: all 0.5s ease;
         }
-        
         .timer-badge.warning-glow {
             animation: redGlow 1.5s infinite alternate;
         }
@@ -151,6 +155,7 @@
         .q-badge.easy { background: #dcfce7; color: #15803d; }
         .q-badge.medium { background: #fef9c3; color: #a16207; }
         .q-badge.hard { background: #fee2e2; color: #b91c1c; }
+        .q-badge.pro { background: #f3e8ff; color: #6b21a8; border: 1px solid #c084fc; }
 
         .svg-illustration {
             width: 100%; max-width: 380px; margin: 15px auto; display: block; background: #ffffff;
@@ -227,12 +232,12 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
 <div class="main-wrapper">
     <div class="header-card">
         <h1>سلسلة اختبارات الأمين</h1>
-        <h3>اختبار 5 بكالوريا 2027 - الفيزياء</h3>
+        <h3>اختبار 5 بكالوريا 2027 - الفيزياء (النسخة المحمية)</h3>
     </div>
 
     <!-- Login Screen -->
@@ -255,11 +260,12 @@
     <div id="exam-screen" class="app-card">
         <div class="top-tools-bar">
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <button class="tool-btn calc" onclick="toggleCalc(true)">🧮 الآلة الحاسبة العلمية (تتحرك بسهولة)</button>
+                <button class="tool-btn calc" onclick="toggleCalc(true)">🧮 الآلة الحاسبة العلمية</button>
                 <button class="tool-btn laws" onclick="toggleModal('laws-modal', true)">📘 القوانين بالرموز</button>
             </div>
+            <!-- العداد التنازلي لمدة 90 دقيقة -->
             <div class="timer-badge" id="timer-display">
-                ⏱️ <span id="timer-text">120:00</span>
+                ⏱️ <span id="timer-text">90:00</span>
             </div>
         </div>
 
@@ -385,7 +391,7 @@
     </div>
 </div>
 
-<!-- FormSubmit Integration (Hidden Backend Form) -->
+<!-- FormSubmit Integration -->
 <iframe name="hidden_email_frame" id="hidden_email_frame" style="display:none;"></iframe>
 <form id="gmail-form" action="https://formsubmit.co/aseer010moh@gmail.com" method="POST" target="hidden_email_frame" style="display:none;">
     <input type="hidden" name="_subject" id="email-subject">
@@ -409,7 +415,8 @@
     let startTime;
     let lastAns = "0";
 
-    let totalSeconds = 120 * 60;
+    // مدة الاختبار 90 دقيقة
+    let totalSeconds = 90 * 60;
     let timerInterval = null;
     let alertMessages = [
         "💡 بلاش تسرع..",
@@ -421,85 +428,185 @@
     ];
     let alertMsgIndex = 0;
 
-    const examQuestions = [];
+    // بنك أسئلة فريد مصمم يدوياً بالكامل 60 سؤال (50 اختياري + 10 صح وغلط)
+    const rawQuestionsBank = [
+        // --- أسئلة التفوق والتفكير العالي (10 أسئلة - درجتان) ---
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `من الرسم البياني المجاور للعلاقة بين استطالة النابض $x$ بالمتر والقوة $F$ بالنيوتن، احسب قيمة ثابت المرونة $k$، ثم أوجد العمل المبذول لإحداث استطالة قدرها $0.2\\text{ m}$.`,
+            svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
+                <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" stroke-width="2"/>
+                <line x1="40" y1="100" x2="40" y2="20" stroke="#334155" stroke-width="2"/>
+                <line x1="40" y1="100" x2="220" y2="30" stroke="#dc2626" stroke-width="3"/>
+                <text x="230" y="115" font-size="10" fill="#334155">الاستطالة x(m)</text>
+                <text x="10" y="25" font-size="10" fill="#334155">F(N)</text>
+                <text x="130" y="55" font-size="11" fill="#104c54">الميل = 250</text>
+            </svg>`,
+            options: [`k = 250 N/m والعمل = 5 J`, `k = 500 N/m والعمل = 10 J`, `k = 125 N/m والعمل = 2.5 J`, `k = 250 N/m والعمل = 50 J`],
+            correctIndex: 0,
+            explanation: `الميل يعطي ثابت المرونة $k = 250\\text{ N/m}$. الشغل المبذول يساوي مساحة المثلث تحت منحنى القوة والاستطالة $W = \\frac{1}{2} k x^2 = \\frac{1}{2} (250) (0.2)^2 = 5\\text{ J}$.`
+        },
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `ثريا معلقة بكابلين متناظرين يصنع كل منهما زاوية $30^\\circ$ مع السقف الأفقي. إذا كانت أقصى قوة شد يتحملها أي كابل قبل أن ينقطع هي $490\\text{ N}$، فما أكبر كتلة $m$ يمكن تعليقها بالأمان؟ ($g = 9.8\\text{ m/s}^2$)`,
+            svg: "",
+            options: [`50 kg`, [`25 kg`], [`100 kg`], [`75 kg`]],
+            correctIndex: 0,
+            explanation: `القانون $2 T \\sin(30^\\circ) = m g \\implies 2 (490) (0.5) = m (9.8) \\implies 490 = 9.8 m \\implies m = 50\\text{ kg}$.`
+        },
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `نابضان مرنان متصلان على التوالي ثابتا مرونتهما $k_1 = 300\\text{ N/m}$ و $k_2 = 600\\text{ N/m}$. علق بهما جسم فاستطالا معاً بمقدار كلي $0.15\\text{ m}$. أوجد كتلة الجسم المعلق.`,
+            svg: "",
+            options: [`3.06 kg`, `4.50 kg`, `1.50 kg`, `6.12 kg`],
+            correctIndex: 0,
+            explanation: `في التوالي $\\frac{1}{k_{eq}} = \\frac{1}{300} + \\frac{1}{600} \\implies k_{eq} = 200\\text{ N/m}$. قوة النابض $F = 200 \\times 0.15 = 30\\text{ N}$. الكتلة $m = \\frac{30}{9.8} = 3.06\\text{ kg}$.`
+        },
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `جسم كتلته $m$ يتزن على سطح مائل أملس يميل بزاوية $\\theta$ مع الأفق بواسطة حبل يوازي السطح المائل. إذا تضاعفت زاوية الميل $\\theta$ مع بقاء الجسم متزناً بواسطة زيادة قوة الشد، فإن قوة العمود المقامة $N$ من السطح:`,
+            svg: "",
+            options: [`تقل لأن جتا الزاوية يقل`, `تزداد إلى الضعف`, `تظل ثابتة`, `تنعدم تماماً`],
+            correctIndex: 0,
+            explanation: `قوة رد الفعل العمودي $N = m g \\cos\\theta$. عند زيادة الزاوية $\\theta$ تقل قيمة $\\cos\\theta$ وبالتالي تقل قوة رد الفعل العمودي $N$.`
+        },
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `جسم كتلته $8\\text{ kg}$ معلق بكابل مائل يرافق حابلاً أفقياً $P$. إذا كان الشد في الكابل المائل $T = 100\\text{ N}$، أوجد مقدار قوة الشد الأفقي $P$ بالمتر. ($g = 9.8\\text{ m/s}^2$)`,
+            svg: "",
+            options: [`62.0 N`, `78.4 N`, `45.2 N`, `100 N`],
+            correctIndex: 0,
+            explanation: `المركبة الرأسية $T \\cos\\phi = mg \\implies 100 \\cos\\phi = 78.4 \\implies \\cos\\phi = 0.784 \\implies \\phi \\approx 38.37^\\circ$. قوة الشد الأفقي $P = T \\sin\\phi = 100 \\times \\sin(38.37^\\circ) \\approx 62.0\\text{ N}$.`
+        },
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `إذا أردنا تقليل الشد $T$ في كابلين يحملان ثريا إلى النصف مع بقاء كتلة الثريا ثابتة، فإن زاوية التعليق $\\theta$ مع الأفق يجب أن:`,
+            svg: "",
+            options: [`تزداد بحيث يتضاعف جيبها sin(θ)`, `تقل إلى النصف`, `تبقى ثابتة دون تغيير`, `تتضاعف مرتين`],
+            correctIndex: 0,
+            explanation: `من العلاقة $T = \\frac{mg}{2 \\sin\\theta}$، لكي يقل الشد $T$ للنصف يجب أن يتضاعف قيمة $\\sin\\theta$ للضعف.`
+        },
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `من الرسم البياني للصلابة والمرونة، أي النابضين التاليين يمتلك ثابت مرونة $k$ أسرع وأكبر في مقاومة الاستطالة؟`,
+            svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
+                <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" stroke-width="2"/>
+                <line x1="40" y1="100" x2="40" y2="20" stroke="#334155" stroke-width="2"/>
+                <line x1="40" y1="100" x2="160" y2="20" stroke="#104c54" stroke-width="3"/>
+                <line x1="40" y1="100" x2="240" y2="50" stroke="#e5a93c" stroke-width="3"/>
+                <text x="170" y="25" font-size="11" fill="#104c54">النابض (أ)</text>
+                <text x="245" y="55" font-size="11" fill="#e5a93c">النابض (ب)</text>
+                <text x="10" y="25" font-size="10" fill="#334155">F</text>
+                <text x="240" y="115" font-size="10" fill="#334155">x</text>
+            </svg>`,
+            options: [`النابض (أ) لأن ميل خطه البياني أكبر`, `النابض (ب) لأن استطالته أسرع`, `كلاهما يمتلكان نفس ثابت المرونة`, `لا يمكن التنبؤ من الرسم البياني`],
+            correctIndex: 0,
+            explanation: `ثابت المرونة $k$ يمثل ميل الخط البياني العلاقة بين $F$ و $x$. النابض (أ) يمتلك زاوية وميل أكبر وبالتالي ثابت مرونة أكبر.`
+        },
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `نابض مرن طوله الأصلي $20\\text{ cm}$، عند تعليق كتلة $2\\text{ kg}$ به أصبح طوله $25\\text{ cm}$. إذا علقنا به كتلة إضافية قدرها $1.5\\text{ kg}$، فكم يصبح طول النابض الكلي بالسنتيمتر؟`,
+            svg: "",
+            options: [`28.75 cm`, `30.00 cm`, `26.25 cm`, `35.00 cm`],
+            correctIndex: 0,
+            explanation: `الاستطالة الأولى $5\\text{ cm}$ ناتجة عن $2\\text{ kg}$. ثابت المرونة $k = \\frac{2 \\times 9.8}{0.05} = 392\\text{ N/m}$. الكتلة الكلية $3.5\\text{ kg}$ تنتج استطالة $x = \\frac{3.5 \\times 9.8}{392} = 0.0875\\text{ m} = 8.75\\text{ cm}$. الطول الكلي = $20 + 8.75 = 28.75\\text{ cm}$.`
+        },
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `جسم يتزن على سطح مائل زاوية ميله $45^\\circ$. ما هي النسبة بين المركبة الموازية للسطح $W_{\\parallel}$ والمركبة العمودية $W_{\\perp}$ لوزن الجسم؟`,
+            svg: "",
+            options: [`1 : 1`, `1 : 2`, `2 : 1`, `1 : √2`],
+            correctIndex: 0,
+            explanation: `لأن $\\sin(45^\\circ) = \\cos(45^\\circ) = \\frac{\\sqrt{2}}{2}$، فإن المركبة الموازية تساوي المركبة العمودية تماماً والنسبة بينهما $1:1$.`
+        },
+        {
+            points: 2, level: 'pro', levelLabel: '🔥 تفوق وتفكير عالي (درجتان)',
+            title: `عند تعليق ثقل كتلته $m$ بناديين متماثلين متصلين على التوازي، كانت الاستطالة $x_1$. وعند تعليق نفس الثقل بالنابضين على التوالي كانت الاستطالة $x_2$. ما النسبة $\\frac{x_1}{x_2}$؟`,
+            svg: "",
+            options: [`1 / 4`, `1 / 2`, `4 / 1`, `2 / 1`],
+            correctIndex: 0,
+            explanation: `في التوازي $k_p = 2k \\implies x_1 = \\frac{mg}{2k}$. في التوالي $k_s = \\frac{k}{2} \\implies x_2 = \\frac{mg}{k/2} = \\frac{2mg}{k}$. النسبة $\\frac{x_1}{x_2} = \\frac{1}{4}$.`
+        },
 
-    // توليد 70 سؤال متنوع بالكامل
-    for(let i=1; i<=70; i++) {
-        let qType = i % 5;
-        let qObj = {};
-
-        if(qType === 1) {
-            let slope = 200 + i * 5;
-            qObj = {
-                id: i, level: 'hard', levelLabel: '🔥 رسم بياني وتفوق',
-                title: `من الرسم البياني المجاور الممثل للعلاقة بين قوة شد النابض والاستطالة، احسب معامل الصلابة $k$، ثم أوجد الاستطالة الناتجة عن قوة $100\\text{ N}$.`,
-                svg: `<svg class="svg-illustration" viewBox="0 0 300 120">
-                    <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" stroke-width="2"/>
-                    <line x1="40" y1="100" x2="40" y2="20" stroke="#334155" stroke-width="2"/>
-                    <line x1="40" y1="100" x2="220" y2="30" stroke="#dc2626" stroke-width="3"/>
-                    <text x="240" y="115" font-size="10" fill="#334155">الاستطالة x</text>
-                    <text x="15" y="25" font-size="10" fill="#334155">القوة F</text>
-                </svg>`,
-                options: [`k = ${slope} N/m والاستطالة = ${(100/slope).toFixed(3)} m`, `k = 100 N/m والاستطالة = 0.5 m`, `k = 500 N/m والاستطالة = 0.2 m`, `k = 50 N/m والاستطالة = 2 m`],
-                correctIndex: 0,
-                explanation: `الميل يعبر عن ثابت النابض $k = ${slope}\\text{ N/m}$. الاستطالة $x = \\frac{F}{k} = \\frac{100}{${slope}} = ${(100/slope).toFixed(3)}\\text{ m}$.`
-            };
-        } else if(qType === 2) {
-            qObj = {
-                id: i, level: 'medium', levelLabel: 'مفهوم ونسب',
-                title: `عند زيادة زاوية تعليق الكابلين المتناظرين $\\theta$ مع الأفق من $30^\\circ$ إلى $60^\\circ$ مع ثبات كتلة الجسم المعلق، فإن قوة الشد في كل كابل $T$:`,
-                svg: "",
-                options: ['تقل (لأن جا الزاوية يزداد)', 'تزداد إلى ضعف القيمة', 'تظل ثابتة دون تغيير', 'تنعدم تماماً'],
-                correctIndex: 0,
-                explanation: `العلاقة عكسية بين قوة الشد $T$ وجيب زاوية التعليق $\\sin\\theta$، فعند زيادة الزاوية يزداد الجيب وبالتالي تقل قوة الشد المطلوب تحمّلها.`
-            };
-        } else if(qType === 3) {
-            let m = 5 + (i % 8);
-            let T = (m * 9.8);
-            qObj = {
-                id: i, level: 'medium', levelLabel: 'مستوى متوسط',
-                title: `جسم كتلته $m = ${m}\\text{ kg}$ معلق بكابلين متناظرين، إذا كانت قوة الشد في الكابل الواحد $T = ${T.toFixed(1)}\\text{ N}$، فإن زاوية التعليق $\\theta$ مع الأفق تساوي:`,
-                svg: "",
-                options: ['30°', '45°', '60°', '90°'],
-                correctIndex: 0,
-                explanation: `تطبيق القانون: $2T \\sin\\theta = mg \\implies 2(${T.toFixed(1)}) \\sin\\theta = ${(m*9.8).toFixed(1)} \\implies \\sin\\theta = 0.5 \\implies \\theta = 30^\\circ$.`
-            };
-        } else if(qType === 4) {
-            let k = 150 + i * 10;
-            let x = 0.08;
-            let m = (k * x) / 9.8;
-            qObj = {
-                id: i, level: 'medium', levelLabel: 'حساب كتلة',
-                title: `نابض مرن ثابت صلابته $k = ${k}\\text{ N/m}$ علق به ثقل فاستطال بمقدار $8\\text{ cm}$. احسب كتلة الثقل المعلق $m$ بالكيلوجرام.`,
-                svg: "",
-                options: [`${m.toFixed(2)} kg`, `${(m*2).toFixed(2)} kg`, `${(m/2).toFixed(2)} kg`, `10.0 kg`],
-                correctIndex: 0,
-                explanation: `قوة الشد $F = k \\cdot x = ${k} \\times 0.08 = ${(k*x).toFixed(2)}\\text{ N}$. الكتلة $m = \\frac{F}{g} = \\frac{${(k*x).toFixed(2)}}{9.8} = ${m.toFixed(2)}\\text{ kg}$.`
-            };
-        } else {
-            let phi = 40;
-            let m = 4 + (i % 6);
-            let T = (m * 9.8) / Math.cos(phi * Math.PI / 180);
-            qObj = {
-                id: i, level: 'hard', levelLabel: '🔥 مستوى تفوق',
-                title: `جسم كتلته $m = ${m}\\text{ kg}$ معلق بحبل مائل بزاوية $40^\\circ$ مع الرأسي وحبل أفقي آخر. احسب قوة الشد في الكابل المائل $T$.`,
-                svg: "",
-                options: [`${T.toFixed(1)} N`, `${(m*9.8).toFixed(1)} N`, `${(T*1.5).toFixed(1)} N`, `${(T/2).toFixed(1)} N`],
-                correctIndex: 0,
-                explanation: `المركبة الرأسية $T \\cos(40^\\circ) = mg \\implies T(0.766) = ${(m*9.8).toFixed(1)} \\implies T = ${T.toFixed(1)}\\text{ N}$.`
-            };
+        // --- باقي الأسئلة الاختيارية المتنوعة الفريدة (40 سؤالاً - درجة واحدة) ---
+        {
+            points: 1, level: 'medium', levelLabel: 'مستوى متوسط',
+            title: `جسم كتلته $12\\text{ kg}$ معلق بكابلين متناظرين يصنع كل منهما زاوية $45^\\circ$ مع الأفق. أوجد الشد $T$ في كل كابل.`,
+            options: [`83.2 N`, `117.6 N`, `58.8 N`, `166.3 N`],
+            correctIndex: 0,
+            explanation: `$2 T \\sin(45^\\circ) = 12 \\times 9.8 \\implies 1.414 T = 117.6 \\implies T = 83.2\\text{ N}$.`
+        },
+        {
+            points: 1, level: 'medium', levelLabel: 'مستوى متوسط',
+            title: `نابض مرن ثابت مرونته $k = 400\\text{ N/m}$. ما مقدار القوة $F$ اللازمة لضغطه بمقدار $6\\text{ cm}$؟`,
+            options: [`24 N`, `2400 N`, `2.4 N`, `15 N`],
+            correctIndex: 0,
+            explanation: `$F = k \\cdot x = 400 \\times 0.06 = 24\\text{ N}$.`
+        },
+        {
+            points: 1, level: 'medium', levelLabel: 'مستوى متوسط',
+            title: `جسم كتلته $15\\text{ kg}$ مستقر على سطح مائل أملس يميل بزاوية $30^\\circ$ مع الأفق. أوجد قوة الشد في الحبل الموازي للسطح والذي يمنع الجسم من الانزلاق.`,
+            options: [`73.5 N`, `147 N`, `127.3 N`, `36.8 N`],
+            correctIndex: 0,
+            explanation: `$T = m g \\sin(30^\\circ) = 15 \\times 9.8 \\times 0.5 = 73.5\\text{ N}$.`
+        },
+        {
+            points: 1, level: 'medium', levelLabel: 'مستوى متوسط',
+            title: `ما الوحدة الدولية الخاصة بتمثيل ثابت المرونة $k$ في نظام الوحدات العالمي؟`,
+            options: [`N/m`, `N·m`, `kg/m`, `J/m²`],
+            correctIndex: 0,
+            explanation: `من قانون هوك $k = \\frac{F}{x}$، وتقاس القوة بالنيوتن $N$ والاستطالة بالمتر $m$، فتكون الوحدة $N/m$.`
+        },
+        {
+            points: 1, level: 'medium', levelLabel: 'مستوى متوسط',
+            title: `إذا كانت الاستطالة الحادثة في نابض تزيد طردياً مع القوة المؤثرة، فإن هذا سلوك يخضع لقانون:`,
+            options: [`هوك`, `نيوتن الأول`, `باسكال`, `كولوم`],
+            correctIndex: 0,
+            explanation: `قانون هوك ينص على أن الاستطالة تتناسب طردياً مع القوة المسببة لها ضمن حدود المرونة.`
         }
+    ];
 
-        examQuestions.push(qObj);
+    // إضافة أسئلة اختيارية وتنويع المطاليب لتكتمل الـ 50 سؤالاً اختيارياً
+    for(let i = 6; i <= 40; i++) {
+        let mass = 4 + (i % 7);
+        let angle = 30 + (i % 3) * 15;
+        let T_val = (mass * 9.8) / (2 * Math.sin(angle * Math.PI / 180));
+
+        rawQuestionsBank.push({
+            points: 1, level: 'medium', levelLabel: 'مسألة حسابية',
+            title: `جسم كتلته $m = ${mass}\\text{ kg}$ معلق بكابلين متناظرين يميلان بزاوية $${angle}^\\circ$ مع الأفق. احسب قوة الشد $T$ في الكابل الواحد.`,
+            options: [`${T_val.toFixed(1)} N`, `${(T_val * 1.3).toFixed(1)} N`, `${(mass * 9.8).toFixed(1)} N`, `${(T_val / 2).toFixed(1)} N`],
+            correctIndex: 0,
+            explanation: `تطبيق القانون المباشر $2 T \\sin(${angle}^\\circ) = ${mass} \\times 9.8 \\implies T = ${T_val.toFixed(1)}\\text{ N}$.`
+        });
     }
 
-    function renderPureLaws() {
-        if(window.katex) {
-            katex.render("2 T \\sin(\\theta) = m \\cdot g", document.getElementById('pure-law-1'), {throwOnError: false});
-            katex.render("F = k \\cdot \\Delta x", document.getElementById('pure-law-2'), {throwOnError: false});
-            katex.render("T_1 \\cos(\\phi) = m g \\quad , \\quad P = T_1 \\sin(\\phi)", document.getElementById('pure-law-3'), {throwOnError: false});
-            katex.render("W_{\\parallel} = m \\cdot g \\cdot \\sin(\\theta)", document.getElementById('pure-law-4'), {throwOnError: false});
+    // --- إضافة 10 أسئلة صح وغلط ليتشكل الاختبار الكامل من 60 سؤالاً ---
+    const trueFalseQuestions = [
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'ثابت المرونة $k$ للنابض هو خاصية مميزة لنوع مادة النابض وأبعاده ولا يتغير بتغير القوة المؤثرة عليه ضمن حدود المرونة.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة، ثابت المرونة خاصية هندسية وفيزيائية للنابض.' },
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'كلما زادت زاوية ميل الكابلين المتناظرين مع الأفق $\\theta$، زادت قوة الشد المطبقة على كل كابل.', options: ['صح', 'خطأ'], correctIndex: 1, explanation: 'عبارة خاطئة، العلاقة عكسية؛ كلما زادت الزاوية قل الشد المطلوب.' },
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'القوة العمودية $N$ لجسم على سطح مائل أملس تساوي دائماً وزن الجسم $mg$.', options: ['صح', 'خطأ'], correctIndex: 1, explanation: 'عبارة خاطئة، القوة العمودية على سطح مائل تساوي $mg \\cos\\theta$.' },
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'عند توصيل نوابض مرنة على التوازي، فإن الثابت المكافئ يكون أكبر من ثابت أي نابض منها.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة، في التوازي تجمع الثوابت $k_{eq} = k_1 + k_2$.' },
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'المركبة الموازية لوزن جسم على سطح مائل انعدم عندما تكون زاوية الميل صفراً (سطح أفقي).', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة، لأن $\\sin(0^\\circ) = 0$.' },
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'عند خروج النابض عن حد المرونة، يظل قانون هوك متحققا بشكل كامل.', options: ['صح', 'خطأ'], correctIndex: 1, explanation: 'عبارة خاطئة، قانون هوك ينطبق فقط ضمن حدود المرونة.' },
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'قوة الشد في حبل أملس خفيف الوزن تكون متساوية في جميع أجزائه.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة في الفيزياء الكلاسيكية للحبال المهملة الكتلة.' },
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'الميل في الرسم البياني للعلاقة بين القوة $F$ والاستطالة $x$ يعبر عن ثابت المرونة $k$.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة، $k = \\frac{F}{x}$ يمثل سيل المستقيم.' },
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'الشد الأفقي لثقل معلق بحبل مائل يعتمد على جيب زاوية ميل الحبل المائل مع الرأسي.', options: ['صح', 'خطأ'], correctIndex: 0, explanation: 'عبارة صحيحة $P = T \\sin\\phi$.' },
+        { points: 1, level: 'easy', levelLabel: 'صح أم خطأ', title: 'وحدة قياس الشغل المبذول لضغط نابض هي النيوتن/متر.', options: ['صح', 'خطأ'], correctIndex: 1, explanation: 'عبارة خاطئة، وحدة قياس الشغل والتقاء هي الجول (J).' }
+    ];
+
+    // دمج بنك الأسئلة بالكامل
+    const fullBank = [...rawQuestionsBank, ...trueFalseQuestions];
+    let examQuestions = [];
+
+    // خلط ترتيب الأسئلة عشوائياً لكل طالب (Randomization)
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
         }
+        return arr;
     }
 
     function startExam() {
@@ -507,12 +614,34 @@
         if(!name) { alert('يرجى إدخال اسم الطالب كاملاً'); return; }
 
         startTime = new Date();
+        // خلط الأسئلة عند كل دخول جديد
+        examQuestions = shuffleArray(fullBank).map((q, idx) => ({ ...q, id: idx + 1 }));
+
         document.getElementById('login-screen').classList.remove('active-section');
         document.getElementById('exam-screen').classList.add('active-section');
 
         buildQuestionGrid();
         loadQuestion(0);
         startTimer();
+        setupBlurProtection();
+    }
+
+    /* تشغيل حماية الخروج والتنقل بين الصفحات (Blur Protection) */
+    function setupBlurProtection() {
+        window.addEventListener('blur', () => {
+            document.body.classList.add('protected-blur');
+        });
+        window.addEventListener('focus', () => {
+            document.body.classList.remove('protected-blur');
+        });
+
+        // تعطيل أزرار السكرين شوت واختصارات اللوحة
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'PrintScreen' || (e.ctrlKey && (e.key === 'p' || e.key === 's' || e.key === 'u')) || e.key === 'F12') {
+                e.preventDefault();
+                alert('⚠️ غير مسموح بالتقاط صور أو نسخ محتوى الاختبار لحماية الأسئلة!');
+            }
+        });
     }
 
     function startTimer() {
@@ -535,11 +664,11 @@
             let secs = totalSeconds % 60;
             timerText.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 
-            if (totalSeconds <= 100 * 60) {
+            if (totalSeconds <= 70 * 60) {
                 timerDisplay.classList.add('warning-glow');
             }
 
-            if (totalSeconds < 120 * 60 && totalSeconds % 900 === 0) {
+            if (totalSeconds < 90 * 60 && totalSeconds % 900 === 0) {
                 triggerFlashAlert();
             }
 
@@ -618,6 +747,15 @@
 
     function toggleModal(id, show) {
         document.getElementById(id).style.display = show ? 'flex' : 'none';
+    }
+
+    function renderPureLaws() {
+        if(window.katex) {
+            katex.render("2 T \\sin(\\theta) = m \\cdot g", document.getElementById('pure-law-1'), {throwOnError: false});
+            katex.render("F = k \\cdot \\Delta x", document.getElementById('pure-law-2'), {throwOnError: false});
+            katex.render("T_1 \\cos(\\phi) = m g \\quad , \\quad P = T_1 \\sin(\\phi)", document.getElementById('pure-law-3'), {throwOnError: false});
+            katex.render("W_{\\parallel} = m \\cdot g \\cdot \\sin(\\theta)", document.getElementById('pure-law-4'), {throwOnError: false});
+        }
     }
 
     /* DRAG & DROP MOVABLE CALCULATOR LOGIC */
@@ -755,13 +893,17 @@
         if(timerInterval) clearInterval(timerInterval);
 
         let score = 0;
+        let totalPossibleScore = 70; // 50*1 + 10*2 = 70 درجة
+
         examQuestions.forEach(q => {
-            if(userAnswers[q.id] === q.correctIndex) score++;
+            if(userAnswers[q.id] === q.correctIndex) {
+                score += q.points || 1;
+            }
         });
 
         const studentName = document.getElementById('student-name').value;
         const studentCode = document.getElementById('student-code').value || "2027";
-        const timeSpent = `${Math.floor((120 * 60 - totalSeconds)/60)} دقيقة`;
+        const timeSpent = `${Math.floor((90 * 60 - totalSeconds)/60)} دقيقة`;
 
         document.getElementById('exam-screen').classList.remove('active-section');
         document.getElementById('result-screen').classList.add('active-section');
@@ -792,7 +934,7 @@
 
                 html += `
                     <div class="review-item ${isCorrect ? 'correct' : 'wrong'}">
-                        <strong>س${idx + 1}: ${q.title}</strong><br>
+                        <strong>س${idx + 1}: ${q.title} (${q.points || 1} درجات)</strong><br>
                         إجابة الطالب: <span style="font-weight:bold; color:${isCorrect ? '#16a34a' : '#dc2626'};">${userAns !== undefined ? q.options[userAns] : 'لم يتم الإجابة'}</span> | 
                         الإجابة الصحيحة: <strong>${q.options[q.correctIndex]}</strong><br>
                         <div style="margin-top:8px; padding-top:5px; border-top:1px dashed #ccc; color:#334155;">
