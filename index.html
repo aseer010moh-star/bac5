@@ -62,7 +62,6 @@
             margin-bottom: 25px;
         }
 
-        /* تكبير العنوان وإضافة خط مميز بظل فسفوري ساطع */
         .header-card h1 {
             margin: 0;
             font-family: 'Cairo', sans-serif;
@@ -156,7 +155,6 @@
             font-size: 19px; line-height: 1.6; font-weight: 700; color: #1e293b; margin-top: 5px;
         }
         
-        /* أوسمة درجات الأسئلة */
         .q-badge {
             display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 14px; font-weight: 800; margin-bottom: 12px;
             font-family: 'Cairo', sans-serif;
@@ -229,7 +227,7 @@
         .review-item.correct { background: #f0fdf4; border-color: #16a34a; }
         .review-item.wrong { background: #fef2f2; border-color: #dc2626; }
 
-        /* تصميم شهادة التقدير الفخمة المطابقة للصورة */
+        /* تصميم الشهادة الفخمة المعتمدة على الصورة الأصلية مع إسقاط النصوص بالدقة الملمترية */
         .cert-wrapper {
             position: relative;
             width: 100%;
@@ -238,60 +236,75 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            background: #fff;
+            background: #020c1b;
         }
-        .cert-bg {
+        .cert-bg-img {
             width: 100%;
             height: auto;
             display: block;
         }
-        .cert-overlay {
+        .cert-overlay-layer {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
         }
-        /* نصوص الشهادة المصممة بمواقع دقيقة على الصورة */
+        
+        /* ضبط نصوص الشهادة بالضبط المتر فوق القالب الأصلي */
         .cert-field {
             position: absolute;
-            color: #0d1b2a;
-            font-weight: bold;
-            text-align: center;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-        }
-        .cert-student-name {
-            top: 48.5%;
-            left: 45%;
-            font-size: 26px;
-            font-family: 'Cairo', sans-serif;
             color: #0b2545;
             font-weight: 900;
-        }
-        .cert-score-box {
-            top: 58.8%;
-            left: 42.5%;
-            font-size: 22px;
             font-family: 'Cairo', sans-serif;
+            white-space: nowrap;
+        }
+        
+        /* اسم الطالب المظبوط محاذاته بجانب إلى الطالب/ة مباشرة */
+        .cert-student-name {
+            top: 45.2%;
+            right: 35%;
+            font-size: 2.2vw;
+            color: #0369a1;
+            text-align: right;
+        }
+
+        /* الدرجة الأولى (درجة الطالب) داخل الصندوق الذهبي الأول */
+        .cert-score-val {
+            top: 54.8%;
+            right: 48.8%;
+            font-size: 2vw;
+            color: #b45309;
+            width: 9.5%;
+            text-align: center;
+            transform: translateX(50%);
+        }
+
+        /* الدرجة الكلية (60) داخل الصندوق الذهبي الثاني */
+        .cert-score-max {
+            top: 54.8%;
+            right: 65.2%;
+            font-size: 2vw;
             color: #1e293b;
-            font-weight: 800;
-            width: 75px;
+            width: 9.5%;
+            text-align: center;
+            transform: translateX(50%);
         }
-        .cert-max-box {
-            top: 58.8%;
-            left: 51.5%;
-            font-size: 22px;
-            font-family: 'Cairo', sans-serif;
-            color: #1e293b;
+
+        /* تاريخ اليوم مظبوط فوق خانة تاريخ الإصدار */
+        .cert-date-val {
+            top: 78.5%;
+            right: 29.5%;
+            font-size: 1.3vw;
+            color: #334155;
+            text-align: center;
+            transform: translateX(50%);
             font-weight: 800;
-            width: 75px;
         }
-        .cert-date-box {
-            top: 73.5%;
-            left: 23%;
-            font-size: 15px;
-            font-family: 'Cairo', sans-serif;
-            color: #0f172a;
-            font-weight: 800;
+
+        @media (min-width: 850px) {
+            .cert-student-name { font-size: 22px; }
+            .cert-score-val { font-size: 20px; }
+            .cert-score-max { font-size: 20px; }
+            .cert-date-val { font-size: 13px; }
         }
 
         footer { text-align: center; color: #e0f2f1; padding: 25px 0; font-size: 16px; }
@@ -366,72 +379,22 @@
 
             <div id="locked-section" style="display: none;">
                 
-                <!-- تصميم الشهادة الفخمة المطابقة للصورة -->
                 <div style="text-align: center; margin-bottom: 15px;">
                     <button class="btn-primary" style="background: linear-gradient(135deg, #d97706, #b45309); font-size: 18px; padding: 12px 30px;" onclick="downloadCertificate()">📥 تحميل شهادة التقدير كصورة</button>
                 </div>
 
+                <!-- الشهادة الأصلية بصورتك وشكلها الفخم -->
                 <div class="cert-wrapper" id="certificate-node">
-                    <!-- SVG القالب المصمم بدقة مع التصحيحات اللغوية -->
-                    <svg viewBox="0 0 1200 800" style="width:100%; height:auto; display:block;">
-                        <defs>
-                            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#fef08a" />
-                                <stop offset="50%" stop-color="#eab308" />
-                                <stop offset="100%" stop-color="#854d0e" />
-                            </linearGradient>
-                            <linearGradient id="blueBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#0a192f" />
-                                <stop offset="100%" stop-color="#020c1b" />
-                            </linearGradient>
-                        </defs>
-
-                        <!-- خلفية زرقاء فخمة مع إطار ذهبي -->
-                        <rect width="1200" height="800" fill="url(#blueBg)" />
-                        <rect x="20" y="20" width="1160" height="760" fill="none" stroke="url(#goldGrad)" stroke-width="6" rx="15"/>
-
-                        <!-- الورقة الداخلية البيضاء ذات الحواف الذهبية -->
-                        <rect x="160" y="90" width="880" height="620" fill="#fcfbf7" stroke="url(#goldGrad)" stroke-width="5" rx="10"/>
-
-                        <!-- العناوين والنصوص الرسمية -->
-                        <text x="600" y="180" font-family="'Cairo', sans-serif" font-weight="900" font-size="54" fill="#a16207" text-anchor="middle">شَهَادَةُ تَقْدِيرٍ</text>
-                        <text x="600" y="240" font-family="'Cairo', sans-serif" font-weight="800" font-size="28" fill="#1e293b" text-anchor="middle">من أ/ محمد أمين نظير — معلم الفيزياء</text>
-
-                        <!-- السطر الأول: الاسم -->
-                        <text x="820" y="340" font-family="'Cairo', sans-serif" font-weight="800" font-size="26" fill="#0f172a" text-anchor="end">إلى الطالب/ة:</text>
-                        <line x1="260" y1="350" x2="680" y2="350" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4"/>
-                        <text id="svg-cert-name" x="470" y="338" font-family="'Cairo', sans-serif" font-weight="900" font-size="28" fill="#0369a1" text-anchor="middle">أحمد محمد علي</text>
-
-                        <!-- السطر الثاني: الحصول على درجة (المعدلة فصاحياً) -->
-                        <text x="940" y="440" font-family="'Cairo', sans-serif" font-weight="800" font-size="24" fill="#0f172a" text-anchor="end">بمناسبة الحصول على درجة رقم</text>
-                        
-                        <!-- صندوق الدرجة الأولى -->
-                        <rect x="530" y="405" width="100" height="48" rx="10" fill="#ffffff" stroke="url(#goldGrad)" stroke-width="3"/>
-                        <text id="svg-cert-score" x="580" y="438" font-family="'Cairo', sans-serif" font-weight="900" font-size="26" fill="#b45309" text-anchor="middle">60</text>
-
-                        <text x="500" y="440" font-family="'Cairo', sans-serif" font-weight="800" font-size="24" fill="#0f172a" text-anchor="middle">من</text>
-
-                        <!-- صندوق الدرجة الكلية -->
-                        <rect x="370" y="405" width="100" height="48" rx="10" fill="#ffffff" stroke="url(#goldGrad)" stroke-width="3"/>
-                        <text x="420" y="438" font-family="'Cairo', sans-serif" font-weight="900" font-size="26" fill="#1e293b" text-anchor="middle">60</text>
-
-                        <text x="330" y="440" font-family="'Cairo', sans-serif" font-weight="800" font-size="24" fill="#0f172a" text-anchor="end">في الاختبار</text>
-
-                        <!-- العبارة المصححة إملائياً (تمنياتنا) -->
-                        <text x="600" y="530" font-family="'Amiri', serif" font-weight="700" font-size="26" fill="#a16207" text-anchor="middle">༺ مع تمنياتنا لك بمزيد من التفوق والنجاح ༻</text>
-
-                        <!-- التوقيع والتاريخ -->
-                        <text x="320" y="610" font-family="'Cairo', sans-serif" font-weight="800" font-size="20" fill="#0f172a" text-anchor="middle">مع تحياتي</text>
-                        <text x="320" y="645" font-family="'Cairo', sans-serif" font-weight="900" font-size="22" fill="#0369a1" text-anchor="middle">Mr / Mohamad Ameen</text>
-
-                        <text x="850" y="610" font-family="'Cairo', sans-serif" font-weight="800" font-size="18" fill="#0f172a" text-anchor="middle">تاريخ الإصدار:</text>
-                        <text id="svg-cert-date" x="850" y="645" font-family="'Cairo', sans-serif" font-weight="800" font-size="18" fill="#475569" text-anchor="middle">2027/10/04</text>
-
-                        <!-- الشعار الذهبي للذرة والفيزياء -->
-                        <circle cx="600" cy="630" r="40" fill="url(#goldGrad)"/>
-                        <circle cx="600" cy="630" r="32" fill="#0a192f"/>
-                        <text x="600" y="638" font-size="24" fill="#eab308" text-anchor="middle">⚛</text>
-                    </svg>
+                    <!-- الصورة القالب الأصلية -->
+                    <img src="https://i.ibb.co/3yxP5tD/physics-cert-template.png" class="cert-bg-img" alt="قالب الشهادة الفخم" crossorigin="anonymous">
+                    
+                    <!-- الطبقة المتقاطعة المسؤولة عن تنزيل النصوص والبيانات في أماكنها الدقيقة -->
+                    <div class="cert-overlay-layer">
+                        <div class="cert-field cert-student-name" id="cert-student-name-val">مريوم صافي</div>
+                        <div class="cert-field cert-score-val" id="cert-score-val">13</div>
+                        <div class="cert-field cert-score-max">60</div>
+                        <div class="cert-field cert-date-val" id="cert-date-val">2026/10/04</div>
+                    </div>
                 </div>
 
                 <h3 style="color: var(--warm-teal); margin-top: 30px; font-family: 'Cairo', sans-serif;">📝 تقرير مراجعة الإجابات والخطوات التفصيلية:</h3>
@@ -556,9 +519,8 @@
     ];
     let alertMsgIndex = 0;
 
-    // بنك الـ 40 سؤالاً كما هو بالكامل بدون أي تعديل
+    // بنك الـ 40 سؤالاً كاملاً دون أي حذف
     const uniqueBank = [
-        // 20 سؤالاً (درجتان لكل سؤال = 40 درجة)
         {
             points: 2, level: 'two-marks', levelLabel: 'سؤال (درجتان)',
             title: `من الرسم البياني المجاور بين القوة $F$ والاستطالة $x$، احسب قيمة ثابت المرونة $k$، ثم أوجد الاستطالة عندما تؤثر قوة قدرها $500\\text{ N}$.`,
@@ -570,7 +532,7 @@
                 <text x="10" y="25" font-size="10" fill="#334155">F(N)</text>
                 <text x="120" y="55" font-size="11" fill="#104c54">الميل = 250 N/m</text>
             </svg>`,
-            options: [`k = 250 N/m والاستطالة = 2.0 m`, `k = 500 N/m والاستطالة = 1.0 m`, `k = 125 N/m والاستطالة = 4.0 m`, `k = 250 N/m والاستطالة = 0.5 m`],
+            options: [`k = 250 N/m واستطالة = 2.0 m`, `k = 500 N/m واستطالة = 1.0 m`, `k = 125 N/m واستطالة = 4.0 m`, `k = 250 N/m واستطالة = 0.5 m`],
             correctIndex: 0,
             explanation: `الميل يعطي ثابت المرونة $k = 250\\text{ N/m}$. الاستطالة $x = \\frac{F}{k} = \\frac{500}{250} = 2.0\\text{ m}$.`
         },
@@ -702,7 +664,6 @@
             options: [`0.196 m`, `0.020 m`, `0.500 m`, `0.098 m`], correctIndex: 0, explanation: `$x = \\frac{mg}{k} = \\frac{3 \\times 9.8}{150} = 0.196\\text{ m}$.`
         },
 
-        // 20 سؤالاً (درجة واحدة لكل سؤال = 20 درجة)
         { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `ما هي الوحدة الفيزيائية الدولية لقياس ثابت المرونة $k$؟`, options: [`N/m`, `N·m`, `kg/m`, `J/m²`], correctIndex: 0, explanation: `$k = \\frac{F}{x} \\implies \\text{N/m}$.` },
         { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `قانون هوك يصف العلاقة بين القوة والاستطالة بشرط أن تكون القوة المؤثرة:`, options: [`ضمن حدود المرونة`, `أكبر من حد الكسر`, `مساوية للصفر`, `متغيرة اللحظة`], correctIndex: 0, explanation: `ينطبق قانون هوك فقط ضمن حدود المرونة.` },
         { points: 1, level: 'one-mark', levelLabel: 'سؤال (درجة واحدة)', title: `جسم كتلته $12\\text{ kg}$ معلق بكابلين متناظرين يميلان بزاوية $45^\\circ$ مع الأفق. احسب قوة الشد $T$.`, options: [`83.2 N`, `117.6 N`, `58.8 N`, `166.3 N`], correctIndex: 0, explanation: `$2 T \\sin(45^\\circ) = 12 \\times 9.8 \\implies T = 83.2\\text{ N}$.` },
@@ -914,13 +875,13 @@
 
         document.getElementById('student-display-name').innerText = studentName;
 
-        // تحديث بيانات الشهادة تلقائياً
-        document.getElementById('svg-cert-name').textContent = studentName;
-        document.getElementById('svg-cert-score').textContent = finalCalculatedScore;
+        // تحديث بيانات الشهادة الأصلية تلقائياً
+        document.getElementById('cert-student-name-val').textContent = studentName;
+        document.getElementById('cert-score-val').textContent = finalCalculatedScore;
         
         const today = new Date();
         const dateStr = `${today.getFullYear()}/${(today.getMonth()+1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}`;
-        document.getElementById('svg-cert-date').textContent = dateStr;
+        document.getElementById('cert-date-val').textContent = dateStr;
 
         document.getElementById('email-subject').value = `📊 نتيجة فيزياء جديدة - ${studentName}`;
         document.getElementById('email-student-name').value = studentName;
@@ -965,12 +926,11 @@
         }
     }
 
-    // دالة تحميل الشهادة تلقائياً كصورة عالية الجودة
     function downloadCertificate() {
         const certElement = document.getElementById('certificate-node');
         const studentName = document.getElementById('student-name').value || "الطالب";
         
-        html2canvas(certElement, { scale: 3 }).then(canvas => {
+        html2canvas(certElement, { scale: 3, useCORS: true }).then(canvas => {
             const link = document.createElement('a');
             link.download = `شهادة_تقدير_${studentName}.png`;
             link.href = canvas.toDataURL('image/png');
